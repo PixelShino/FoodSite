@@ -2,6 +2,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("its work");
 
+  //TABS
+
   const tabs = document.querySelectorAll(".tabheader__item");
   const tabsContent = document.querySelectorAll(".tabcontent");
   const tabsParent = document.querySelector(".tabheader__items");
@@ -38,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // TIMER
+
   const deadline = "2024-12-31";
 
   function getTimeRemaining(endtime) {
@@ -63,17 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const seconds = timer.querySelector("#seconds");
     let timeInterval = setInterval(updateClock, 1000);
     updateClock();
-    // function updateClock() {
-    //   const t = getTimeRemaining(endtime);
-    //   days.innerHTML = t.days;
-    //   hours.innerHTML = t.hours;
-    //   minutes.innerHTML = t.minutes;
-    //   seconds.innerHTML = t.seconds;
 
-    //   if (total <= 0) {
-    //     clearInterval(timeInterval);
-    //   }
-    // }
     function updateClock() {
       const t = getTimeRemaining(endtime);
       days.innerHTML = getZero(t.days);
@@ -99,5 +92,33 @@ document.addEventListener("DOMContentLoaded", () => {
   switchTab();
 
   setClock(".timer", deadline);
+
+  // Modal
+  function initModal() {
+    const modalElement = document.querySelector(".modal");
+    const openModal = () => (modalElement.style.display = "block");
+    const closeModal = () => (modalElement.style.display = "none");
+
+    document.querySelectorAll("[data-modal]").forEach((button) =>
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        openModal();
+      })
+    );
+
+    document
+      .querySelector("[data-close]")
+      .addEventListener("click", (event) => {
+        event.preventDefault();
+        closeModal();
+      });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && modalElement.style.display === "block") {
+        event.preventDefault();
+        closeModal();
+      }
+    });
+  }
+
+  initModal();
 });
-console.log("test 123");
