@@ -96,25 +96,42 @@ document.addEventListener("DOMContentLoaded", () => {
   // Modal
   function initModal() {
     const modalElement = document.querySelector(".modal");
-    const openModal = () => (modalElement.style.display = "block");
-    const closeModal = () => (modalElement.style.display = "none");
 
-    document.querySelectorAll("[data-modal]").forEach((button) =>
-      button.addEventListener("click", (event) => {
-        event.preventDefault();
-        openModal();
-      })
-    );
+    // Открытие модального окна и добавление обработчика `keydown`
+    const openModal = () => {
+      modalElement.classList.add("show");
+      document.addEventListener("keydown", onEscapePress);
+      document.body.style.overflow = "hidden";
+    };
 
-    document
-      .querySelector("[data-close]")
-      .addEventListener("click", (event) => {
+    // Закрытие модального окна и удаление обработчика `keydown`
+    const closeModal = () => {
+      modalElement.classList.remove("show");
+      document.removeEventListener("keydown", onEscapePress);
+      document.body.style.overflow = "auto";
+    };
+
+    // Обработчик для закрытия модального окна по клавише Escape
+    const onEscapePress = (event) => {
+      if (event.key === "Escape") {
         event.preventDefault();
         closeModal();
-      });
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && modalElement.style.display === "block") {
-        event.preventDefault();
+      }
+    };
+
+    // Открытие модального окна по клику на кнопки с атрибутом data-modal
+    document
+      .querySelectorAll("[data-modal]")
+      .forEach((button) => button.addEventListener("click", openModal));
+
+    // Закрытие модального окна по клику на кнопку с атрибутом data-close
+    document
+      .querySelector("[data-close]")
+      .addEventListener("click", closeModal);
+
+    // Закрытие модального окна по клику вне его содержимого
+    modalElement.addEventListener("click", (event) => {
+      if (event.target === modalElement) {
         closeModal();
       }
     });
