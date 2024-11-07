@@ -94,48 +94,132 @@ document.addEventListener("DOMContentLoaded", () => {
   setClock(".timer", deadline);
 
   // Modal
-  function initModal() {
-    const modalElement = document.querySelector(".modal");
+  // function initModal() {
+  //   const modalElement = document.querySelector(".modal");
 
-    // Открытие модального окна и добавление обработчика `keydown`
-    const openModal = () => {
-      modalElement.classList.add("show");
-      document.addEventListener("keydown", onEscapePress);
-      document.body.style.overflow = "hidden";
-    };
+  //   // Открытие модального окна и добавление обработчика `keydown`
+  //   const openModal = () => {
+  //     modalElement.classList.add("show");
+  //     document.addEventListener("keydown", onEscapePress);
+  //     document.body.style.overflow = "hidden";
+  //     clearInterval(timerModal);
+  //   };
 
-    // Закрытие модального окна и удаление обработчика `keydown`
-    const closeModal = () => {
-      modalElement.classList.remove("show");
-      document.removeEventListener("keydown", onEscapePress);
-      document.body.style.overflow = "auto";
-    };
+  //   // Закрытие модального окна и удаление обработчика `keydown`
+  //   const closeModal = () => {
+  //     modalElement.classList.remove("show");
+  //     document.removeEventListener("keydown", onEscapePress);
+  //     document.body.style.overflow = "auto";
+  //   };
 
-    // Обработчик для закрытия модального окна по клавише Escape
-    const onEscapePress = (event) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        closeModal();
-      }
-    };
+  //   // Обработчик для закрытия модального окна по клавише Escape
+  //   const onEscapePress = (event) => {
+  //     if (event.key === "Escape") {
+  //       event.preventDefault();
+  //       closeModal();
+  //     }
+  //   };
 
-    // Открытие модального окна по клику на кнопки с атрибутом data-modal
-    document
-      .querySelectorAll("[data-modal]")
-      .forEach((button) => button.addEventListener("click", openModal));
+  //   // Открытие модального окна по клику на кнопки с атрибутом data-modal
+  //   document
+  //     .querySelectorAll("[data-modal]")
+  //     .forEach((button) => button.addEventListener("click", openModal));
 
-    // Закрытие модального окна по клику на кнопку с атрибутом data-close
-    document
-      .querySelector("[data-close]")
-      .addEventListener("click", closeModal);
+  //   // Закрытие модального окна по клику на кнопку с атрибутом data-close
+  //   document
+  //     .querySelector("[data-close]")
+  //     .addEventListener("click", closeModal);
 
-    // Закрытие модального окна по клику вне его содержимого
-    modalElement.addEventListener("click", (event) => {
-      if (event.target === modalElement) {
-        closeModal();
-      }
-    });
+  //   // Закрытие модального окна по клику вне его содержимого
+  //   modalElement.addEventListener("click", (event) => {
+  //     if (event.target === modalElement) {
+  //       closeModal();
+  //     }
+  //   });
+
+  //   // Вызов modal по истечению 3с
+  //   let timerModal = setTimeout(openModal, 6000);
+
+  //   // вызов modal на конце страницы
+  //   //TODO: Сделать запрет на повторное срабатывание в течении определенного времени
+  //   //TODO: рефрактор с использованием Intersection Observer api
+  //   function showModalOnEndOfPage() {
+  //     const scrollPosition = window.scrollY + window.innerHeight;
+  //     const documentHeight = document.body.offsetHeight;
+
+  //     if (scrollPosition >= documentHeight) {
+  //       openModal();
+  //       window.removeEventListener("scroll", showModalOnEndOfPage);
+  //     }
+  //   }
+  //   window.addEventListener("scroll", showModalOnEndOfPage);
+  // }
+
+  // initModal();
+
+  //CLASS FOR CARDS
+  class MenuCard {
+    constructor(imgSrc, alt, title, decription, price, parentSelector) {
+      this.parent = document.querySelector(parentSelector);
+      this.imgSrc = imgSrc;
+      this.alt = alt;
+      this.title = title;
+      this.description = decription;
+      this.price = price;
+      this.tansfer = 50;
+      this.changeToUAH();
+    }
+
+    changeToUAH() {
+      this.price = this.price * this.tansfer;
+    }
+    render() {
+      const element = document.createElement("div");
+      element.innerHTML = `
+    <div class="menu__item"><img src=${this.imgSrc} alt=${this.alt} />
+    <h3 class="menu__item-subtitle">${this.title}</h3>
+    <div class="menu__item-descr">${this.description}</div>
+    <div class="menu__item-divider"></div>
+    <div class="menu__item-price">
+      <div class="menu__item-cost">Цена:</div>
+      <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+    </div>
+  </div>`;
+
+      this.parent.append(element);
+    }
   }
+  new MenuCard(
+    "img/tabs/vegy.jpg",
+    "vegy",
+    `Меню "Фитнес"`,
+    `Меню "Фитнес" - это новый подход к приготовлению блюд: больше
+    свежих овощей и фруктов. Продукт активных и здоровых людей. Это
+    абсолютно новый продукт с оптимальной ценой и высоким качеством!`,
+    9,
+    ".menu .container"
+  ).render();
 
-  initModal();
+  new MenuCard(
+    "img/tabs/elite.jpg",
+    "elite",
+    `Меню “Премиум”`,
+    `В меню “Премиум” мы используем не только красивый дизайн упаковки, 
+    но и качественное исполнение блюд. Красная рыба, морепродукты, 
+    фрукты - ресторанное меню без похода в ресторан!`,
+    15,
+    ".menu .container"
+  ).render();
+
+  new MenuCard(
+    "img/tabs/post.jpg",
+    "post",
+    `Меню "Постное"`,
+    `Меню “Постное” - это тщательный подбор ингредиентов: полное
+    отсутствие продуктов животного происхождения, молоко из миндаля, 
+    овса, кокоса или гречки, правильное количество белков за счет тофу
+    и импортных вегетарианских стейков.`,
+    10,
+    ".menu .container"
+  ).render();
 });
