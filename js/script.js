@@ -92,13 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
   switchTab();
 
   setClock('.timer', deadline);
-
+  let openModal;
+  let closeModal;
   //Modal
   function initModal() {
     const modalElement = document.querySelector('.modal');
 
     // Открытие модального окна и добавление обработчика `keydown`
-    const openModal = () => {
+    openModal = () => {
       modalElement.classList.add('show');
       document.addEventListener('keydown', onEscapePress);
       document.body.style.overflow = 'hidden';
@@ -106,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Закрытие модального окна и удаление обработчика `keydown`
-    const closeModal = () => {
+    closeModal = () => {
       modalElement.classList.remove('show');
       document.removeEventListener('keydown', onEscapePress);
       document.body.style.overflow = 'auto';
@@ -126,19 +127,22 @@ document.addEventListener('DOMContentLoaded', () => {
       .forEach((button) => button.addEventListener('click', openModal));
 
     // Закрытие модального окна по клику на кнопку с атрибутом data-close
-    document
-      .querySelector('[data-close]')
-      .addEventListener('click', closeModal);
+    // document
+    //   .querySelector('[data-close]')
+    //   .addEventListener('click', closeModal);
 
     // Закрытие модального окна по клику вне его содержимого
     modalElement.addEventListener('click', (event) => {
-      if (event.target === modalElement) {
+      if (
+        event.target === modalElement ||
+        event.target.getAttribute('data-close' == '')
+      ) {
         closeModal();
       }
     });
 
-    // Вызов modal по истечению 3с
-    // let timerModal = setTimeout(openModal, 6000);
+    // Вызов modal по истечению 50с
+    let timerModal = setTimeout(openModal, 50000);
 
     // вызов modal на конце страницы
     //TODO: Сделать запрет на повторное срабатывание в течении определенного времени
@@ -246,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //FORM
   const forms = document.querySelectorAll('form');
   const message = {
-    loading: 'Загрузка...',
+    loading: 'img/form/spinner.svg',
     success: 'Спасибо! Скоро мы с вами свяжемся',
     failure: 'Что-то пошло не так...',
   };
@@ -258,16 +262,17 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
 
-      const statusMessage = document.createElement('div');
-      statusMessage.classList.add('status');
-      statusMessage.textContent = message.loading;
-      form.append(statusMessage);
+      const statusMessage = document.createElement('img');
+      statusMessage.src = message.loading;
+      statusMessage.style.cssText = `display: block; margin: 0 auto;`; //TODO: вынести в отдельый класс css
+      // form.append(statusMessage);
+      form.insertAdjacentElement('afterend', statusMessage);
 
       const request = new XMLHttpRequest();
       request.open('POST', 'index.php');
       request.setRequestHeader(
         'Content-type',
-        'appliacation/json', //возможно не нужно
+        'application/json', //возможно не нужно
       );
 
       const formData = new FormData(form);
@@ -283,15 +288,43 @@ document.addEventListener('DOMContentLoaded', () => {
       request.addEventListener('load', () => {
         if (request.status === 200) {
           console.log(request.response);
-          statusMessage.textContent = message.success;
+          showThanksModal(message.success);
           form.reset();
-          setTimeout(() => {
-            statusMessage.remove();
-          }, 2000);
+          statusMessage.remove();
         } else {
-          statusMessage.textContent = message.failure;
+          showThanksModal(message.failure);
         }
       });
     });
   }
+  function showThanksModal(message) {
+    const prevModalDialog = document.querySelector('.modal__dialog');
+    prevModalDialog.classList.add('hide');
+    openModal();
+    const thanksModal = document.createElement('div');
+    thanksModal.classList.add('modal__dialog');
+    thanksModal.innerHTML = `
+    <div class="modal__content">
+      <div class="modal__close" data-close>&times;</div>
+      <div class="modal__title">${message}</div>
+    </div>
+    `;
+    document.querySelector('.modal').append(thanksModal);
+    setTimeout(() => {
+      thanksModal.remove();
+      prevModalDialog.classList.add('show');
+      prevModalDialog.classList.remove('hide');
+      closeModal();
+    }, 4000);
+  }
+
+  // fetch('https://jsonplaceholder.typicode.com/posts', {
+  //   method: 'POST',
+  //   body: JSON.stringify({ name: 'Alex' }),
+  //   headers: {
+  //     'Content-type': 'application/json',
+  //   },
+  // })
+  //   .then((response) => response.json())
+  //   .then((json) => console.log(json));
 });
