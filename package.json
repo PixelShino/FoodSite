@@ -1,0 +1,22 @@
+{
+  "name": "foodsite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shin4x/FoodSite.git"
+  },
+  "author": "Dmitrii Goldobin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shin4x/FoodSite/issues"
+  },
+  "homepage": "https://github.com/shin4x/FoodSite#readme",
+  "devDependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}
