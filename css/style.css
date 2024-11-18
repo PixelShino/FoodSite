@@ -81,7 +81,7 @@ a {
   color: #303030;
 }
 .header__link:after {
-  content: "";
+  content: '';
   position: absolute;
   display: block;
   width: 110%;
@@ -312,7 +312,7 @@ a {
   margin-top: 0;
 }
 .calculating #gender:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -616,9 +616,9 @@ a {
     opacity: 1;
   }
 }
-.modal {
+/* .modal {
   animation: fade 2s ease-in-out;
-}
+} */
 .hide {
   display: none;
 }
