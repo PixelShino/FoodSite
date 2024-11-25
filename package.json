@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/shin4x/FoodSite#readme",
   "devDependencies": {
-    "json-server": "^1.0.0-beta.3"
+    "json-server": "^1.0.0-beta.3",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
   }
 }
