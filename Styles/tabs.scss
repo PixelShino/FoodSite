@@ -1,0 +1,138 @@
+@import 'colors';
+.preview {
+  padding: 2vw 0 4vw 0;
+  position: relative;
+
+  background-color: $dark;
+  z-index: -1;
+
+  .bgc_blue {
+    // Стили для фонового элемента
+    position: absolute;
+    right: 0;
+    top: -1vw;
+    width: 50%;
+    height: 110%;
+
+    z-index: -1;
+
+    background-color: $black;
+  }
+
+  .container {
+    max-width: 100vw;
+    // width: 100vw;
+
+    .tabcontainer {
+      display: flex;
+      width: 100%;
+      //   margin: 0 7vw 0 7vw;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      justify-content: center;
+      .tabcontent {
+        width: 70vw;
+        height: 30vw;
+        // position: relative;
+
+        img {
+          // Стили для изображения
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        &__descr {
+          // Стили для описания
+          position: absolute;
+          top: 22vw;
+          right: 12vw;
+          width: 60vw;
+          height: 16.5vw;
+          color: whitesmoke;
+          padding: 3vw;
+          font-size: 1.5vw;
+          font-weight: 300;
+          line-height: 2vw;
+          overflow: hidden;
+          background-color: $medium-dark;
+        }
+      }
+
+      .tabheader {
+        width: 17vw;
+        padding: 2vw 1.7vw;
+        background-color: $light;
+
+        h3 {
+          // Стили для заголовка
+          font-weight: 1.7vw;
+          font-size: 1.7vw;
+        }
+
+        &__items {
+          margin-top: 2vw;
+          padding-left: 1.5vw;
+          border-left: 1px solid #000;
+          .tabheader__item {
+            // Стили для элементов вкладок
+            font-weight: 700;
+            font-size: 1.3vw;
+            font-weight: 300;
+            margin-top: 6%;
+            color: rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+            transition: 0.3s all;
+
+            &_active {
+              // Стили для активной вкладки
+              color: $orange;
+              font-size: 2vw;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+
+    .preview__life {
+      // Стили для текста "Живи полной жизнью!"
+      font-weight: 700;
+      font-size: 1.6vw;
+      margin-left: 7vw;
+      margin-top: 2vw;
+      color: whitesmoke;
+    }
+  }
+}
+
+// .container {
+//   //   margin: 0 auto;
+// }
+// .preview {
+// }
+// .preview__life {
+// }
+// .bgc_blue {
+// }
+// .tabcontainer {
+// }
+// .tabcontent {
+// }
+// .tabcontent img {
+// }
+// .tabcontent__descr {
+// }
+// .tabheader {
+// }
+// .tabheader h3 {
+// }
+// .tabheader__items {
+// }
+// .tabheader__item {
+// }
+// .tabheader__item_active {
+// }
+.header__link:last-child {
+  margin-right: 0;
+}

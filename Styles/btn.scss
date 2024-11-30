@@ -1,0 +1,16 @@
+.btn {
+  min-width: 12vw;
+  max-width: 20vw;
+  height: 8vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: 0.3s all;
+  outline: 0;
+}
