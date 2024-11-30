@@ -1,0 +1,100 @@
+// normalize.scss
+
+// 1. Убираем отступы по умолчанию
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// 2. Устанавливаем базовые стили для документа
+html {
+  line-height: 1.15; // 1. Уменьшение межстрочного интервала для лучшей читаемости
+  -webkit-text-size-adjust: 100%; // 2. Убираем масштабирование текста в мобильных браузерах
+}
+
+body {
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  background-color: #fff;
+  color: #000;
+  text-rendering: optimizeLegibility; // Улучшенная рендеринг шрифтов
+}
+
+// 3. Корректируем стили для основных элементов
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+figure {
+  margin: 0;
+}
+
+// 4. Стили для изображений и медиа
+img,
+video {
+  max-width: 100%; // Ограничиваем ширину
+  height: auto; // Сохраняем пропорции
+  display: block; // Убираем пробелы снизу
+}
+
+// 5. Таблицы
+table {
+  border-collapse: collapse; // Убираем двойные границы
+  width: 100%; // Растягиваем на ширину родителя
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.5em;
+}
+
+// 6. Ссылки
+a {
+  color: inherit; // Убираем цвет по умолчанию
+  text-decoration: none; // Убираем подчеркивание
+}
+
+// 7. Убираем стандартные стили списка
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// 8. Поля ввода и кнопки
+input,
+button,
+textarea,
+select {
+  font: inherit; // Наследуем шрифт
+  border: none; // Убираем стандартные рамки
+  outline: none; // Убираем фокус
+}
+
+button {
+  cursor: pointer; // Указываем курсор для кнопок
+}
+
+// 9. Корректируем стили для кода
+code,
+pre {
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 1em;
+}

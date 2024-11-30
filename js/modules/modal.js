@@ -64,3 +64,4 @@ function modal(triggerSelector, modalSelector, closeSelector) {
   initModal();
 }
 export default modal;
+export { openModal, closeModal };

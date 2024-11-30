@@ -132,3 +132,4 @@ function calc() {
   calc();
 }
 export default calc;
+console.log('webpack test');
