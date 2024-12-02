@@ -1,11 +1,25 @@
 // import { closeModal, openModal } from './modal';
 // const { openModal, closeModal } = modalModule();
-function tabs() {
+function tabs(tabsItem, tabsContentItem, tabsParentItem) {
   //TABS
 
-  const tabs = document.querySelectorAll('.tabheader__item');
-  const tabsContent = document.querySelectorAll('.tabcontent');
-  const tabsParent = document.querySelector('.tabheader__items');
+  const tabs = document.querySelectorAll(`${tabsItem}`); // элемент переключения
+  const tabsContent = document.querySelectorAll(`${tabsContentItem}`); // сам контент
+  const tabsParent = document.querySelector(`${tabsParentItem}`); // родитель
+
+  // const tabs = document.querySelectorAll('.tabheader__item');
+  // const tabsContent = document.querySelectorAll('.tabcontent');
+  // const tabsParent = document.querySelector('.tabheader__items');
+
+  if (!tabs.length || !tabsContent.length || !tabsParent) {
+    console.error('Не удалось найти необходимые элементы для табов');
+    return;
+  } else {
+    console.log('Табы найдены :');
+    console.log(`${tabs}`);
+    console.log(`${tabsContent}`);
+    console.log(`${tabsParent}`);
+  }
 
   function hideTabsContent() {
     tabsContent.forEach((element) => {
@@ -26,6 +40,7 @@ function tabs() {
 
   function switchTab() {
     tabsParent.addEventListener('click', (event) => {
+      console.log(event.target);
       const target = event.target;
       if (target && target.classList.contains('tabheader__item')) {
         tabs.forEach((item, i) => {
@@ -41,4 +56,5 @@ function tabs() {
   showTabContent();
   switchTab();
 }
+
 export default tabs;

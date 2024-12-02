@@ -1,0 +1,143 @@
+@import 'colors';
+
+.offer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 2vw 0;
+  align-items: center;
+
+  // Фоновый элемент
+  .bgc_y {
+    position: absolute;
+    width: 100vw;
+    height: 40vw;
+    background: $medium-dark;
+    z-index: -1;
+  }
+
+  // Основной контейнер
+  .container {
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  // Слайдер
+  &__slider {
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    // Счетчик слайдов
+    &-counter {
+      display: flex;
+      width: 30vw;
+      align-items: center;
+      font-size: 2vw;
+      color: rgba(0, 0, 0, 0.5);
+      align-self: center;
+      justify-content: center;
+      background-color: $medium;
+      width: 100%;
+    }
+
+    // Обертка слайдера
+    &-wrapper {
+      width: 100%;
+      height: 60vh;
+      margin: 1vw 0 10vh 0;
+      box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+      // overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    // Контейнер для слайдов
+    &-inner {
+      display: flex;
+      transition: 0.5s all;
+      height: 100%;
+      width: 400%; // 4 слайда по 100%
+    }
+  }
+
+  // Слайд
+  &__slide {
+    width: 25%; // 100% / 4 слайда
+    height: 100%;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  // Описание в слайде
+  &__descr {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2vw;
+    z-index: 1;
+
+    &-info {
+      font-size: 1.3vw;
+      line-height: 1.6;
+      margin-bottom: 2vw;
+    }
+
+    &-action {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+// Кнопки навигации
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3vw;
+  height: 6vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+
+// Кнопка
+.btn_dark {
+  background-color: #303030;
+  color: #fff;
+  border: none;
+  padding: 12px 45px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s all;
+
+  &:hover {
+    background-color: darken(#303030, 10%);
+  }
+}

@@ -4,7 +4,7 @@
   position: relative;
 
   background-color: $dark;
-  z-index: -1;
+  z-index: 0;
 
   .bgc_blue {
     // Стили для фонового элемента
@@ -81,8 +81,16 @@
             font-weight: 300;
             margin-top: 6%;
             color: rgba(0, 0, 0, 0.6);
-            cursor: pointer;
+
             transition: 0.3s all;
+            z-index: 3;
+            cursor: pointer;
+            &:hover {
+              // color: black;
+              transform: scale(1.2);
+              transition: all 0.3s;
+              background-color: rgba(0, 0, 0, 0.1); // временно для отладки
+            }
 
             &_active {
               // Стили для активной вкладки
@@ -106,33 +114,6 @@
   }
 }
 
-// .container {
-//   //   margin: 0 auto;
-// }
-// .preview {
-// }
-// .preview__life {
-// }
-// .bgc_blue {
-// }
-// .tabcontainer {
-// }
-// .tabcontent {
-// }
-// .tabcontent img {
-// }
-// .tabcontent__descr {
-// }
-// .tabheader {
-// }
-// .tabheader h3 {
-// }
-// .tabheader__items {
-// }
-// .tabheader__item {
-// }
-// .tabheader__item_active {
-// }
 .header__link:last-child {
   margin-right: 0;
 }
