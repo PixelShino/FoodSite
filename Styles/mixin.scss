@@ -1,0 +1,35 @@
+@use 'sass:math';
+
+@mixin fluid-text($max: 48, $min: 16) {
+  $maxViewportWidth: 1400;
+  $minViewportWidth: 360;
+
+  $maxSize: math.div($max, 16);
+  $minSize: math.div($min, 16);
+  $maxWidth: math.div($maxViewportWidth, 16);
+  $minWidth: math.div($minViewportWidth, 16);
+
+  $slope: math.div(($maxSize - $minSize), ($maxWidth - $minWidth));
+  $yAxisIntersection: -$minWidth * $slope + $minSize;
+
+  font-size: clamp(
+    #{$minSize * 1rem},
+    #{$yAxisIntersection * 1rem} + #{$slope * 100vw},
+    #{$maxSize * 1rem}
+  );
+}
+
+$orange: #ffa500; // bright
+$light: #8b8b8b; // light
+$medium: #6e6e6e; // medium
+$medium-dark: #515151; // dark
+$dark: #3e3e3e; // dark
+$black: #1f1f1f;
+
+// Определение миксина для запрета выделения
+@mixin no-select {
+  user-select: none;
+  -webkit-user-select: none; // Для браузеров на основе WebKit
+  -moz-user-select: none; // Для браузеров Firefox
+  -ms-user-select: none; // Для браузеров Internet Explorer/Edge
+}

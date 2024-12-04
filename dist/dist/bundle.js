@@ -690,16 +690,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function combinedTabsSlider(
-  tabsSelector,
+function SliderV2(
   contentSelector,
   parentSelector,
   sliderPrev,
   sliderNext,
   current,
   total,
+  // tabsSelector,
 ) {
-  const tabs = document.querySelectorAll(tabsSelector);
+  // const tabs = document.querySelectorAll(tabsSelector);
   const tabsContent = document.querySelectorAll(contentSelector);
   const tabsParent = document.querySelector(parentSelector);
   const prev = document.querySelector(sliderPrev);
@@ -708,11 +708,13 @@ function combinedTabsSlider(
   const totalCounter = document.querySelector(total);
 
   let slideIndex = 0;
+  let startX = 0;
+  let endX = 0;
 
-  if (!tabs.length || !tabsContent.length || !tabsParent) {
-    console.error('Элементы не найдены');
-    return;
-  }
+  // if (!tabs.length || !tabsContent.length || !tabsParent) {
+  //   console.error('Элементы не найдены');
+  //   return;
+  // }
 
   function hideContent() {
     tabsContent.forEach((item) => {
@@ -720,15 +722,15 @@ function combinedTabsSlider(
       item.classList.remove('show', 'fade');
     });
 
-    tabs.forEach((tab) => {
-      tab.classList.remove('tabheader__item_active');
-    });
+    // tabs.forEach((tab) => {
+    //   tab.classList.remove('tabheader__item_active');
+    // });
   }
 
   function showContent(i = 0) {
     tabsContent[i].classList.add('show', 'fade');
     tabsContent[i].classList.remove('hide');
-    tabs[i].classList.add('tabheader__item_active');
+    // tabs[i].classList.add('tabheader__item_active');
 
     // Обновляем счетчик
     currentCounter.textContent = getZero(i + 1);
@@ -740,19 +742,19 @@ function combinedTabsSlider(
   }
 
   // Обработчик для табов
-  tabsParent.addEventListener('click', (event) => {
-    const target = event.target;
+  // tabsParent.addEventListener('click', (event) => {
+  //   const target = event.target;
 
-    if (target && target.classList.contains('tabheader__item')) {
-      tabs.forEach((item, i) => {
-        if (target === item) {
-          slideIndex = i;
-          hideContent();
-          showContent(slideIndex);
-        }
-      });
-    }
-  });
+  //   if (target && target.classList.contains(tabsSelector.replace('.', ''))) {
+  //     tabs.forEach((item, i) => {
+  //       if (target === item) {
+  //         slideIndex = i;
+  //         hideContent();
+  //         showContent(slideIndex);
+  //       }
+  //     });
+  //   }
+  // });
 
   // Обработчики для стрелок
   prev.addEventListener('click', () => {
@@ -766,12 +768,51 @@ function combinedTabsSlider(
     hideContent();
     showContent(slideIndex);
   });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+      // Обработка нажатия стрелки влево
+      slideIndex = slideIndex === 0 ? tabsContent.length - 1 : slideIndex - 1;
+      hideContent();
+      showContent(slideIndex);
+    } else if (event.key === 'ArrowRight') {
+      // Обработка нажатия стрелки вправо
+      slideIndex = slideIndex === tabsContent.length - 1 ? 0 : slideIndex + 1;
+      hideContent();
+      showContent(slideIndex);
+    }
+  });
+
+  // Обработчики для свайпа
+  tabsParent.addEventListener('touchstart', (event) => {
+    startX = event.touches[0].clientX;
+    endX = startX;
+  });
+
+  tabsParent.addEventListener('touchmove', (event) => {
+    endX = event.touches[0].clientX;
+  });
+
+  tabsParent.addEventListener('touchend', () => {
+    const swipeDistance = endX - startX;
+    const swipeThreshold = 50; // минимальная дистанция
+
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance < 0) {
+        // Swipe left
+        slideIndex = slideIndex === tabsContent.length - 1 ? 0 : slideIndex + 1;
+      } else {
+        // Swipe right
+        slideIndex = slideIndex === 0 ? tabsContent.length - 1 : slideIndex - 1;
+      }
+      hideContent();
+      showContent(slideIndex);
+    }
+  });
 
   // Инициализация
   hideContent();
   showContent();
 }
-
 // // Использование в script.js:
 // document.addEventListener('DOMContentLoaded', () => {
 //   combinedTabsSlider(
@@ -784,7 +825,7 @@ function combinedTabsSlider(
 //     '#total',
 //   );
 // });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (combinedTabsSlider);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SliderV2);
 
 
 /***/ }),
@@ -962,7 +1003,6 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_modules_timer_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
 
   (0,_modules_tabsAndSlider_js__WEBPACK_IMPORTED_MODULE_8__["default"])(
-    '.tabheader__item',
     '.offer__slide', // изменить на слайды вместо .offer__descr
     '.offer__slider', // изменить на родительский элемент слайдера
     '.prev',
@@ -970,6 +1010,18 @@ document.addEventListener('DOMContentLoaded', () => {
     '#current',
     '#total',
   );
+  // tabsAndSlider(
+  //   '.offer__slide', // Селектор для слайдов
+  //   '.tabcontent', // Селектор для контента табов
+  //   '.tabheader__items', // Родительский элемент табов
+  //   '.prev', // Селектор кнопки предыдущего слайда
+  //   '.next', // Селектор кнопки следующего слайда
+  //   '#current', // Селектор текущего номера слайда
+  //   '#total', // Селектор общего количества слайдов
+  //   '.tabheader__item', // Селектор для табов
+  //   '.tabcontent', // Селектор для контента табов
+  //   '.tabheader__items' // Родительский элемент табов
+  // );
 
   // tabsSelector,
   // contentSelector,

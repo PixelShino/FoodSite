@@ -7,7 +7,7 @@ import modal from './modules/modal.js';
 import slider from './modules/slider.js';
 import tabs from './modules/tabs.js';
 import timer from './modules/timer.js';
-import tabsAndSlider from './modules/tabsAndSlider.js';
+import SliderV2 from './modules/tabsAndSlider.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('its work');
@@ -20,8 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   tabs('.tabheader__item', '.tabcontent', '.tabheader__items');
   timer();
 
-  tabsAndSlider(
-    '.tabheader__item',
+  SliderV2(
     '.offer__slide', // изменить на слайды вместо .offer__descr
     '.offer__slider', // изменить на родительский элемент слайдера
     '.prev',
@@ -29,6 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
     '#current',
     '#total',
   );
+  // tabsAndSlider(
+  //   '.offer__slide', // Селектор для слайдов
+  //   '.tabcontent', // Селектор для контента табов
+  //   '.tabheader__items', // Родительский элемент табов
+  //   '.prev', // Селектор кнопки предыдущего слайда
+  //   '.next', // Селектор кнопки следующего слайда
+  //   '#current', // Селектор текущего номера слайда
+  //   '#total', // Селектор общего количества слайдов
+  //   '.tabheader__item', // Селектор для табов
+  //   '.tabcontent', // Селектор для контента табов
+  //   '.tabheader__items' // Родительский элемент табов
+  // );
 
   // tabsSelector,
   // contentSelector,
