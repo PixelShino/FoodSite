@@ -1,0 +1,423 @@
+@import 'mixin';
+.calculating {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .container {
+    width: 100%;
+    // max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    padding: 5rem;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../img/icon/onion.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  .title {
+    text-align: center;
+    @include fluid-text(36, 16);
+  }
+
+  &__field {
+    width: 100%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // max-width: 90vw;
+    justify-content: center;
+    justify-self: center;
+    margin-top: 3rem;
+    background: #ffffff7c;
+    @include BRo // background: $white;
+;
+  }
+
+  &__subtitle {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    @include fluid-text(22, 16);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  #gender {
+    position: relative;
+    display: flex;
+    width: 100%;
+    // background-color: #fff;
+
+    // &:after {
+    //   content: '';
+    //   position: absolute;
+    //   top: 50%;
+    //   transform: translateY(-50%);
+    //   display: block;
+    //   width: 16px;
+    //   height: 16px;
+    //   background: url(../icons/switch.svg) center center/cover no-repeat;
+    // }
+    #male,
+    #female {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: auto 3rem auto;
+      height: 4rem;
+      padding: 0 2rem;
+      border: none;
+      text-align: center;
+      cursor: pointer;
+      outline: 0;
+      transition: 0.3s all;
+      //   justify-content: space-evenly;
+      @include BR;
+      @include fluid-text(20, 18);
+      &.calculating__choose-item_active {
+        color: #fff;
+        background-color: #54ed39;
+      }
+    }
+  }
+
+  &__choose {
+    position: relative;
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+    align-items: center;
+    max-width: 90vw;
+    flex-wrap: nowrap;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-width: 10rem;
+      margin: auto 3rem auto;
+      height: 4rem;
+      padding: 0 2rem;
+
+      border: none;
+      text-align: center;
+
+      cursor: pointer;
+      outline: 0;
+      transition: 0.3s all;
+      //   justify-content: space-evenly;
+      @include BR;
+      @include fluid-text(20, 18);
+
+      &.calculating__choose-item_active {
+        color: #fff;
+        background-color: #54ed39;
+      }
+    }
+
+    &.calculating__choose_medium {
+      //   justify-content: space-between;
+      margin: 1.5rem auto 1.5rem auto;
+      justify-content: space-evenly;
+      .calculating__choose-item {
+        display: flex;
+        text-align: center;
+      }
+    }
+
+    &.calculating__choose_big {
+      justify-content: space-between;
+      margin: 1.5rem auto 1.5rem auto;
+      justify-content: center;
+      width: 100%;
+      .calculating__choose-item {
+        display: flex;
+        text-align: center;
+      }
+    }
+  }
+
+  //   &__divider {
+  //     width: 45rem;
+  //     height: 0.1rem;
+  //     margin: 3rem auto;
+  //     background-color: rgba(0, 0, 0, 0.2);
+  //   }
+
+  &__total {
+    width: auto;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include BR;
+    padding: 1rem;
+
+    &.kcal,
+    &.bmi {
+      .calculating__result {
+        font-size: 1.25rem;
+        font-weight: 700;
+
+        span {
+          @include fluid-text(32, 20);
+        }
+      }
+    }
+  }
+}
+
+// Мобильные устройства
+@media (max-width: 425px) {
+  .calculating .container {
+    margin-top: 2rem;
+    padding: 0.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .calculating__field {
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .calculating__choose {
+    width: auto;
+    position: relative;
+    display: flex;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    // max-width: 90vw;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    .calculating__choose-item {
+      margin: 0.5rem 0 0.5rem 0;
+    }
+  }
+  #male,
+  #female {
+    width: 100%;
+  }
+  .calculating__choose_medium {
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  .calculating__choose_big {
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    .calculating__choose-item {
+    }
+  }
+  .calculating__subtitle {
+    font-size: 1.5rem;
+  }
+  .calculating__total {
+    display: flex;
+    flex-flow: column wrap;
+  }
+  .calculating__total {
+    @include BRo;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    .calculating__resul span {
+      font-size: 4rem !important;
+    }
+  }
+  div.calculating__total.kcal > div.calculating__result > span,
+  div.calculating__result.bmi span {
+    font-size: 3rem !important;
+  }
+}
+
+// Планшеты
+@media (min-width: 426px) and (max-width: 768px) {
+  .calculating .container {
+    margin-top: 2rem;
+    padding: 0.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .calculating__field {
+    padding: 1rem 2rem 1rem 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .calculating__choose {
+    .calculating__choose-item {
+      margin: 1rem 0 1rem 0;
+    }
+  }
+  #male,
+  #female {
+    width: 100%;
+  }
+  .calculating__choose_medium {
+    flex-wrap: wrap;
+  }
+  .calculating__choose_big {
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+    .calculating__choose-item {
+    }
+  }
+}
+
+// Ноутбуки и настольные компьютеры
+@media (min-width: 769px) and (max-width: 1440px) {
+  .container {
+  }
+  .calculating__field {
+    padding: 1rem 2rem 1rem 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .calculating__choose {
+    .calculating__choose-item {
+      margin: 1rem 2rem 1rem 2rem;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  #gender {
+    #male,
+    #female {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: 0 0.4rem 0 !important ;
+      padding: 0 1rem;
+      border: none;
+      text-align: center;
+      cursor: pointer;
+      outline: 0;
+      transition: 0.3s all;
+      //   justify-content: space-evenly;
+      @include BR;
+      @include fluid-text(20, 18);
+      &.calculating__choose-item_active {
+        color: #fff;
+        background-color: #54ed39;
+      }
+    }
+  }
+
+  .calculating__choose_medium {
+    // flex-wrap: wrap;
+    display: grid;
+    justify-content: space-between;
+    align-items: center;
+    grid-template: 1fr / 1fr 1fr;
+    grid-template-areas:
+      'top top'
+      'botLeft botRight';
+    row-gap: 1rem;
+    column-gap: 1rem;
+    width: 100%;
+    // grid-auto-rows: 4rem;
+    grid-auto-columns: auto;
+    margin-left: 0;
+    margin-right: 0;
+    grid-auto-flow: row;
+
+    #weight {
+      grid-area: top;
+      width: 100%;
+
+      justify-self: center;
+    }
+    #height {
+      //   margin: auto 1rem auto 1rem;
+      width: auto;
+      grid-area: botLeft;
+      margin: 0;
+      justify-self: center;
+      width: 100%;
+    }
+    #age {
+      //   margin: auto 1rem auto 1rem;
+      width: auto;
+      grid-area: botRight;
+      margin: 0 auto 0 auto;
+      justify-self: center;
+      width: 100%;
+    }
+    justify-content: center;
+    align-items: center;
+  }
+  .calculating__choose_big {
+    // flex-wrap: wrap;
+    // margin: 0 0 0 0 !important;
+    display: grid;
+    justify-content: space-between;
+    align-items: center;
+    grid-template: 1fr 1fr / 1fr 1fr;
+    // grid-template-areas:
+    //   'top top'
+    //   'botLeft botRight';
+    row-gap: 1rem;
+    column-gap: 1rem;
+    width: auto;
+    // grid-auto-rows: 4rem;
+    grid-auto-columns: auto;
+    grid-auto-rows: auto;
+
+    margin-left: 0;
+    margin-right: 0;
+    grid-auto-flow: row;
+    #low,
+    #small,
+    #medium,
+    #high {
+      width: auto;
+      //   grid-area: botRight;
+      margin: 0 auto 0 auto;
+      justify-self: center;
+      width: 100%;
+    }
+    #low {
+    }
+    #small {
+    }
+    #medium {
+    }
+    #high {
+    }
+  }
+}
+
+// Большие экраны
+@media (min-width: 1441px) {
+  .container {
+    padding: 40px;
+  }
+  .calculating__total.kcal {
+    width: auto;
+  }
+}
+// * {
+//   outline: 1px solid red !important;
+// }

@@ -3,6 +3,10 @@ function calc() {
   function calc() {
     let sex, height, weight, age, ratio;
     const result = document.querySelector('.calculating__result span');
+    const index = document.querySelector('.calculating__result.bmi span');
+    const indexInfo = document.querySelector(
+      '.calculating__total.bmi.info span',
+    );
 
     if (localStorage.getItem('sex')) {
       sex = localStorage.getItem('sex');
@@ -61,7 +65,40 @@ function calc() {
       }
     }
 
+    //TODO: вывести информацию о подходящем плане питания
+    function calcIndex() {
+      console.log('Height:', height, 'Weight:', weight); // Добавьте это для отладки
+      if (!height || !weight) {
+        index.textContent = '____';
+        console.log('index = ____');
+        return;
+      } else {
+        console.log('index find');
+
+        let indexValue = +((10000 * weight) / (height * height)).toFixed(1);
+        index.textContent = indexValue;
+        console.log((10000 * weight) / (height * height));
+
+        if (indexValue <= 16) {
+          indexInfo.textContent = 'Выраженный дефицит массы тела';
+        } else if (indexValue >= 16 && indexValue <= 18.4) {
+          indexInfo.textContent = 'Недостаточная (дефицит) масса тела';
+        } else if (indexValue >= 18.5 && indexValue <= 24.9) {
+          indexInfo.textContent = 'Норма';
+        } else if (indexValue >= 25 && indexValue <= 29.9) {
+          indexInfo.textContent = 'Избыточная масса тела';
+        } else if (indexValue >= 30 && indexValue <= 34.9) {
+          indexInfo.textContent = 'Ожирение первой степени';
+        } else if (indexValue >= 35 && indexValue <= 39.9) {
+          indexInfo.textContent = 'Ожирение второй степени';
+        } else if (indexValue >= 40) {
+          indexInfo.textContent = 'Ожирение третьей степени (морбидное)';
+        }
+      }
+    }
+
     calcTotal();
+    calcIndex();
 
     function getStaticInformation(parentSelector, activeClass) {
       const elements = document.querySelectorAll(`${parentSelector} div`);
@@ -92,6 +129,7 @@ function calc() {
           }
 
           calcTotal();
+          calcIndex();
         });
     }
 
@@ -121,9 +159,10 @@ function calc() {
             break;
         }
         calcTotal();
+        calcIndex();
       });
     }
-
+    console.log(index);
     getDynamicInformation('#height');
     getDynamicInformation('#weight');
     getDynamicInformation('#age');
