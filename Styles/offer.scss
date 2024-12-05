@@ -313,7 +313,7 @@
           height: 6vw;
           width: 20vw;
           @include fluid-text(24, 18);
-          @include BR;
+          @include BTN;
         }
       }
     }

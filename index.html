@@ -14,14 +14,6 @@
           <div class="header__logo-text">Lorem ipsum dolor sit amet.</div>
         </div>
         <nav class="header__links">
-          <a href="#" class="header__link"
-            ><img
-              width="20"
-              height="20"
-              src="https://img.icons8.com/ios/50/marker--v1.png"
-              alt="marker--v1"
-            />Москва</a
-          >
           <button data-modal class="btn header__link">Связаться с нами</button>
           <button class="btn header__link">Авторизация</button>
         </nav>
@@ -33,6 +25,14 @@
           <a href="#" class="header__link">Как работает</a>
           <a href="#" class="header__link">О компании</a>
           <a href="#" class="header__link">Вопросы</a>
+          <a href="#" class="header__link"
+            ><img
+              width="20"
+              height="20"
+              src="https://img.icons8.com/ios/50/marker--v1.png"
+              alt="marker--v1"
+            />Москва</a
+          >
         </nav>
       </div>
     </header>
@@ -88,7 +88,7 @@
                     </div>
                     <div class="offer__descr-right">
                       <div class="offer__descr-right--img">
-                        <img src="img/icon/onion.svg" alt="pepper" />
+                        <img src="img/icon/onion.webp" alt="pepper" />
                       </div>
                     </div>
                   </div>
@@ -304,19 +304,21 @@
 
             <div class="calculating__divider"></div>
 
-            <div class="calculating__total kcal">
-              <div class="calculating__subtitle">
-                Ваша суточная норма калорий:
+            <div class="calculating__total-wrapper">
+              <div class="calculating__total kcal">
+                <div class="calculating__subtitle">
+                  Ваша суточная норма калорий:
+                </div>
+                <div class="calculating__result"><span>2700</span> ккал</div>
               </div>
-              <div class="calculating__result"><span>2700</span> ккал</div>
-            </div>
 
-            <div class="calculating__total bmi">
-              <div class="calculating__subtitle">Ваша индекс массы тела:</div>
-              <div class="calculating__result bmi"><span>20.00</span></div>
-            </div>
-            <div class="calculating__total bmi info">
-              <div class="calculating__subtitle"><span></span></div>
+              <div class="calculating__total bmi">
+                <div class="calculating__subtitle">Ваш индекс массы тела:</div>
+                <div class="calculating__result bmi"><span></span></div>
+              </div>
+              <div class="calculating__total bmi info">
+                <div class="calculating__subtitle"><span></span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -332,7 +334,7 @@
         </div>
       </div>
 
-      <!-- <div class="order">
+      <div class="order">
         <div class="container">
           <div class="title">Заказывай пробный день прямо сейчас!</div>
           <form action="#" class="order__form">
@@ -351,12 +353,12 @@
               class="order__input"
             />
             <img src="icons/right.svg" alt="right" />
-            <button class="btn btn_dark btn_min">Перезвонить мне</button>
+            <button class="btn">Перезвонить мне</button>
           </form>
         </div>
       </div>
 
-      <div class="divider"></div> -->
+      <div class="divider"></div>
 
       <div class="promotion">
         <div class="bgc_y"></div>

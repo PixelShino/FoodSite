@@ -18,20 +18,35 @@
     #{$maxSize * 1rem}
   );
 }
-@mixin BR {
-  border-radius: 50px;
+@mixin BTN {
+  border-radius: 30px;
+  border: $white solid 1px;
   background: #e0e0e0;
-  box-shadow:
-    20px 20px 40px #a8a8a8,
-    -20px -20px 40px #ffffff;
+  // box-shadow:
+  //   20px 20px 40px #a8a8a8,
+  //   -20px -20px 40px #ffffff;
+}
+@mixin BTNmedium {
+  border-radius: 20px;
+  border: $white solid 1px;
+  background: #e0e0e0;
+  // box-shadow:
+  //   20px 20px 40px #a8a8a8,
+  //   -20px -20px 40px #ffffff;
 }
 @mixin BRo {
   border-radius: 30px;
   background: #e0e0e06a;
 
-  box-shadow:
-    48px 48px 300px #d9d9d9e1,
-    -48px -48px 300px #e7e7e7a5;
+  // box-shadow:
+  //   48px 48px 300px #d9d9d9e1,
+  //   -48px -48px 300px #e7e7e7a5;
+}
+@mixin container {
+  width: 85%;
+  max-width: math.div(85, 100) * 100%; // This ensures the width is calculated as 85% of the parent
+  margin-left: auto;
+  margin-right: auto;
 }
 
 $orange: #ffa500; // bright

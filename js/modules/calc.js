@@ -67,14 +67,19 @@ function calc() {
 
     //TODO: вывести информацию о подходящем плане питания
     function calcIndex() {
-      console.log('Height:', height, 'Weight:', weight); // Добавьте это для отладки
+      console.log('Height:', height, 'Weight:', weight);
+      let indexValueContainer = document.querySelector(
+        '.calculating__total.bmi.info',
+      ); // Добавьте это для отладки
       if (!height || !weight) {
         index.textContent = '____';
         console.log('index = ____');
+        console.log(indexValueContainer);
+        indexValueContainer.style.display = 'none';
         return;
       } else {
         console.log('index find');
-
+        indexValueContainer.style.display = 'block';
         let indexValue = +((10000 * weight) / (height * height)).toFixed(1);
         index.textContent = indexValue;
         console.log((10000 * weight) / (height * height));

@@ -5,7 +5,13 @@
 @use 'header';
 @use 'tabs';
 @use 'offer';
-@use 'calc'; // main {
-//   width: 100vw;
-//   overflow: hidden;
+@use 'calc';
+@use 'menu';
+@use 'order';
+@use 'promotion';
+@use 'footer';
+@use 'sidepanel';
+@use 'modal';
+// * {
+//   outline: red 1px solid;
 // }

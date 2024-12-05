@@ -1,0 +1,48 @@
+@import 'mixin';
+.footer {
+  min-height: 180px;
+  background-color: #303030;
+  padding: 45px 0 50px 0;
+  color: #fff;
+
+  .container {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .social {
+      .subtitle {
+        font-size: 20px;
+      }
+
+      .link {
+        display: block;
+        margin-top: 15px;
+        font-size: 16px;
+        color: #fff;
+      }
+    }
+
+    .pepper {
+      img {
+        // Добавьте стили для изображения, если необходимо
+      }
+    }
+
+    .call {
+      text-align: right;
+
+      .subtitle {
+        font-size: 20px;
+      }
+
+      .link {
+        display: block;
+        margin-top: 15px;
+        font-size: 16px;
+        color: #fff;
+      }
+    }
+  }
+}
