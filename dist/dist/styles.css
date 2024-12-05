@@ -499,17 +499,19 @@ pre {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: url(277ce23f8d6f0f75bc05.webp);
+  background-repeat: repeat-y;
+  background-size: contain;
 }
 .calculating .container {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 5rem;
   justify-content: center;
   align-items: center;
-  background-image: url(277ce23f8d6f0f75bc05.webp);
-  background-repeat: no-repeat;
-  background-size: contain;
+  width: 85%;
+  max-width: 85%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .calculating .title {
   text-align: center;
@@ -612,12 +614,11 @@ pre {
 }
 .calculating__choose.calculating__choose_medium {
   margin: 1.5rem auto 1.5rem auto;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 .calculating__choose.calculating__choose_medium .calculating__choose-item {
   display: flex;
   text-align: center;
-  width: 100%;
   margin: 0 1rem 0 1rem;
   border-radius: 20px;
   border: #eeeeee solid 1px;
@@ -685,99 +686,153 @@ pre {
 }
 
 @media (max-width: 425px) {
+  .calculating__choose#gender {
+    width: 100%;
+    padding: 0 0.25rem 0 0.25rem !important;
+  }
   .calculating .container {
     margin-top: 2rem;
-    padding: 0.5rem;
-    justify-content: center;
+  }
+  .calculating .container .title {
+    font-size: 2rem;
+  }
+  .calculating .container .calculating__field {
+    margin-top: 1rem;
+  }
+  .calculating .container .calculating__choose {
+    margin: 0 0.25rem 0 0.25rem !important;
+    padding: 0 !important;
+    width: auto;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .calculating .container .calculating__choose .calculating__choose-item {
+    margin: 0.25rem 0rem 0.25rem 0rem !important;
     align-items: center;
+    justify-content: center;
+  }
+  .calculating .container .calculating__subtitle {
+    font-size: 1.8rem;
   }
   .calculating__field {
-    padding: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0 !important;
     align-items: center;
     justify-content: center;
-  }
-  .calculating__choose {
-    width: auto;
-    position: relative;
-    display: flex;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    flex-direction: column;
-  }
-  .calculating__choose .calculating__choose-item {
-    margin: 0.5rem 0 0.5rem 0;
-  }
-  #male,
-  #female {
-    width: 100%;
   }
   .calculating__choose_medium {
     flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
-    width: 100%;
   }
   .calculating__choose_big {
     flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
   }
-  .calculating__subtitle {
-    font-size: 1.5rem;
+  .calculating__total-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr;
   }
-  .calculating__total {
+  .calculating__total.kcal,
+  .calculating__total.bmi,
+  .calculating__total.bmi.info {
     display: flex;
-    flex-flow: column wrap;
+    height: 100%;
+    width: auto;
+    flex-direction: column;
   }
-  .calculating__total {
-    border-radius: 30px;
-    background: rgba(224, 224, 224, 0.4156862745);
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  .calculating__total.kcal .calculating__subtitle,
+  .calculating__total.bmi .calculating__subtitle,
+  .calculating__total.bmi.info .calculating__subtitle {
+    font-size: 1rem;
   }
-  .calculating__total .calculating__resul span {
-    font-size: 4rem !important;
+  .calculating__total.kcal .calculating__result span,
+  .calculating__total.bmi .calculating__result span,
+  .calculating__total.bmi.info .calculating__result span {
+    font-size: 1.7rem;
   }
-  div.calculating__total.kcal > div.calculating__result > span,
-  div.calculating__result.bmi span {
-    font-size: 3rem !important;
+  .calculating__total.bmi.info {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    width: 100%;
+  }
+  .calculating__total.bmi.info .calculating__subtitle {
+    font-size: 1.2rem;
   }
 }
 @media (min-width: 426px) and (max-width: 768px) {
+  .calculating__choose#gender {
+    width: 100%;
+    padding: 0 1rem 0 1rem !important;
+  }
   .calculating .container {
     margin-top: 2rem;
-    padding: 0.5rem;
-    justify-content: center;
+  }
+  .calculating .container .title {
+    font-size: 2rem;
+  }
+  .calculating .container .calculating__field {
+    margin-top: 1rem;
+  }
+  .calculating .container .calculating__choose {
+    margin: 0 1rem 0 1rem !important;
+    padding: 0 !important;
+    width: auto;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .calculating .container .calculating__choose .calculating__choose-item {
+    margin: 0.5rem 0rem 0.5rem 0rem !important;
     align-items: center;
+    justify-content: center;
+  }
+  .calculating .container .calculating__subtitle {
+    font-size: 1.5rem;
   }
   .calculating__field {
-    padding: 1rem 2rem 1rem 2rem;
+    padding: 0 !important;
     align-items: center;
     justify-content: center;
-  }
-  .calculating__choose .calculating__choose-item {
-    margin: 1rem 0 1rem 0;
-  }
-  #male,
-  #female {
-    width: 100%;
   }
   .calculating__choose_medium {
     flex-wrap: wrap;
   }
   .calculating__choose_big {
     flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
+  }
+  .calculating__total-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr;
+  }
+  .calculating__total.kcal,
+  .calculating__total.bmi,
+  .calculating__total.bmi.info {
+    display: flex;
+    height: 100%;
+    width: auto;
+    flex-direction: column;
+  }
+  .calculating__total.kcal .calculating__subtitle,
+  .calculating__total.bmi .calculating__subtitle,
+  .calculating__total.bmi.info .calculating__subtitle {
+    font-size: 1rem;
+  }
+  .calculating__total.kcal .calculating__result span,
+  .calculating__total.bmi .calculating__result span,
+  .calculating__total.bmi.info .calculating__result span {
+    font-size: 1.7rem;
+  }
+  .calculating__total.bmi.info {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    width: 100%;
+  }
+  .calculating__total.bmi.info .calculating__subtitle {
+    font-size: 1.2rem;
   }
 }
 @media (min-width: 769px) and (max-width: 1440px) {
+  .container {
+    margin-top: 2rem;
+  }
   .calculating__total {
     width: 100% !important;
   }

@@ -79,7 +79,7 @@ function calc() {
         return;
       } else {
         console.log('index find');
-        indexValueContainer.style.display = 'block';
+        indexValueContainer.style.display = 'grid';
         let indexValue = +((10000 * weight) / (height * height)).toFixed(1);
         index.textContent = indexValue;
         console.log((10000 * weight) / (height * height));

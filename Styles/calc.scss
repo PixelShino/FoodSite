@@ -4,18 +4,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  background-image: url(../img/icon/onion.webp);
+  background-repeat: repeat-y;
+  background-size: contain;
   .container {
-    width: 100%;
+    // width: 100%;
     // max-width: 100vw;
     display: flex;
     flex-direction: column;
-    padding: 5rem;
+    // padding: 5rem;
     justify-content: center;
     align-items: center;
-    background-image: url(../img/icon/onion.webp);
-    background-repeat: no-repeat;
-    background-size: contain;
+
+    @include container;
   }
   .title {
     text-align: center;
@@ -143,11 +144,11 @@
     &.calculating__choose_medium {
       //   justify-content: space-between;
       margin: 1.5rem auto 1.5rem auto;
-      justify-content: space-evenly;
+      justify-content: space-between;
       .calculating__choose-item {
         display: flex;
         text-align: center;
-        width: 100%;
+        // width: 100%;
         margin: 0 1rem 0 1rem;
         @include BTNmedium;
       }
@@ -229,103 +230,204 @@
 
 // Мобильные устройства
 @media (max-width: 425px) {
+  // * {
+  //   border: 1px solid red;
+  // }
+  .calculating__choose#gender {
+    // margin: 0 1rem 0 1rem !important;
+    // padding: 0 !important;
+    width: 100%;
+    padding: 0 0.25rem 0 0.25rem !important;
+    // justify-content: space-between;
+    // flex-wrap: wrap;
+  }
   .calculating .container {
     margin-top: 2rem;
-    padding: 0.5rem;
-    justify-content: center;
-    align-items: center;
-  }
-  .calculating__field {
-    padding: 0.5rem 1rem 0.5rem 1rem;
-    align-items: center;
-    justify-content: center;
-  }
-  .calculating__choose {
-    width: auto;
-    position: relative;
-    display: flex;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    justify-content: center;
-    align-items: center;
-    // max-width: 90vw;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    .calculating__choose-item {
-      margin: 0.5rem 0 0.5rem 0;
+    .title {
+      font-size: 2rem;
+    }
+    .calculating__field {
+      margin-top: 1rem;
+    }
+    .calculating__choose {
+      margin: 0 0.25rem 0 0.25rem !important;
+      padding: 0 !important;
+      width: auto;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .calculating__choose-item {
+        margin: 0.25rem 0rem 0.25rem 0rem !important;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .calculating__subtitle {
+      font-size: 1.8rem;
     }
   }
+
+  .calculating__field {
+    padding: 0 !important;
+
+    align-items: center;
+    justify-content: center;
+  }
+
   #male,
   #female {
-    width: 100%;
+    // width: 100%;
+    // margin: 0 !important;
   }
   .calculating__choose_medium {
     flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
-    width: 100%;
   }
   .calculating__choose_big {
     flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
+    // padding: 0;
+    // margin: 0;
     .calculating__choose-item {
     }
   }
-  .calculating__subtitle {
-    font-size: 1.5rem;
+  .calculating__total-wrapper {
+    // display: flex;
+    // flex-direction: row;
+    // margin: 1rem 1rem 1rem 1rem !important;
+    // padding: 0 !important;
+    // width: 100%;
+    // height: 100%;
+    // justify-content: space-between;
+    // flex-wrap: nowrap;
+
+    // width: 100%;
+    // padding: 0 1rem 0 1rem !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr;
   }
-  .calculating__total {
+
+  .calculating__total.kcal,
+  .calculating__total.bmi,
+  .calculating__total.bmi.info {
     display: flex;
-    flex-flow: column wrap;
-  }
-  .calculating__total {
-    @include BRo;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    .calculating__resul span {
-      font-size: 4rem !important;
+    height: 100%;
+    width: auto;
+    flex-direction: column;
+    .calculating__subtitle {
+      font-size: 1rem;
+    }
+    .calculating__result span {
+      font-size: 1.7rem;
     }
   }
-  div.calculating__total.kcal > div.calculating__result > span,
-  div.calculating__result.bmi span {
-    font-size: 3rem !important;
+  .calculating__total.bmi.info {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    width: 100%;
+    .calculating__subtitle {
+      font-size: 1.2rem;
+    }
   }
 }
 
 // Планшеты
 @media (min-width: 426px) and (max-width: 768px) {
+  // * {
+  //   border: 1px solid red;
+  // }
+  .calculating__choose#gender {
+    // margin: 0 1rem 0 1rem !important;
+    // padding: 0 !important;
+    width: 100%;
+    padding: 0 1rem 0 1rem !important;
+    // justify-content: space-between;
+    // flex-wrap: wrap;
+  }
   .calculating .container {
     margin-top: 2rem;
-    padding: 0.5rem;
-    justify-content: center;
-    align-items: center;
-  }
-  .calculating__field {
-    padding: 1rem 2rem 1rem 2rem;
-    align-items: center;
-    justify-content: center;
-  }
-  .calculating__choose {
-    .calculating__choose-item {
-      margin: 1rem 0 1rem 0;
+    .title {
+      font-size: 2rem;
+    }
+    .calculating__field {
+      margin-top: 1rem;
+    }
+    .calculating__choose {
+      margin: 0 1rem 0 1rem !important;
+      padding: 0 !important;
+      width: auto;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .calculating__choose-item {
+        margin: 0.5rem 0rem 0.5rem 0rem !important;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .calculating__subtitle {
+      font-size: 1.5rem;
     }
   }
+
+  .calculating__field {
+    padding: 0 !important;
+
+    align-items: center;
+    justify-content: center;
+  }
+
   #male,
   #female {
-    width: 100%;
+    // width: 100%;
+    // margin: 0 !important;
   }
   .calculating__choose_medium {
     flex-wrap: wrap;
   }
   .calculating__choose_big {
     flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
+    // padding: 0;
+    // margin: 0;
     .calculating__choose-item {
+    }
+  }
+  .calculating__total-wrapper {
+    // display: flex;
+    // flex-direction: row;
+    // margin: 1rem 1rem 1rem 1rem !important;
+    // padding: 0 !important;
+    // width: 100%;
+    // height: 100%;
+    // justify-content: space-between;
+    // flex-wrap: nowrap;
+
+    // width: 100%;
+    // padding: 0 1rem 0 1rem !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr;
+  }
+
+  .calculating__total.kcal,
+  .calculating__total.bmi,
+  .calculating__total.bmi.info {
+    display: flex;
+    height: 100%;
+    width: auto;
+    flex-direction: column;
+    .calculating__subtitle {
+      font-size: 1rem;
+    }
+    .calculating__result span {
+      font-size: 1.7rem;
+    }
+  }
+  .calculating__total.bmi.info {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    width: 100%;
+    .calculating__subtitle {
+      font-size: 1.2rem;
     }
   }
 }
@@ -333,6 +435,7 @@
 // Ноутбуки и настольные компьютеры
 @media (min-width: 769px) and (max-width: 1440px) {
   .container {
+    margin-top: 2rem;
   }
   // * {
   //   border: 1px solid red !important;
