@@ -36,7 +36,7 @@
 }
 @mixin BRo {
   border-radius: 30px;
-  background: #e0e0e06a;
+  background: #e0e0e094;
 
   // box-shadow:
   //   48px 48px 300px #d9d9d9e1,
@@ -49,13 +49,14 @@
   margin-right: auto;
 }
 
-$orange: #ffa500; // bright
+$orange: #ffa500a2; // bright
 $white: #eeeeee;
 $light: #8b8b8b; // light
 $medium: #6e6e6e; // medium
 $medium-dark: #515151; // dark
 $dark: #3e3e3e; // dark
 $black: #1f1f1f;
+$green: #54ed39a2;
 
 // Определение миксина для запрета выделения
 @mixin no-select {
@@ -63,4 +64,25 @@ $black: #1f1f1f;
   -webkit-user-select: none; // Для браузеров на основе WebKit
   -moz-user-select: none; // Для браузеров Firefox
   -ms-user-select: none; // Для браузеров Internet Explorer/Edge
+}
+
+// В файле mixin.scss
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: 425px) {
+      @content;
+    }
+  } @else if $breakpoint == tablet {
+    @media (min-width: 426px) and (max-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media (min-width: 769px) and (max-width: 1440px) {
+      @content;
+    }
+  } @else if $breakpoint == large-desktop {
+    @media (min-width: 1441px) {
+      @content;
+    }
+  }
 }

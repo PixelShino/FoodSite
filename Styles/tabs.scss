@@ -1,102 +1,212 @@
 @import 'mixin';
 .preview {
-  padding: 2vw 0 4vw 0;
+  // padding: 2vw 0 4vw 0;
   position: relative;
 
-  background-color: $dark;
+  // background-color: white;
+  background-image: url(../img/icon/hambuger.webp);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right;
+
   z-index: 0;
 
-  .bgc_blue {
-    // Стили для фонового элемента
-    position: absolute;
-    right: 0;
-    top: -1vw;
-    width: 50%;
-    height: 110%;
+  // .bgc_blue {
+  //   // Стили для фонового элемента
+  //   position: absolute;
+  //   right: 0;
+  //   top: -1vw;
+  //   width: 50%;
+  //   height: 110%;
 
-    z-index: -1;
+  //   z-index: -1;
 
-    background-color: $black;
-  }
+  //   background-color: $black;
+  // }
 
   .container {
-    max-width: 100vw;
-    // width: 100vw;
+    @include container;
 
     .tabcontainer {
       display: flex;
-      width: 100%;
+      flex-direction: column;
+      @include BRo; // width: 100%;
       //   margin: 0 7vw 0 7vw;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
-      overflow: hidden;
-      justify-content: center;
-      .tabcontent {
-        width: 70vw;
-        height: 30vw;
-        // position: relative;
+      // box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+      // overflow: hidden;
+      // justify-content: center;
+      // gap: 5rem;
+      @include respond-to(tablet) {
+        // Для экранов от 426px до 768px
+        flex-direction: column-reverse;
+        gap: 0;
+      }
+      &__bot {
+        display: flex;
+        justify-content: space-between;
 
-        img {
-          // Стили для изображения
+        &-link--btn,
+        &-promo {
+          display: flex;
+          align-self: flex-end;
+          margin-top: auto;
+          justify-content: center;
+          text-align: center;
+          align-items: center;
+          width: 100%;
+          height: 3rem;
+          @include BTNmedium;
+          @include fluid-text(24, 16);
+        }
+        &-link {
+          display: flex; /* Или flex, если нужно выравнивание внутри */
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          text-decoration: none; /* Убираем подчеркивание ссылки */
+          // color: inherit; /* Наследуем цвет текста от родителя */
+          &--btn {
+            // width: 100%;
+            background-color: $orange;
+          }
         }
-
-        &__descr {
-          // Стили для описания
-          position: absolute;
-          top: 22vw;
-          right: 12vw;
-          width: 60vw;
-          height: 16.5vw;
-          color: whitesmoke;
-          padding: 3vw;
-          font-size: 1.5vw;
-          font-weight: 300;
-          line-height: 2vw;
-          overflow: hidden;
-          background-color: $medium-dark;
+        &-promo {
+          width: 50%;
+          background-color: $green;
         }
+        // .tabcontainer__bot-link--btn {
+        //   background-color: $orange;
+        // }
       }
+      .tabcontainer__top {
+        display: flex;
+        flex-direction: row;
+        .tabcontent {
+          // position: relative;
+          // display: flex;
+          // overflow: hidden;
 
-      .tabheader {
-        width: 17vw;
-        padding: 2vw 1.7vw;
-        background-color: $light;
+          &__wrapper {
+            display: flex;
+            flex-direction: column;
 
-        h3 {
-          // Стили для заголовка
-          font-weight: 1.7vw;
-          font-size: 1.7vw;
+            .tabcontent__top {
+              display: flex;
+              flex-direction: row;
+
+              // max-width: 100%;
+              // max-height: 100%;
+              .tabcontent__img {
+                img {
+                  height: 100%;
+                  width: 100%;
+                  // max-height: 400px;
+
+                  // Стили для изображения
+                  // display: block !important;
+                  // width: auto !important;
+                  // max-width: 100% !important;
+                  // height: auto !important;
+                  // max-height: 100% !important;
+                  overflow: hidden;
+                  object-fit: cover;
+                }
+              }
+
+              .tabcontent__descr {
+                // Стили для описания
+                // position: absolute;
+
+                color: $black;
+                padding: 2rem;
+                font-size: 1.5rem;
+                font-weight: 300;
+                line-height: 2rem;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+              }
+            }
+            .tabcontent__bot {
+              &-cards {
+                margin-top: 2rem;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
+                background-color: #4e4e4e;
+                &--card {
+                  display: flex;
+                  flex-direction: column;
+                  max-width: 20rem;
+                  border: 2px solid white;
+                  &--title {
+                    @include fluid-text(12, 8);
+                    color: red;
+                    display: flex;
+                    justify-content: flex-start;
+                  }
+                  &--img {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    img {
+                      height: 10rem;
+                      width: 10rem;
+                      overflow: hidden;
+                      object-fit: cover;
+                    }
+                  }
+                  &--kcal {
+                    display: flex;
+                    justify-content: flex-end;
+                    color: red;
+                  }
+                }
+              }
+            }
+          }
         }
 
-        &__items {
-          margin-top: 2vw;
-          padding-left: 1.5vw;
-          border-left: 1px solid #000;
-          .tabheader__item {
-            // Стили для элементов вкладок
+        .tabheader {
+          color: $black;
+          width: 100%;
+          padding: 1rem 1rem;
+          // @include BRo;
+          // background-color: $light;
+
+          h3 {
+            // Стили для заголовка
             font-weight: 700;
-            font-size: 1.3vw;
-            font-weight: 300;
-            margin-top: 6%;
-            color: rgba(0, 0, 0, 0.6);
+            font-size: 1.5rem;
+          }
 
-            transition: 0.3s all;
-            z-index: 3;
-            cursor: pointer;
-            &:hover {
-              // color: black;
-              transform: scale(1.2);
-              transition: all 0.3s;
-              background-color: rgba(0, 0, 0, 0.1); // временно для отладки
-            }
+          &__items {
+            margin-top: 2rem;
+            padding-left: 1.5rem;
+            border-left: 1px solid #000;
 
-            &_active {
-              // Стили для активной вкладки
-              color: $orange;
-              font-size: 2vw;
+            .tabheader__item {
+              // Стили для элементов вкладок
               font-weight: 700;
+              font-size: 1.25rem;
+              font-weight: 500;
+              margin-top: 6%;
+              color: rgba(0, 0, 0, 0.6);
+
+              transition: 0.3s all;
+              z-index: 3;
+              cursor: pointer;
+              &:hover {
+                // color: black;
+                // transform: scale(1.2);
+                transition: all 0.3s;
+                background-color: rgba(0, 0, 0, 0.1); // временно для отладки
+              }
+
+              &_active {
+                // Стили для активной вкладки
+                color: $orange;
+                // font-size: 2vw;
+                font-weight: 700;
+              }
             }
           }
         }
@@ -106,14 +216,44 @@
     .preview__life {
       // Стили для текста "Живи полной жизнью!"
       font-weight: 700;
-      font-size: 1.6vw;
-      margin-left: 7vw;
-      margin-top: 2vw;
-      color: whitesmoke;
+      font-size: 1.5rem;
+      margin-left: 7rem;
+      margin-top: 2rem;
+      color: $black;
     }
   }
 }
 
 .header__link:last-child {
   margin-right: 0;
+}
+// Мобильные стили
+@include respond-to(mobile) {
+}
+// Стили для планшетов
+@include respond-to(tablet) {
+}
+// Стили для ноутбуков и настольных ПК
+@include respond-to(desktop) {
+}
+// Стили для больших экранов
+@include respond-to(large-desktop) {
+}
+
+@import 'mixin';
+
+@include respond-to(mobile) {
+  // Для экранов до 425px
+}
+
+@include respond-to(tablet) {
+  // Для экранов от 426px до 768px
+}
+
+@include respond-to(desktop) {
+  // Для экранов от 769px до 1440px
+}
+
+@include respond-to(large-desktop) {
+  // Для экранов от 1441px и выше
 }

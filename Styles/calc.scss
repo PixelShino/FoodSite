@@ -15,6 +15,7 @@
     // padding: 5rem;
     justify-content: center;
     align-items: center;
+    margin-top: 3rem;
 
     @include container;
   }
@@ -434,7 +435,7 @@
 
 // Ноутбуки и настольные компьютеры
 @media (min-width: 769px) and (max-width: 1440px) {
-  .container {
+  .calculating .container {
     margin-top: 2rem;
   }
   // * {
@@ -566,7 +567,7 @@
 
 // Большие экраны
 @media (min-width: 1441px) {
-  .container {
+  .calculating .container {
     padding: 40px;
   }
   .calculating__total.kcal {
