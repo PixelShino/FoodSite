@@ -7,7 +7,9 @@ import modal from './modules/modal.js';
 import slider from './modules/slider.js';
 import tabs from './modules/tabs.js';
 import timer from './modules/timer.js';
+
 import SliderV2 from './modules/tabsAndSlider.js';
+import tabsSlider from './modules/tabsSlider';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('its work');
@@ -28,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     '#current',
     '#total',
   );
+  tabsSlider();
+  // tabsAndSlider();
   // tabsAndSlider(
   //   '.offer__slide', // Селектор для слайдов
   //   '.tabcontent', // Селектор для контента табов

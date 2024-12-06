@@ -874,6 +874,99 @@ function SliderV2(
 
 /***/ }),
 
+/***/ "./js/modules/tabsSlider.js":
+/*!**********************************!*\
+  !*** ./js/modules/tabsSlider.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// js/modules/tabsSlider.js
+
+function tabsSlider() {
+  console.log('tabsSlider initialized');
+  const cardContainer = document.querySelector('.tabcontent__bot-cards');
+
+  if (!cardContainer) return;
+
+  let isDown = false,
+    startX,
+    scrollLeft;
+  let isTouching = false,
+    touchStartX,
+    touchScrollLeft;
+
+  const handleMouseDown = (e) => {
+    isDown = true;
+    cardContainer.classList.add('active');
+    startX = e.clientX - cardContainer.getBoundingClientRect().left;
+    scrollLeft = cardContainer.scrollLeft;
+    cardContainer.style.userSelect = 'none';
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.clientX - cardContainer.getBoundingClientRect().left;
+    cardContainer.scrollLeft = scrollLeft - (x - startX) * 2;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    if (isDown || isTouching) {
+      isDown = false;
+      isTouching = false;
+      cardContainer.classList.remove('active');
+      cardContainer.style.userSelect = 'auto';
+    }
+  };
+
+  const handleTouchStart = (e) => {
+    isTouching = true;
+    touchStartX =
+      e.touches[0].clientX - cardContainer.getBoundingClientRect().left;
+    touchScrollLeft = cardContainer.scrollLeft;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isTouching) return;
+    const x = e.touches[0].clientX - cardContainer.getBoundingClientRect().left;
+    cardContainer.scrollLeft = touchScrollLeft - (x - touchStartX) * 2;
+  };
+
+  const handleTouchEnd = () => {
+    isTouching = false;
+    isDown = false;
+  };
+
+  cardContainer.addEventListener('mousedown', handleMouseDown);
+  cardContainer.addEventListener('touchstart', handleTouchStart);
+  cardContainer.addEventListener('touchmove', handleTouchMove);
+  cardContainer.addEventListener('touchend', handleTouchEnd);
+
+  window.addEventListener('mouseup', handleMouseUpOrLeave);
+  window.addEventListener('mousemove', handleMouseMove);
+  window.addEventListener('mouseleave', handleMouseUpOrLeave);
+
+  return () => {
+    cardContainer.removeEventListener('mousedown', handleMouseDown);
+    cardContainer.removeEventListener('touchstart', handleTouchStart);
+    cardContainer.removeEventListener('touchmove', handleTouchMove);
+    cardContainer.removeEventListener('touchend', handleTouchEnd);
+
+    window.removeEventListener('mouseup', handleMouseUpOrLeave);
+    window.removeEventListener('mousemove', handleMouseMove);
+    window.removeEventListener('mouseleave', handleMouseUpOrLeave);
+  };
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tabsSlider);
+
+
+/***/ }),
+
 /***/ "./js/modules/timer.js":
 /*!*****************************!*\
   !*** ./js/modules/timer.js ***!
@@ -1024,6 +1117,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_tabs_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/tabs.js */ "./js/modules/tabs.js");
 /* harmony import */ var _modules_timer_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/timer.js */ "./js/modules/timer.js");
 /* harmony import */ var _modules_tabsAndSlider_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/tabsAndSlider.js */ "./js/modules/tabsAndSlider.js");
+/* harmony import */ var _modules_tabsSlider__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/tabsSlider */ "./js/modules/tabsSlider.js");
+
+
 
 
 
@@ -1054,6 +1150,8 @@ document.addEventListener('DOMContentLoaded', () => {
     '#current',
     '#total',
   );
+  (0,_modules_tabsSlider__WEBPACK_IMPORTED_MODULE_9__["default"])();
+  // tabsAndSlider();
   // tabsAndSlider(
   //   '.offer__slide', // Селектор для слайдов
   //   '.tabcontent', // Селектор для контента табов

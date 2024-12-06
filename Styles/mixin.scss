@@ -34,6 +34,13 @@
   //   20px 20px 40px #a8a8a8,
   //   -20px -20px 40px #ffffff;
 }
+@mixin BTNshadow {
+  border-radius: 10px;
+  background: #e0e0e06a;
+  box-shadow:
+    5px 5px 18px #a4a4a480,
+    -5px -5px 18px #ffffff82;
+}
 @mixin BRo {
   border-radius: 30px;
   background: #e0e0e094;
@@ -60,29 +67,58 @@ $green: #54ed39a2;
 
 // Определение миксина для запрета выделения
 @mixin no-select {
+  user-drag: none;
+  -webkit-user-drag: none;
   user-select: none;
-  -webkit-user-select: none; // Для браузеров на основе WebKit
-  -moz-user-select: none; // Для браузеров Firefox
-  -ms-user-select: none; // Для браузеров Internet Explorer/Edge
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 // В файле mixin.scss
-@mixin respond-to($breakpoint) {
-  @if $breakpoint == mobile {
-    @media (max-width: 425px) {
-      @content;
-    }
-  } @else if $breakpoint == tablet {
-    @media (min-width: 426px) and (max-width: 768px) {
-      @content;
-    }
-  } @else if $breakpoint == desktop {
-    @media (min-width: 769px) and (max-width: 1440px) {
-      @content;
-    }
-  } @else if $breakpoint == large-desktop {
-    @media (min-width: 1441px) {
-      @content;
-    }
-  }
-}
+// @mixin respond-to($breakpoint) {
+//   @if $breakpoint == mobile {
+//     @media (max-width: 425px) {
+//       @content;
+//     }
+//   } @else if $breakpoint == tablet {
+//     @media (min-width: 426px) and (max-width: 768px) {
+//       @content;
+//     }
+//   } @else if $breakpoint == desktop {
+//     @media (min-width: 769px) and (max-width: 1440px) {
+//       @content;
+//     }
+//   } @else if $breakpoint == large-desktop {
+//     @media (min-width: 1441px) {
+//       @content;
+//     }
+//   }
+// }
+
+// Определение точек останова как переменных для согласованности и простоты поддержки
+$breakpoint-mobile: 425px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1440px;
+
+// Миксин для адаптивного дизайна
+// Миксин для адаптивного дизайна
+// @mixin respond-to($breakpoint) {
+//   @if $breakpoint == mobile {
+//     @media (max-width: 425px) {
+//       @content;
+//     }
+//   } @else if $breakpoint == tablet {
+//     @media (min-width: 426px) {
+//       @content;
+//     }
+//   } @else if $breakpoint == desktop {
+//     @media (min-width: 769) {
+//       @content;
+//     }
+//   } @else if $breakpoint == large-desktop {
+//     @media (min-width: 1441px) {
+//       @content;
+//     }
+//   }
+// }
