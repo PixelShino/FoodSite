@@ -660,27 +660,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _tabsSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tabsSlider */ "./js/modules/tabsSlider.js");
 // import { closeModal, openModal } from './modal';
 // const { openModal, closeModal } = modalModule();
-function tabs(tabsItem, tabsContentItem, tabsParentItem) {
-  //TABS
 
-  const tabs = document.querySelectorAll(`${tabsItem}`); // элемент переключения
-  const tabsContent = document.querySelectorAll(`${tabsContentItem}`); // сам контент
-  const tabsParent = document.querySelector(`${tabsParentItem}`); // родитель
 
-  // const tabs = document.querySelectorAll('.tabheader__item');
-  // const tabsContent = document.querySelectorAll('.tabcontent');
-  // const tabsParent = document.querySelector('.tabheader__items');
+function tabs(tabsItem, tabsContentItem, tabsParentItem, cardsParentItem) {
+  const tabs = document.querySelectorAll(tabsItem);
+  const tabsContent = document.querySelectorAll(tabsContentItem);
+  const tabsParent = document.querySelector(tabsParentItem);
+  const cardsParent = document.querySelector(cardsParentItem);
 
-  if (!tabs.length || !tabsContent.length || !tabsParent) {
+  if (!tabs.length || !tabsContent.length || !tabsParent || !cardsParent) {
     console.error('Не удалось найти необходимые элементы для табов');
     return;
-  } else {
-    console.log('Табы найдены :');
-    console.log(`${tabs}`);
-    console.log(`${tabsContent}`);
-    console.log(`${tabsParent}`);
   }
 
   function hideTabsContent() {
@@ -698,11 +691,15 @@ function tabs(tabsItem, tabsContentItem, tabsParentItem) {
     tabsContent[tabIndex].classList.add('show', 'fade');
     tabsContent[tabIndex].classList.remove('hide');
     tabs[tabIndex].classList.add('tabheader__item_active');
+
+    // Call tabsSlider with the appropriate cardsParent for the current tab
+    if (tabsContent[tabIndex].querySelector(cardsParentItem)) {
+      (0,_tabsSlider__WEBPACK_IMPORTED_MODULE_0__["default"])(tabsContent[tabIndex].querySelector(cardsParentItem));
+    }
   }
 
   function switchTab() {
     tabsParent.addEventListener('click', (event) => {
-      console.log(event.target);
       const target = event.target;
       if (target && target.classList.contains('tabheader__item')) {
         tabs.forEach((item, i) => {
@@ -714,6 +711,7 @@ function tabs(tabsItem, tabsContentItem, tabsParentItem) {
       }
     });
   }
+
   hideTabsContent();
   showTabContent();
   switchTab();
@@ -886,9 +884,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 // js/modules/tabsSlider.js
 
-function tabsSlider() {
-  console.log('tabsSlider initialized');
-  const cardContainer = document.querySelector('.tabcontent__bot-cards');
+function tabsSlider(cardContainerOpt) {
+  // console.log('tabsSlider initialized');
+  // let cardContainer = document.querySelector('.tabcontent__bot-cards');
+  let cardContainer =
+    cardContainerOpt || document.querySelector('.tabcontent__bot-cards'); // FIM
+  // console.log(cardContainer);
+  function switchActiveCards() {
+    const tabheaderItems = document.querySelector('.tabheader__items');
+    const tabheaderItemClass = 'tabheader__item'; // Define the class name
+
+    tabheaderItems.addEventListener('click', (event) => {
+      const clickedElement = event.target;
+
+      if (clickedElement.classList.contains(tabheaderItemClass)) {
+        // console.log('tab clicked');
+        // console.log(
+        //   cardContainerOpt || document.querySelector('.tabcontent__bot-cards'),
+        // );
+        tabsSlider();
+        cardContainer =
+          cardContainerOpt || document.querySelector('.tabcontent__bot-cards');
+        console.log('tabSlider switch');
+      } else {
+        console.log('not a tab clicked');
+      }
+    });
+  }
+  switchActiveCards();
 
   if (!cardContainer) return;
 
@@ -1139,7 +1162,12 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_modules_forms_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
   (0,_modules_modal_js__WEBPACK_IMPORTED_MODULE_4__["default"])('[data-modal]', '.modal', '[data-close]');
   // slider();
-  (0,_modules_tabs_js__WEBPACK_IMPORTED_MODULE_6__["default"])('.tabheader__item', '.tabcontent', '.tabheader__items');
+  (0,_modules_tabs_js__WEBPACK_IMPORTED_MODULE_6__["default"])(
+    '.tabheader__item',
+    '.tabcontent',
+    '.tabheader__items',
+    '.tabcontent__bot-cards',
+  );
   (0,_modules_timer_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
 
   (0,_modules_tabsAndSlider_js__WEBPACK_IMPORTED_MODULE_8__["default"])(

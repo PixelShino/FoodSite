@@ -1,24 +1,16 @@
 // import { closeModal, openModal } from './modal';
 // const { openModal, closeModal } = modalModule();
-function tabs(tabsItem, tabsContentItem, tabsParentItem) {
-  //TABS
+import tabsSlider from './tabsSlider';
 
-  const tabs = document.querySelectorAll(`${tabsItem}`); // элемент переключения
-  const tabsContent = document.querySelectorAll(`${tabsContentItem}`); // сам контент
-  const tabsParent = document.querySelector(`${tabsParentItem}`); // родитель
+function tabs(tabsItem, tabsContentItem, tabsParentItem, cardsParentItem) {
+  const tabs = document.querySelectorAll(tabsItem);
+  const tabsContent = document.querySelectorAll(tabsContentItem);
+  const tabsParent = document.querySelector(tabsParentItem);
+  const cardsParent = document.querySelector(cardsParentItem);
 
-  // const tabs = document.querySelectorAll('.tabheader__item');
-  // const tabsContent = document.querySelectorAll('.tabcontent');
-  // const tabsParent = document.querySelector('.tabheader__items');
-
-  if (!tabs.length || !tabsContent.length || !tabsParent) {
+  if (!tabs.length || !tabsContent.length || !tabsParent || !cardsParent) {
     console.error('Не удалось найти необходимые элементы для табов');
     return;
-  } else {
-    console.log('Табы найдены :');
-    console.log(`${tabs}`);
-    console.log(`${tabsContent}`);
-    console.log(`${tabsParent}`);
   }
 
   function hideTabsContent() {
@@ -36,11 +28,15 @@ function tabs(tabsItem, tabsContentItem, tabsParentItem) {
     tabsContent[tabIndex].classList.add('show', 'fade');
     tabsContent[tabIndex].classList.remove('hide');
     tabs[tabIndex].classList.add('tabheader__item_active');
+
+    // Call tabsSlider with the appropriate cardsParent for the current tab
+    if (tabsContent[tabIndex].querySelector(cardsParentItem)) {
+      tabsSlider(tabsContent[tabIndex].querySelector(cardsParentItem));
+    }
   }
 
   function switchTab() {
     tabsParent.addEventListener('click', (event) => {
-      console.log(event.target);
       const target = event.target;
       if (target && target.classList.contains('tabheader__item')) {
         tabs.forEach((item, i) => {
@@ -52,6 +48,7 @@ function tabs(tabsItem, tabsContentItem, tabsParentItem) {
       }
     });
   }
+
   hideTabsContent();
   showTabContent();
   switchTab();

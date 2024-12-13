@@ -1,8 +1,33 @@
 // js/modules/tabsSlider.js
 
-function tabsSlider() {
-  console.log('tabsSlider initialized');
-  const cardContainer = document.querySelector('.tabcontent__bot-cards');
+function tabsSlider(cardContainerOpt) {
+  // console.log('tabsSlider initialized');
+  // let cardContainer = document.querySelector('.tabcontent__bot-cards');
+  let cardContainer =
+    cardContainerOpt || document.querySelector('.tabcontent__bot-cards'); // FIM
+  // console.log(cardContainer);
+  function switchActiveCards() {
+    const tabheaderItems = document.querySelector('.tabheader__items');
+    const tabheaderItemClass = 'tabheader__item'; // Define the class name
+
+    tabheaderItems.addEventListener('click', (event) => {
+      const clickedElement = event.target;
+
+      if (clickedElement.classList.contains(tabheaderItemClass)) {
+        // console.log('tab clicked');
+        // console.log(
+        //   cardContainerOpt || document.querySelector('.tabcontent__bot-cards'),
+        // );
+        tabsSlider();
+        cardContainer =
+          cardContainerOpt || document.querySelector('.tabcontent__bot-cards');
+        console.log('tabSlider switch');
+      } else {
+        console.log('not a tab clicked');
+      }
+    });
+  }
+  switchActiveCards();
 
   if (!cardContainer) return;
 

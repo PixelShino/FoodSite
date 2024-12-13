@@ -19,7 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
   forms();
   modal('[data-modal]', '.modal', '[data-close]');
   // slider();
-  tabs('.tabheader__item', '.tabcontent', '.tabheader__items');
+  tabs(
+    '.tabheader__item',
+    '.tabcontent',
+    '.tabheader__items',
+    '.tabcontent__bot-cards',
+  );
   timer();
 
   SliderV2(
