@@ -279,6 +279,56 @@ function cards() {
 
 /***/ }),
 
+/***/ "./js/modules/fixedPromo.js":
+/*!**********************************!*\
+  !*** ./js/modules/fixedPromo.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ fixedPromo)
+/* harmony export */ });
+function fixedPromo() {
+  document.addEventListener('scroll', function () {
+    const promoElement = document.querySelector('.tabcontainer__bot-promo');
+    const parent = document.querySelector('.tabcontainer'); // FIM
+    const nextContainer = document.querySelector('.calculating__field');
+
+    // Проверяем, найден ли элемент
+    if (!promoElement) {
+      console.error('Элемент с классом .tabcontainer__bot-promo не найден');
+      return; // Завершаем выполнение функции, если элемент не найден
+    }
+
+    const promoElementPosition =
+      parent.getBoundingClientRect().top + window.scrollY;
+    const nextContainerPosition =
+      nextContainer.getBoundingClientRect().top + window.scrollY; // Позиция элемента на странице
+    const scrollPosition = window.scrollY; // Текущая позиция прокрутки
+
+    // Если прокрутка страницы больше, чем позиция элемента
+    if (scrollPosition >= promoElementPosition) {
+      promoElement.classList.remove('tabcontainer__bot-promo--fixedBot');
+    } else {
+      promoElement.classList.add('tabcontainer__bot-promo--fixedBot'); // Возвращаем обратно в абсолют
+    }
+
+    if (
+      scrollPosition >
+      promoElementPosition + promoElement.offsetHeight * 15
+    ) {
+      promoElement.classList.remove('tabcontainer__bot-promo--fixedBot');
+      promoElement.classList.add('tabcontainer__bot-promo--fixedTop');
+    } else {
+      promoElement.classList.remove('tabcontainer__bot-promo--fixedTop');
+    }
+  });
+}
+
+
+/***/ }),
+
 /***/ "./js/modules/forms.js":
 /*!*****************************!*\
   !*** ./js/modules/forms.js ***!
@@ -692,7 +742,7 @@ function tabs(tabsItem, tabsContentItem, tabsParentItem, cardsParentItem) {
     tabsContent[tabIndex].classList.remove('hide');
     tabs[tabIndex].classList.add('tabheader__item_active');
 
-    // Call tabsSlider with the appropriate cardsParent for the current tab
+    // Вызов tabsSlider в соответсвтии с текущей вкладкой
     if (tabsContent[tabIndex].querySelector(cardsParentItem)) {
       (0,_tabsSlider__WEBPACK_IMPORTED_MODULE_0__["default"])(tabsContent[tabIndex].querySelector(cardsParentItem));
     }
@@ -889,29 +939,28 @@ function tabsSlider(cardContainerOpt) {
   // let cardContainer = document.querySelector('.tabcontent__bot-cards');
   let cardContainer =
     cardContainerOpt || document.querySelector('.tabcontent__bot-cards'); // FIM
-  // console.log(cardContainer);
-  function switchActiveCards() {
-    const tabheaderItems = document.querySelector('.tabheader__items');
-    const tabheaderItemClass = 'tabheader__item'; // Define the class name
+  // console.log(cardContainer);\
 
-    tabheaderItems.addEventListener('click', (event) => {
-      const clickedElement = event.target;
+  // function switchActiveCards(cardContainerOpt) {
+  //   // Pass cardContainerOpt as an argument
+  //   const tabheaderItems = document.querySelector('.tabheader__items');
+  //   const tabheaderItemClass = 'tabheader__item';
+  //   let cardContainer = cardContainerOpt; // Cache the card container
 
-      if (clickedElement.classList.contains(tabheaderItemClass)) {
-        // console.log('tab clicked');
-        // console.log(
-        //   cardContainerOpt || document.querySelector('.tabcontent__bot-cards'),
-        // );
-        tabsSlider();
-        cardContainer =
-          cardContainerOpt || document.querySelector('.tabcontent__bot-cards');
-        console.log('tabSlider switch');
-      } else {
-        console.log('not a tab clicked');
-      }
-    });
-  }
-  switchActiveCards();
+  //   tabheaderItems.addEventListener('click', (event) => {
+  //     const clickedElement = event.target;
+
+  //     if (clickedElement.classList.contains(tabheaderItemClass)) {
+  //       tabsSlider();
+
+  //       // Only query the DOM if cardContainerOpt wasn't provided
+  //       if (!cardContainer) {
+  //         cardContainer = document.querySelector('.tabcontent__bot-cards');
+  //       }
+  //     }
+  //   });
+  // }
+  // switchActiveCards();
 
   if (!cardContainer) return;
 
@@ -1141,6 +1190,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_timer_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/timer.js */ "./js/modules/timer.js");
 /* harmony import */ var _modules_tabsAndSlider_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/tabsAndSlider.js */ "./js/modules/tabsAndSlider.js");
 /* harmony import */ var _modules_tabsSlider__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/tabsSlider */ "./js/modules/tabsSlider.js");
+/* harmony import */ var _modules_fixedPromo__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/fixedPromo */ "./js/modules/fixedPromo.js");
+
 
 
 
@@ -1156,7 +1207,7 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('its work');
-
+  (0,_modules_fixedPromo__WEBPACK_IMPORTED_MODULE_10__["default"])();
   (0,_modules_calc_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
   (0,_modules_cards_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
   (0,_modules_forms_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
@@ -1179,6 +1230,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '#total',
   );
   (0,_modules_tabsSlider__WEBPACK_IMPORTED_MODULE_9__["default"])();
+
   // tabsAndSlider();
   // tabsAndSlider(
   //   '.offer__slide', // Селектор для слайдов

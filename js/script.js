@@ -10,10 +10,11 @@ import timer from './modules/timer.js';
 
 import SliderV2 from './modules/tabsAndSlider.js';
 import tabsSlider from './modules/tabsSlider';
+import fixedPromo from './modules/fixedPromo';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('its work');
-
+  fixedPromo();
   calc();
   cards();
   forms();
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '#total',
   );
   tabsSlider();
+
   // tabsAndSlider();
   // tabsAndSlider(
   //   '.offer__slide', // Селектор для слайдов

@@ -22,20 +22,27 @@
   border-radius: 30px;
   border: $white solid 1px;
   background: #e0e0e0;
-  // box-shadow:
-  //   20px 20px 40px #a8a8a8,
-  //   -20px -20px 40px #ffffff;
+
+  height: 100%;
+  padding: 2rem;
+}
+@mixin BTNopiacity {
+  border-radius: 30px;
+  border: $white solid 1px;
+  background: #e0e0e086;
+
+  height: 100%;
+  padding: 2rem;
 }
 @mixin BTNmedium {
-  border-radius: 20px;
+  border-radius: 30px;
   border: $white solid 1px;
   background: #e0e0e0;
-  // box-shadow:
-  //   20px 20px 40px #a8a8a8,
-  //   -20px -20px 40px #ffffff;
+  height: 100%;
+  padding: 1rem;
 }
 @mixin BTNshadow {
-  border-radius: 10px;
+  border-radius: 30px;
   background: #e0e0e06a;
   box-shadow:
     5px 5px 18px #a4a4a480,
@@ -49,6 +56,28 @@
   //   48px 48px 300px #d9d9d9e1,
   //   -48px -48px 300px #e7e7e7a5;
 }
+
+@mixin no-border-radius($side: all) {
+  // Default value 'all'
+  @if $side == all {
+    border-radius: 0;
+  } @else if $side == top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  } @else if $side == right {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  } @else if $side == bottom {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  } @else if $side == left {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  } @else {
+    @error "Invalid side value: #{$side}. Allowed values: all, top, right, bottom, left";
+  }
+}
+
 @mixin container {
   width: 85%;
   max-width: math.div(85, 100) * 100%; // This ensures the width is calculated as 85% of the parent

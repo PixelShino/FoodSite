@@ -5,29 +5,28 @@ function tabsSlider(cardContainerOpt) {
   // let cardContainer = document.querySelector('.tabcontent__bot-cards');
   let cardContainer =
     cardContainerOpt || document.querySelector('.tabcontent__bot-cards'); // FIM
-  // console.log(cardContainer);
-  function switchActiveCards() {
-    const tabheaderItems = document.querySelector('.tabheader__items');
-    const tabheaderItemClass = 'tabheader__item'; // Define the class name
+  // console.log(cardContainer);\
 
-    tabheaderItems.addEventListener('click', (event) => {
-      const clickedElement = event.target;
+  // function switchActiveCards(cardContainerOpt) {
+  //   // Pass cardContainerOpt as an argument
+  //   const tabheaderItems = document.querySelector('.tabheader__items');
+  //   const tabheaderItemClass = 'tabheader__item';
+  //   let cardContainer = cardContainerOpt; // Cache the card container
 
-      if (clickedElement.classList.contains(tabheaderItemClass)) {
-        // console.log('tab clicked');
-        // console.log(
-        //   cardContainerOpt || document.querySelector('.tabcontent__bot-cards'),
-        // );
-        tabsSlider();
-        cardContainer =
-          cardContainerOpt || document.querySelector('.tabcontent__bot-cards');
-        console.log('tabSlider switch');
-      } else {
-        console.log('not a tab clicked');
-      }
-    });
-  }
-  switchActiveCards();
+  //   tabheaderItems.addEventListener('click', (event) => {
+  //     const clickedElement = event.target;
+
+  //     if (clickedElement.classList.contains(tabheaderItemClass)) {
+  //       tabsSlider();
+
+  //       // Only query the DOM if cardContainerOpt wasn't provided
+  //       if (!cardContainer) {
+  //         cardContainer = document.querySelector('.tabcontent__bot-cards');
+  //       }
+  //     }
+  //   });
+  // }
+  // switchActiveCards();
 
   if (!cardContainer) return;
 

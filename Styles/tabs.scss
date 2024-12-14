@@ -2,7 +2,7 @@
 @import 'mediaMixin';
 
 .preview {
-  position: relative;
+  // position: relative;
   background-image: url(../img/icon/hambuger.webp);
   background-repeat: no-repeat;
   background-size: contain;
@@ -15,12 +15,14 @@
   .tabcontainer {
     display: flex;
     flex-direction: column;
+    // transform: scaleY(0.9);
+    width: 100%;
     @include BRo;
 
     &__bot {
       display: flex;
       // padding-top: 5rem;
-      padding: 2rem;
+      // padding: 2rem;
       justify-content: space-between;
 
       &-link--btn,
@@ -32,7 +34,7 @@
         text-align: center;
         align-items: center;
         width: 100%;
-        height: 3rem;
+        height: 100%;
         @include BTNmedium;
         @include fluid-text(24, 16);
       }
@@ -40,7 +42,7 @@
       &-link {
         display: flex;
         width: 100%;
-        height: 100%;
+
         text-decoration: none;
 
         &--btn {
@@ -48,43 +50,93 @@
         }
       }
 
-      &-promo {
-        width: 50%;
-        background-color: $green;
+      .tabcontainer__bot-promo {
+        position: relative; // Изначально относительное позиционирование
+        // width: 100%;
+        background-color: $green; // Убедитесь, что $green определен
+        @include no-border-radius();
+
+        &--fixedBot {
+          position: fixed; // Фиксированное позиционирование при прокрутке
+          bottom: 0; // Прикрепляем к верхней части окна
+          left: 0;
+          right: 0; // Прикрепляем к правой части окна
+          width: 100%;
+          height: 5vh; // Ширина 100%
+          z-index: 1000; // Чтобы элемент находился поверх других
+          @keyframes fadeInUp {
+            0% {
+              opacity: 0; /* Начальная непрозрачность */
+              transform: translateY(20px); /* Начальное положение (внизу) */
+            }
+            100% {
+              opacity: 1; /* Конечная непрозрачность */
+              transform: translateY(0px); /* Конечное положение (вверху) */
+            }
+          }
+          animation: fadeInUp 1.5s forwards;
+        }
+        &--fixedTop {
+          position: fixed; // Фиксированное позиционирование при прокрутке
+          top: 0; // Прикрепляем к верхней части окна
+          left: 0;
+          right: 0; // Прикрепляем к правой части окна
+          width: 100%;
+          height: 5vh; // Ширина 100%
+          z-index: 1000; // Чтобы элемент находился поверх других
+          @keyframes fadeInUp {
+            0% {
+              opacity: 0; /* Начальная непрозрачность */
+              transform: translateY(-20px); /* Начальное положение (внизу) */
+            }
+            100% {
+              opacity: 1; /* Конечная непрозрачность */
+              transform: translateY(0px); /* Конечное положение (вверху) */
+            }
+          }
+          animation: fadeInUp 1.5s forwards;
+        }
       }
     }
 
     .tabcontainer__top {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       height: 100%;
       // .tabcontent {
       //   height: 100%;
       // }
+      .tabcontent {
+        order: 1;
+      }
       .tabcontent__wrapper {
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         height: 100%;
 
         .tabcontent__top {
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
           // flex-wrap: wrap;
           align-items: center;
           height: 100%;
           justify-content: space-around;
-
+          // margin: 0.5rem 2rem 0.5rem;
+          // padding: 1.5rem;
+          @include BRo;
+          @include no-border-radius();
           .tabcontent__img {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             // justify-content: space-between;
             flex: 0 0 35%;
 
             // margin: auto;
-            // padding: ;
-            @include BRo;
+            // padding: 2rem;
+            // @include BRo;
             height: 100%;
+            width: 100%;
 
             img {
               height: 100%;
@@ -105,16 +157,20 @@
               text-align: center;
               align-items: center;
               justify-content: center;
-              @include BTNshadow;
+              // @include BTNshadow;
+              @include BTNmedium;
+              // opacity: 0.7;
+              margin: 0.5rem;
             }
             &-title {
               font-weight: 700;
               @include fluid-text(28, 16);
-              order: 1;
+              order: 3;
+              background-color: $orange;
               // color: $orange;
             }
             &-price {
-              order: 3;
+              order: 1;
               @include fluid-text(22, 14);
             }
             &-cKal {
@@ -126,13 +182,17 @@
           .tabcontent__descr {
             color: $black;
             padding: 2rem;
+            // margin: 0rem 0 2rem 0;
             font-size: 1.5rem;
             font-weight: 300;
             line-height: 2rem;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
+            // flex-direction: column;
             flex: 0 0 65%;
+            width: 100%;
+            height: 100%;
+            @include fluid-text(24, 16);
           }
         }
 
@@ -141,14 +201,28 @@
           flex-wrap: nowrap;
           overflow-x: auto;
           overflow-y: hidden;
-          // gap: 1rem;
-          // padding: 1rem;
-          width: 100%;
+          // gap: 2rem;
+          // padding: 1.5rem;
+          // padding-right: 2rem;
+          // width: 100%;
           @include no-select;
-          @include BRo;
+          @include BTNshadow;
+
+          // margin: 1rem 2rem 1rem;
+          // margin: 1rem 0rem 1rem 2rem;
+          padding: 1.5rem;
+          // @include BRo;
+
+          align-items: center;
+          // height: 100%;
+          justify-content: space-around;
+          // margin: 1rem 2rem 1rem;
+          @include no-border-radius(all);
+          background: rgba(224, 224, 224, 0.5803921569);
 
           scrollbar-width: thin;
           scrollbar-color: $green transparent;
+
           scroll-behavior: smooth;
           -webkit-overflow-scrolling: touch;
           scroll-snap-type: x mandatory;
@@ -167,7 +241,7 @@
           }
 
           &::-webkit-scrollbar-thumb {
-            background-color: $orange;
+            background-color: $green transparent;
             border-radius: 4px;
             border: 2px solid transparent;
             background-clip: content-box;
@@ -175,19 +249,26 @@
 
           &--card {
             display: flex;
-            padding: 1rem;
-
+            // margin: 1rem;
+            // padding: 0.3rem;
             // border: 1px $light solid;
             flex-direction: column;
             scroll-snap-align: start;
             flex: 0 0 auto;
-            width: 33%;
+            height: auto;
+            // border-right: 1px $orange solid;
+            // border-left: 1px $orange solid;
+            // width: 33.4%;
+            width: calc((100% / 3) - 2rem);
+
             @include no-select;
-            // @include BRo;
+            @include BTNopiacity;
+            padding: 0.25rem;
+            // opacity: 0.9;
             &--title {
               display: flex;
               justify-content: center;
-              order: 2;
+              order: 3;
               @include fluid-text(18, 14);
               font-weight: 700;
               color: $black;
@@ -204,7 +285,8 @@
                 height: 10rem;
                 width: 10rem;
                 overflow: hidden;
-                object-fit: cover;
+                object-fit: scale-down;
+                min-width: 200px;
                 @include no-select;
               }
             }
@@ -215,6 +297,8 @@
               flex-direction: row;
               justify-content: space-between;
               align-items: center;
+              flex: 0 0 auto;
+              @include BTNshadow;
 
               #cKal,
               #protein,
@@ -222,6 +306,10 @@
               #carbs {
                 display: flex;
                 flex-direction: column-reverse;
+
+                padding: 0.3rem;
+                border-radius: 20px;
+                width: 100%;
               }
 
               @include no-select;
@@ -273,39 +361,77 @@
 
     .tabheader {
       color: $black;
-      padding: 3rem;
+      // padding: 3rem;
       flex: 0 1 100%;
+      // margin: 0.5rem 2rem 0.5rem;
       @include BRo;
 
       h3 {
+        padding: 1rem;
         font-weight: 700;
-        font-size: 1.5rem;
+
+        text-align: center;
+        @include fluid-text(30, 20);
       }
 
+      // padding: 1.5rem;
+
       &__items {
-        margin-top: 2rem;
-        padding-left: 2rem;
+        display: flex;
+
         border-left: 1px solid #000;
+        width: auto;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        // width: auto;
+
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-self: center;
+        align-items: center;
+        align-content: center;
+        text-align: center;
+        justify-content: center;
+        justify-items: center;
+        // justify-self: center;
+        border-left: none;
+        border-bottom: 1px solid #000;
 
         .tabheader__item {
           display: flex;
-          font-weight: 900;
-          font-size: 1.5rem;
+          width: 100%;
+          justify-content: center;
+          text-align: center;
+          align-items: center;
+          height: 100%;
+
           font-weight: 500;
-          margin-top: 6%;
+          margin: 1rem;
+
           color: rgba(0, 0, 0, 0.6);
           transition: 0.3s all;
           z-index: 3;
           cursor: pointer;
+          @include fluid-text(24, 16);
+          @include BTN;
+          // padding: 1rem;
+          @include no-select;
 
           &:hover {
             transition: all 0.3s;
-            background-color: rgba(0, 0, 0, 0.1);
+            scale: 1.1;
           }
 
           &_active {
-            color: $orange;
+            color: $white;
             font-weight: 700;
+            @include BTN;
+            height: 100%;
+            scale: 1.1;
+            padding: 2rem;
+            background-color: $green;
           }
         }
       }
@@ -333,10 +459,11 @@
 
   .preview .container .tabheader {
     display: flex;
-    order: -1;
+    // order: 1;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+
     h3 {
       width: 100%;
       justify-self: center;
@@ -344,25 +471,37 @@
       padding: 0 1rem 1rem 1rem;
     }
     .tabheader__items {
-      margin: 0;
-      padding: 0;
-      // width: auto;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: space-around;
-      align-self: center;
-      border-left: none;
-      border-bottom: 1px solid #000;
+      // margin: 0;
+      // padding: 0;
+      display: grid;
+      grid-template: repeat(2, 1fr) / repeat(2, 1fr);
       width: 100%;
+      gap: 2rem;
+      padding: 1rem;
 
       // display: grid;
       // grid-template-rows: auto;
 
       .tabheader__item {
         // margin: 0 10% 0 10%;
-        margin: 0;
-        padding: 0;
+        margin: 1rem;
+        padding: 1rem;
+        width: 100%;
+        text-align: center;
+        // width: calc(100% / 4);
+        &:hover {
+          transition: all 0.3s;
+          scale: none;
+          // background-color: #7ee86e63;
+        }
+        &:active {
+          transition: 0.1s;
+          scale: 0.95;
+        }
+
+        &_active {
+          scale: none;
+        }
       }
     }
   }

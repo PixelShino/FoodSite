@@ -29,7 +29,7 @@ function tabs(tabsItem, tabsContentItem, tabsParentItem, cardsParentItem) {
     tabsContent[tabIndex].classList.remove('hide');
     tabs[tabIndex].classList.add('tabheader__item_active');
 
-    // Call tabsSlider with the appropriate cardsParent for the current tab
+    // Вызов tabsSlider в соответсвтии с текущей вкладкой
     if (tabsContent[tabIndex].querySelector(cardsParentItem)) {
       tabsSlider(tabsContent[tabIndex].querySelector(cardsParentItem));
     }
