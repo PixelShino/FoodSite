@@ -14,7 +14,7 @@ import fixedPromo from './modules/fixedPromo';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('its work');
-  fixedPromo();
+  // fixedPromo();
   calc();
   cards();
   forms();
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '.tabcontent',
     '.tabheader__items',
     '.tabcontent__bot-cards',
+    '.tabdays__choise-btn',
   );
   timer();
 

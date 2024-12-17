@@ -560,6 +560,23 @@
                         </div>
                       </div>
                     </div>
+                    <div class="tabcalories">
+                      <div class="tabcalories__title">
+                        <h3>
+                          Выберите свою норму калорий, свою норму можно
+                          посчитать в
+                          <a href="#selectATariff">калькуляторе</a>
+                        </h3>
+                      </div>
+                      <div class="tabcalories__choise">
+                        <button
+                          class="tabcalories__choise-btn tabcalories__choise-btn--active"
+                        >
+                          2500
+                        </button>
+                        <button class="tabcalories__choise-btn">3000</button>
+                      </div>
+                    </div>
                     <!-- <div class="custom-scrollbar">
                       <div class="custom-scrollbar__thumb"></div>
                     </div> -->
@@ -587,10 +604,13 @@
                     </div>
                   </div>
                   <div class="tabcontent__bot">
-                    <div class="tabcontent__bot-cards">
+                    <div
+                      class="tabcontent__bot-cards"
+                      style="user-select: auto"
+                    >
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 1
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
@@ -605,7 +625,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              368
+                              350
                             </div>
                           </div>
                           <div id="protein">
@@ -617,7 +637,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              111
+                              20
                             </div>
                           </div>
                           <div id="fats">
@@ -629,7 +649,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              10
+                              5
                             </div>
                           </div>
                           <div id="carbs">
@@ -641,7 +661,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              10
+                              60
                             </div>
                           </div>
                         </div>
@@ -649,62 +669,317 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 2
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
                         </div>
-                        <div class="tabcontent__bot-cards--card--kcal">
-                          500 кКал
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              500
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              30
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              15
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              70
+                            </div>
+                          </div>
                         </div>
                       </div>
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 3
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
                         </div>
-                        <div class="tabcontent__bot-cards--card--kcal">
-                          500 кКал
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              600
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              40
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              20
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              80
+                            </div>
+                          </div>
                         </div>
                       </div>
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 4
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
                         </div>
-                        <div class="tabcontent__bot-cards--card--kcal">
-                          500 кКал
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              700
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              50
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              25
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              90
+                            </div>
+                          </div>
                         </div>
                       </div>
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 5
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
                         </div>
-                        <div class="tabcontent__bot-cards--card--kcal">
-                          500 кКал
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              800
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              60
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              30
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              100
+                            </div>
+                          </div>
                         </div>
                       </div>
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 6
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
                         </div>
-                        <div class="tabcontent__bot-cards--card--kcal">
-                          500 кКал
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              900
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              70
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              35
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              120
+                            </div>
+                          </div>
                         </div>
+                      </div>
+                    </div>
+                    <div class="tabcalories">
+                      <div class="tabcalories__title">
+                        <h3>
+                          Выберите свою норму калорий, свою норму можно
+                          посчитать в
+                          <a href="selectATariff">калькуляторе</a>
+                        </h3>
+                      </div>
+                      <div class="tabcalories__choise">
+                        <button
+                          class="tabcalories__choise-btn tabcalories__choise-btn--active"
+                        >
+                          1000
+                        </button>
+                        <button class="tabcalories__choise-btn">1200</button>
+                        <button class="tabcalories__choise-btn">1400</button>
+                        <button class="tabcalories__choise-btn">1600</button>
+                        <button class="tabcalories__choise-btn">1800</button>
                       </div>
                     </div>
                     <!-- <div class="custom-scrollbar">
@@ -734,10 +1009,13 @@
                     </div>
                   </div>
                   <div class="tabcontent__bot">
-                    <div class="tabcontent__bot-cards">
+                    <div
+                      class="tabcontent__bot-cards"
+                      style="user-select: auto"
+                    >
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 1
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
@@ -752,7 +1030,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              368
+                              350
                             </div>
                           </div>
                           <div id="protein">
@@ -764,7 +1042,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              111
+                              20
                             </div>
                           </div>
                           <div id="fats">
@@ -776,7 +1054,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              10
+                              5
                             </div>
                           </div>
                           <div id="carbs">
@@ -788,7 +1066,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              10
+                              60
                             </div>
                           </div>
                         </div>
@@ -796,62 +1074,317 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 2
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
                         </div>
-                        <div class="tabcontent__bot-cards--card--kcal">
-                          500 кКал
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              500
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              30
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              15
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              70
+                            </div>
+                          </div>
                         </div>
                       </div>
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 3
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
                         </div>
-                        <div class="tabcontent__bot-cards--card--kcal">
-                          500 кКал
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              600
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              40
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              20
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              80
+                            </div>
+                          </div>
                         </div>
                       </div>
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 4
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
                         </div>
-                        <div class="tabcontent__bot-cards--card--kcal">
-                          500 кКал
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              700
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              50
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              25
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              90
+                            </div>
+                          </div>
                         </div>
                       </div>
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 5
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
                         </div>
-                        <div class="tabcontent__bot-cards--card--kcal">
-                          500 кКал
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              800
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              60
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              30
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              100
+                            </div>
+                          </div>
                         </div>
                       </div>
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          карточка 1
+                          Карточка 6
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
                           <img src="./img/icon/soymilk.webp" alt="" />
                         </div>
-                        <div class="tabcontent__bot-cards--card--kcal">
-                          500 кКал
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              900
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              70
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              35
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              120
+                            </div>
+                          </div>
                         </div>
+                      </div>
+                    </div>
+                    <div class="tabcalories">
+                      <div class="tabcalories__title">
+                        <h3>
+                          Выберите свою норму калорий, свою норму можно
+                          посчитать в
+                          <a href="selectATariff">калькуляторе</a>
+                        </h3>
+                      </div>
+                      <div class="tabcalories__choise">
+                        <button
+                          class="tabcalories__choise-btn tabcalories__choise-btn--active"
+                        >
+                          1000
+                        </button>
+                        <button class="tabcalories__choise-btn">1200</button>
+                        <button class="tabcalories__choise-btn">1400</button>
+                        <button class="tabcalories__choise-btn">1600</button>
+                        <button class="tabcalories__choise-btn">1800</button>
                       </div>
                     </div>
                     <!-- <div class="custom-scrollbar">
@@ -1012,23 +1545,81 @@
                 <h3>Выберите тариф питания</h3>
                 <div class="tabheader__items">
                   <div class="tabheader__item tabheader__item_active">
-                    Набор веса
+                    <div class="tabheader__item--left">
+                      <div class="tabheader__item-title">Набор веса</div>
+                      <div class="tabheader__item-cKal">2500-3000</div>
+                    </div>
+                    <div class="tabheader__item--right">
+                      <div class="tabheader__item-img">
+                        <img src="./img/icon/meet.webp" alt="" />
+                      </div>
+                    </div>
                   </div>
-                  <div class="tabheader__item">Сбалансированное</div>
-                  <div class="tabheader__item">Похудение</div>
-                  <div class="tabheader__item">Премиум</div>
+
+                  <div class="tabheader__item">
+                    <div class="tabheader__item--left">
+                      <div class="tabheader__item-title">Сбалансированное</div>
+                      <div class="tabheader__item-cKal">1500-2500</div>
+                    </div>
+                    <div class="tabheader__item--right">
+                      <div class="tabheader__item-img">
+                        <img src="./img/icon/salat.webp" alt="" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tabheader__item">
+                    <div class="tabheader__item--left">
+                      <div class="tabheader__item-title">Похудение</div>
+                      <div class="tabheader__item-cKal">1300-2200</div>
+                    </div>
+                    <div class="tabheader__item--right">
+                      <div class="tabheader__item-img">
+                        <img src="./img/icon/carrot.webp" alt="" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <div class="tabheader__item">
+                    <div class="tabheader__item-title">Премиум</div>
+                    <div class="tabheader__item-img">
+                      <img src="./img/icon/noodle.webp" alt="" />
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+
+              <div class="tabdays">
+                <div class="tabdays__title">
+                  <h3>Выберите число дней доставки</h3>
+                </div>
+                <div class="tabdays__choise">
+                  <button
+                    class="tabdays__choise-btn tabdays__choise-btn--active"
+                  >
+                    1
+                  </button>
+                  <button class="tabdays__choise-btn">2</button>
+                  <button class="tabdays__choise-btn">5</button>
+                  <button class="tabdays__choise-btn">7</button>
+                  <button class="tabdays__choise-btn">10</button>
+                  <button class="tabdays__choise-btn">14</button>
+                  <button class="tabdays__choise-btn">20</button>
+                  <button class="tabdays__choise-btn">28</button>
                 </div>
               </div>
             </div>
             <div class="tabcontainer__bot">
-              <!-- <a href="#selectATariff" class="tabcontainer__bot-link">
-                <div class="tabcontainer__bot-link--btn">
-                  Подобрать тариф
-                </div></a
-              > -->
-              <div class="tabcontainer__bot-promo">
-                Скидка 15% на первый заказ !
+              <div class="tabcontainer__bot-title">Выбранная программа</div>
+              <div class="tabcontainer__bot-tariff"></div>
+              <div class="tabcontainer__bot-day">1 день</div>
+              <div class="tabcontainer__bot-calories">1000 калорий</div>
+              <div class="tabcontainer__bot-price"></div>
+              <div class="tabcontainer__bot-action">
+                <div class="tabcontainer__bot-action--icon"></div>
+                <div class="tabcontainer__bot-action--text">Оформить заказ</div>
               </div>
+              <div class="tabcontainer__bot-reset">Сбросить настройки</div>
             </div>
           </div>
           <!-- <div class="preview__life">Живи полной жизнью!</div> -->
@@ -1246,6 +1837,7 @@
         </div>
       </div>
     </div>
+    <div class="tabcontainer__bot-promo">Скидка 15% на первый заказ !</div>
     <script type="module" src="./dist/dist/bundle.js"></script>
   </body>
 </html>

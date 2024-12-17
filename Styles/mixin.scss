@@ -93,8 +93,7 @@ $medium-dark: #515151; // dark
 $dark: #3e3e3e; // dark
 $black: #1f1f1f;
 $green: #54ed39a2;
-
-// Определение миксина для запрета выделения
+$half-green: #54ed3968; // Определение миксина для запрета выделения
 @mixin no-select {
   user-drag: none;
   -webkit-user-drag: none;
