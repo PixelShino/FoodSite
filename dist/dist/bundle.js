@@ -737,6 +737,7 @@ function tabs(
 
   const choiseKcal = document.querySelector('.tabcalories__choise');
   const btnKcal = document.querySelectorAll('.tabcalories__choise-btn');
+  const tabcalories = document.querySelector('.tabcalories');
 
   if (!tabs.length || !tabsContent.length || !tabsParent || !cardsParent) {
     console.error('Не удалось найти необходимые элементы для табов');
@@ -772,9 +773,43 @@ function tabs(
       (0,_tabsSlider__WEBPACK_IMPORTED_MODULE_0__["default"])(tabsContent[tabIndex].querySelector(cardsParentItem));
     }
 
-    if (btnKcal[tabIndex].querySelector('.tabcalories__choise')) {
-      calcPriceAndDays(btnKcal[tabIndex].querySelector('.tabcalories__choise'));
+    const tabcaloriesChoise = tabsContent[tabIndex].querySelector(
+      '.tabcalories__choise',
+    );
+
+    // проверка содержит ли текущий таб поле с выборм калорий
+    if (tabcaloriesChoise) {
+      console.log(`tabs  contains Kcal`); // true
+      calcKcal(tabcaloriesChoise);
+      console.log(choiseKcal);
+      // choiseKcal.forEach((btn) => {
+      //   if
+      // })
+    } else {
+      console.log(`tabs not contains Kcal`);
     }
+
+    // //проверка содержит ли поле калорий активную кнопку
+    // const tabcaloriesActive = choiseKcal.closest(
+    //   '.tabcalories__choise-btn--active',
+    // );
+
+    // if (!tabcaloriesActive) {
+    //   console.log('НЕТУ АКТИВНОЙ КНОПКИ');
+    //   console.log(btnKcal);
+    //   btnKcal[0].classList.add('tabcalories__choise-btn--active');
+
+    //   // item[0].classList.add('tabcalories__choise-btn--active');
+    //   // menuKcal.textContent = `${item.textContent} калорий`;
+
+    //   // calcKcal(tabcaloriesChoise);
+    // } else {
+    //   console.log(tabcaloriesActive);
+    // }
+
+    // if (tabsContent[tabIndex].querySelector(tabcalories)) {
+    //   calcPriceAndDays(tabsContent[tabIndex].querySelector(tabcalories));
+    // }
   }
 
   // function switchTab() {
@@ -810,11 +845,12 @@ function tabs(
   }
   function calcPriceAndDays(btnIndex = 0) {
     // Обработчик для выбора дней
+
     choiseDays.addEventListener('click', (event) => {
       const target = event.target.closest('.tabdays__choise-btn');
       if (target) {
         btnDays.forEach((item) => {
-          console.log(target);
+          // console.log(target);
           item.classList.remove('tabdays__choise-btn--active');
         });
         target.classList.add('tabdays__choise-btn--active');
@@ -833,21 +869,53 @@ function tabs(
 
     // Обработчик для выбора калорий
     //FIXME: сделать работоспособными при переключении вкладок
-    choiseKcal.addEventListener('click', (event) => {
+  }
+  function calcKcal(parentSelector = choiseKcal, tabIndex) {
+    // console.log(typeof choiseKcal);
+    // console.log(parentSelector);
+
+    // btnKcal.forEach((item) => {
+    //   // console.log(target);
+    //   // item[0].classList.add('tabcalories__choise-btn--active');
+    //   // menuKcal.textContent = `${item.textContent} калорий`;
+    // });
+    btnKcal.forEach((item) => {
+      // console.log(target);
+      item.classList.remove('tabcalories__choise-btn--active');
+      menuKcal.textContent = `${parentSelector.firstElementChild.textContent} калорий`;
+    });
+
+    console.log(parentSelector);
+    parentSelector.firstElementChild.classList.add(
+      'tabcalories__choise-btn--active',
+    );
+
+    parentSelector.addEventListener('click', () => {
       const target = event.target.closest('.tabcalories__choise-btn');
+
       if (target) {
+        console.log(`target for kCal find ,is ${target.classList} in func`);
         btnKcal.forEach((item) => {
-          console.log(target);
+          // console.log(target);
           item.classList.remove('tabcalories__choise-btn--active');
+
+          target.classList.add('tabcalories__choise-btn--active');
+          menuKcal.textContent = `${target.textContent} калорий`;
+          console.log(choiseKcal);
         });
-        target.classList.add('tabcalories__choise-btn--active');
-        menuKcal.textContent = `${target.textContent} калорий`;
+      } else {
+        console.log(btnKcal[0]);
+        btnKcal[0].textContent = `??? калорий`;
+        console.log(`target forKcal NOT FIND`);
       }
     });
   }
 
+  function calcPrice() {}
+
   hideTabsContent();
   showTabContent();
+  // calcKcal();
   switchTab();
   calcPriceAndDays();
 }
