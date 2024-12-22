@@ -363,6 +363,7 @@ function forms() {
     });
     return await res.json();
   };
+
   function bindPostData(form) {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -828,17 +829,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _menuCardSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./menuCardSlider */ "./js/modules/menuCardSlider.js");
-// import { closeModal, openModal } from './modal';
-// const { openModal, closeModal } = modalModule();
+ // Импортируем модуль для слайдера карточек меню
 
-
+// Функция для управления табами
 function tabs(
-  tabsItem,
-  tabsContentItem,
-  tabsParentItem,
-  cardsParentItem,
-  btnDaysItem,
+  tabsItem, // Селектор элементов табов
+  tabsContentItem, // Селектор элементов контента табов
+  tabsParentItem, // Селектор родительского элемента табов
+  cardsParentItem, // Селектор родительского элемента карточек меню
+  btnDaysItem, // Селектор кнопок выбора дней (не используется)
 ) {
+  // Получаем элементы DOM
   const tabs = document.querySelectorAll(tabsItem);
   const tabsContent = document.querySelectorAll(tabsContentItem);
   const tabsParent = document.querySelector(tabsParentItem);
@@ -854,15 +855,21 @@ function tabs(
 
   const choiseKcal = document.querySelector('.tabcalories__choise');
   const btnKcal = document.querySelectorAll('.tabcalories__choise-btn');
-  const tabcalories = document.querySelector('.tabcalories');
-  let tabIndex = 0;
-  let price = 0;
 
+  // Индекс текущего активного таба
+  let tabIndex = 0;
+
+  // Переменные для хранения текущих значений дней и ратио калорий
+  let currentDayValue = 1;
+  let currentRatioValue;
+
+  // Проверка на наличие необходимых элементов DOM. Если их нет, выводим ошибку в консоль и прекращаем выполнение функции
   if (!tabs.length || !tabsContent.length || !tabsParent || !cardsParent) {
     console.error('Не удалось найти необходимые элементы для табов');
     return;
   }
 
+  // Функция для скрытия контента всех табов
   function hideTabsContent() {
     tabsContent.forEach((element) => {
       element.classList.add('hide');
@@ -874,20 +881,16 @@ function tabs(
     });
   }
 
+  // Функция для отображения контента выбранного таба
   function showTabContent() {
     tabsContent[tabIndex].classList.add('show', 'fade');
     tabsContent[tabIndex].classList.remove('hide');
     tabs[tabIndex].classList.add('tabheader__item_active');
 
-    menuTariff.textContent = tabs[tabIndex].querySelector(
-      '.tabheader__item-title',
-    ).textContent;
+    menuTariff.textContent =
+      tabs[tabIndex].querySelector('.tabheader__item-title').textContent || 1;
 
-    // menuKcal.textContent = btnKcal[tabIndex].querySelector(
-    //   '.tabcalories__choise-btn',
-    // ).textContent;
-
-    // Вызов tabsSlider в соответсвтии с текущей вкладкой
+    // Инициализируем слайдер карточек меню, если он есть на текущем табе
     if (tabsContent[tabIndex].querySelector(cardsParentItem)) {
       (0,_menuCardSlider__WEBPACK_IMPORTED_MODULE_0__["default"])(tabsContent[tabIndex].querySelector(cardsParentItem));
     }
@@ -896,149 +899,139 @@ function tabs(
       '.tabcalories__choise',
     );
 
-    // проверка содержит ли текущий таб поле с выборм калорий
+    // Если на текущем табе есть выбор калорий, инициализируем его
     if (tabcaloriesChoise) {
-      console.log(`tabs  contains Kcal`); // true
-      calcKcal(tabcaloriesChoise);
-      console.log(choiseKcal);
-      // choiseKcal.forEach((btn) => {
-      //   if
-      // })
-    } else {
-      console.log(`tabs not contains Kcal`);
+      resetKcal(tabcaloriesChoise); // Сбрасываем выбор калорий на первый элемент
+      resetDays(tabcaloriesChoise); // Сбрасываем выбор дней на первый элемент
+
+      // Инициализируем currentRatioValue после resetKcal, чтобы значение было актуальным
+      currentRatioValue = btnKcal.length > 0 ? btnKcal[0].dataset.ratio : 1.2;
+
+      calcKcal(tabcaloriesChoise, tabIndex, currentDayValue);
+      calcDays(tabcaloriesChoise, tabIndex, currentRatioValue);
+      calcTotalPrice(tabIndex, currentDayValue, currentRatioValue); // Пересчитываем общую цену
     }
-
-    // //проверка содержит ли поле калорий активную кнопку
-    // const tabcaloriesActive = choiseKcal.closest(
-    //   '.tabcalories__choise-btn--active',
-    // );
-
-    // if (!tabcaloriesActive) {
-    //   console.log('НЕТУ АКТИВНОЙ КНОПКИ');
-    //   console.log(btnKcal);
-    //   btnKcal[0].classList.add('tabcalories__choise-btn--active');
-
-    //   // item[0].classList.add('tabcalories__choise-btn--active');
-    //   // menuKcal.textContent = `${item.textContent} калорий`;
-
-    //   // calcKcal(tabcaloriesChoise);
-    // } else {
-    //   console.log(tabcaloriesActive);
-    // }
-
-    // if (tabsContent[tabIndex].querySelector(tabcalories)) {
-    //   calcDays(tabsContent[tabIndex].querySelector(tabcalories));
-    // }
   }
 
-  // function switchTab() {
-  //   tabsParent.addEventListener('click', (event) => {
-  //     const target = event.target;
-  //     if (target && target.classList.contains('tabheader__item')) {
-  //       tabs.forEach((item, i) => {
-  //         if (target === item) {
-  //           hideTabsContent();
-  //           showTabContent(i);
-  //         }
-  //       });
-  //     }
-
-  //   });
-  // }
+  // Функция для обработки переключения табов
   function switchTab() {
     tabsParent.addEventListener('click', (event) => {
-      // Ищем ближайший родительский элемент с нужным классом/селектором
       const targetElement = event.target.closest(tabsItem);
 
-      // Проверяем, нашёлся ли элемент
       if (targetElement) {
         tabs.forEach((item, i) => {
           if (targetElement === item) {
             tabIndex = i;
             hideTabsContent();
-            showTabContent(tabIndex);
-            calcDays(tabIndex);
-            calcTotalPrice(tabIndex);
+            showTabContent(); // Отображаем контент нового таба
+            calcTotalPrice(tabIndex, currentDayValue, currentRatioValue); //  и пересчитываем цену
           }
         });
       }
     });
   }
-  function calcDays(btnIndex = 0) {
-    // Обработчик для выбора дней
 
-    choiseDays.addEventListener('click', (event) => {
+  // Функция для сброса выбора дней на первый элемент
+  function resetDays() {
+    if (btnDays.length > 0) {
+      btnDays.forEach((item) => {
+        item.classList.remove('tabdays__choise-btn--active');
+      });
+      btnDays[0].classList.add('tabdays__choise-btn--active');
+      currentDayValue = parseInt(btnDays[0].textContent, 10);
+      menuDays.textContent =
+        currentDayValue === 1
+          ? `${currentDayValue} день`
+          : currentDayValue <= 4
+            ? `${currentDayValue} дня`
+            : `${currentDayValue} дней`;
+    }
+  }
+
+  // Функция для сброса выбора калорий на первый элемент
+  function resetKcal() {
+    if (btnKcal.length > 0) {
+      btnKcal.forEach((item) => {
+        item.classList.remove('tabcalories__choise-btn--active');
+      });
+      btnKcal[0].classList.add('tabcalories__choise-btn--active');
+      menuKcal.textContent = `${btnKcal[0].textContent} калорий`;
+      currentRatioValue = btnKcal[0].dataset.ratio; // Обновляем currentRatioValue
+    }
+  }
+
+  // Функция для обработки выбора количества дней
+  function calcDays(tabcaloriesChoise, tabIndex, ratio) {
+    // Удаляем предыдущий обработчик события, чтобы избежать дублирования
+    choiseDays.removeEventListener('click', handleChoiseDaysClick);
+
+    function handleChoiseDaysClick(event) {
       const target = event.target.closest('.tabdays__choise-btn');
+
       if (target) {
         btnDays.forEach((item) => {
-          // console.log(target);
           item.classList.remove('tabdays__choise-btn--active');
         });
         target.classList.add('tabdays__choise-btn--active');
 
-        // Изменение текста в зависимости от количества дней
-        const daysCount = parseInt(target.textContent, 10);
-        if (daysCount === 1) {
-          menuDays.textContent = `${daysCount} день`;
-        } else if (daysCount > 1 && daysCount <= 4) {
-          menuDays.textContent = `${daysCount} дня`;
-        } else {
-          menuDays.textContent = `${daysCount} дней`;
-        }
+        currentDayValue = parseInt(target.textContent, 10);
+        menuDays.textContent =
+          currentDayValue === 1
+            ? `${currentDayValue} день`
+            : currentDayValue <= 4
+              ? `${currentDayValue} дня`
+              : `${currentDayValue} дней`;
+
+        calcTotalPrice(tabIndex, currentDayValue, currentRatioValue); // Пересчитываем общую цену
       }
-    });
+    }
 
-    // Обработчик для выбора калорий
+    choiseDays.addEventListener('click', handleChoiseDaysClick);
   }
-  function calcKcal(parentSelector = choiseKcal, tabIndex) {
-    // console.log(typeof choiseKcal);
-    // console.log(parentSelector);
 
-    // btnKcal.forEach((item) => {
-    //   // console.log(target);
-    //   // item[0].classList.add('tabcalories__choise-btn--active');
-    //   // menuKcal.textContent = `${item.textContent} калорий`;
-    // });
+  // Функция для обработки выбора калорий
+  function calcKcal(parentSelector = choiseKcal, tabIndex, dayValue) {
+    parentSelector.removeEventListener('click', handleKcalClick); // Удаляем предыдущий обработчик
+
     btnKcal.forEach((item) => {
-      // console.log(target);
       item.classList.remove('tabcalories__choise-btn--active');
-      menuKcal.textContent = `${parentSelector.firstElementChild.textContent} калорий`;
     });
 
-    console.log(parentSelector);
     parentSelector.firstElementChild.classList.add(
       'tabcalories__choise-btn--active',
     );
 
-    parentSelector.addEventListener('click', () => {
+    function handleKcalClick(event) {
       const target = event.target.closest('.tabcalories__choise-btn');
-
       if (target) {
-        console.log(`target for kCal find ,is ${target.classList} in func`);
         btnKcal.forEach((item) => {
-          // console.log(target);
           item.classList.remove('tabcalories__choise-btn--active');
-
-          target.classList.add('tabcalories__choise-btn--active');
-          menuKcal.textContent = `${target.textContent} калорий`;
-          // console.log(choiseKcal);
         });
-      } else {
-        console.log(btnKcal[0]);
-        btnKcal[0].textContent = `??? калорий`;
-        console.log(`target forKcal NOT FIND`);
+        target.classList.add('tabcalories__choise-btn--active');
+        menuKcal.textContent = `${target.textContent} калорий`;
+        currentRatioValue = target.dataset.ratio;
+        calcTotalPrice(tabIndex, dayValue, currentRatioValue); // Пересчитываем общую цену
       }
-    });
+    }
+
+    parentSelector.addEventListener('click', handleKcalClick);
   }
 
-  //TODO: нужно вывод цены на экран бокового меню,
-  // на цену вляет - тариф( выбраннеы калории) ,
-  // количество выбранных дней ( скидка от 5 дней ),
-  // персональная скидка на первй заказ 15%,
-  function calcTotalPrice(tabIndex) {
+  // Функция для расчета общей цены
+  function calcTotalPrice(tabIndex, dayValue, ratio) {
+    // Вывод данных в консоль для отладки
+    console.log('Приходит в calcTotalPrice');
+    console.log(`Таб индекс - ${tabIndex}`);
+    console.log(`Значение дня ${dayValue}`);
+    console.log(`Ратио калорий - ${ratio}`);
+
+    let defaultPrice = 100; // Цена по умолчанию
+    let price = 0;
+
+    // Определяем цену в зависимости от выбранного таба
     switch (tabIndex) {
       case 0:
-        price = 100;
+        price = defaultPrice;
         break;
       case 1:
         price = 125;
@@ -1047,52 +1040,31 @@ function tabs(
         price = 150;
         break;
       default:
-        price = 0;
+        price = defaultPrice;
     }
 
-    // const price = {
-    //   950: 980,
-    //   1350: 1260,
-    //   1525: 1360,
-    //   2025: 1510,
-    //   2500: 1600,
-    //   3000: 1800,
-    // };
-    // const discount = {
-    //   5: 150,
-    //   7: 320,
-    //   10: 800,
-    //   14: 1390,
-    //   20: 2400,
-    //   28: 3880,
-    // };
-    // const firstBuyDiscount = 15%
-    // Проверяем, есть ли цена для указанных калорий
-    // if (!dsdf[dsas]) {
-    //   throw new Error("Неизвестное количество калорий");
-    // }
-
-    const daysMatch = menuDays.textContent.match(/\d+/);
-    const days = daysMatch ? parseInt(daysMatch[0], 10) : 0;
+    const days = dayValue || 0; // Используем dayValue, если он определен, иначе 0
     let totalPrice = days * price;
     menuPrice.textContent = +totalPrice.toFixed(2) + ' руб.';
 
+    // Вывод данных в консоль для отладки
     console.log(`Цена - ${price}`);
-    console.log(`Количество дней - ${days}`);
+    console.log(`Количество дней - ${dayValue}`);
+    console.log(`Ратио калорий - ${ratio}`);
     console.log(`Итоговая цена - ${totalPrice}`);
     return totalPrice;
   }
 
-  calcTotalPrice();
-
-  hideTabsContent();
-  showTabContent();
-  // calcKcal();
-  switchTab();
-  calcDays();
+  // Инициализируем табы
+  calcTotalPrice(tabIndex, currentDayValue, currentRatioValue); // Вычисляем начальную цену
+  hideTabsContent(); // Скрываем контент всех табов, кроме первого
+  showTabContent(); // Показываем контент первого таба
+  switchTab(); // Инициализируем обработчик переключения табов
 }
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tabs);
+
+//TODO : сделать расчет цены , в внимание принимается - количество дней и ратио калорий,
+// скидка на первый заказ а так же скидка на больший выбор дней
 
 
 /***/ }),

@@ -21,6 +21,7 @@ function forms() {
     });
     return await res.json();
   };
+
   function bindPostData(form) {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
