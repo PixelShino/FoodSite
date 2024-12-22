@@ -431,6 +431,123 @@ function forms() {
 
 /***/ }),
 
+/***/ "./js/modules/menuCardSlider.js":
+/*!**************************************!*\
+  !*** ./js/modules/menuCardSlider.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// js/modules/tabsSlider.js           tabsSlider
+//TODO: нужно сделать плавнее , так же продумать на разных экранах,
+function menuCardSlider(cardContainerOpt) {
+  // console.log('tabsSlider initialized');
+  // let cardContainer = document.querySelector('.tabcontent__bot-cards');
+  let cardContainer =
+    cardContainerOpt || document.querySelector('.tabcontent__bot-cards'); // FIM
+  // console.log(cardContainer);\
+
+  // function switchActiveCards(cardContainerOpt) {
+  //   // Pass cardContainerOpt as an argument
+  //   const tabheaderItems = document.querySelector('.tabheader__items');
+  //   const tabheaderItemClass = 'tabheader__item';
+  //   let cardContainer = cardContainerOpt; // Cache the card container
+
+  //   tabheaderItems.addEventListener('click', (event) => {
+  //     const clickedElement = event.target;
+
+  //     if (clickedElement.classList.contains(tabheaderItemClass)) {
+  //       tabsSlider();
+
+  //       // Only query the DOM if cardContainerOpt wasn't provided
+  //       if (!cardContainer) {
+  //         cardContainer = document.querySelector('.tabcontent__bot-cards');
+  //       }
+  //     }
+  //   });
+  // }
+  // switchActiveCards();
+
+  if (!cardContainer) return;
+
+  let isDown = false,
+    startX,
+    scrollLeft;
+  let isTouching = false,
+    touchStartX,
+    touchScrollLeft;
+
+  const handleMouseDown = (e) => {
+    isDown = true;
+    cardContainer.classList.add('active');
+    startX = e.clientX - cardContainer.getBoundingClientRect().left;
+    scrollLeft = cardContainer.scrollLeft;
+    cardContainer.style.userSelect = 'none';
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.clientX - cardContainer.getBoundingClientRect().left;
+    cardContainer.scrollLeft = scrollLeft - (x - startX) * 2;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    if (isDown || isTouching) {
+      isDown = false;
+      isTouching = false;
+      cardContainer.classList.remove('active');
+      cardContainer.style.userSelect = 'auto';
+    }
+  };
+
+  const handleTouchStart = (e) => {
+    isTouching = true;
+    touchStartX =
+      e.touches[0].clientX - cardContainer.getBoundingClientRect().left;
+    touchScrollLeft = cardContainer.scrollLeft;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isTouching) return;
+    const x = e.touches[0].clientX - cardContainer.getBoundingClientRect().left;
+    cardContainer.scrollLeft = touchScrollLeft - (x - touchStartX) * 2;
+  };
+
+  const handleTouchEnd = () => {
+    isTouching = false;
+    isDown = false;
+  };
+
+  cardContainer.addEventListener('mousedown', handleMouseDown);
+  cardContainer.addEventListener('touchstart', handleTouchStart);
+  cardContainer.addEventListener('touchmove', handleTouchMove);
+  cardContainer.addEventListener('touchend', handleTouchEnd);
+
+  window.addEventListener('mouseup', handleMouseUpOrLeave);
+  window.addEventListener('mousemove', handleMouseMove);
+  window.addEventListener('mouseleave', handleMouseUpOrLeave);
+
+  return () => {
+    cardContainer.removeEventListener('mousedown', handleMouseDown);
+    cardContainer.removeEventListener('touchstart', handleTouchStart);
+    cardContainer.removeEventListener('touchmove', handleTouchMove);
+    cardContainer.removeEventListener('touchend', handleTouchEnd);
+
+    window.removeEventListener('mouseup', handleMouseUpOrLeave);
+    window.removeEventListener('mousemove', handleMouseMove);
+    window.removeEventListener('mouseleave', handleMouseUpOrLeave);
+  };
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (menuCardSlider);
+
+
+/***/ }),
+
 /***/ "./js/modules/modal.js":
 /*!*****************************!*\
   !*** ./js/modules/modal.js ***!
@@ -710,7 +827,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _tabsSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tabsSlider */ "./js/modules/tabsSlider.js");
+/* harmony import */ var _menuCardSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./menuCardSlider */ "./js/modules/menuCardSlider.js");
 // import { closeModal, openModal } from './modal';
 // const { openModal, closeModal } = modalModule();
 
@@ -738,6 +855,8 @@ function tabs(
   const choiseKcal = document.querySelector('.tabcalories__choise');
   const btnKcal = document.querySelectorAll('.tabcalories__choise-btn');
   const tabcalories = document.querySelector('.tabcalories');
+  let tabIndex = 0;
+  let price = 0;
 
   if (!tabs.length || !tabsContent.length || !tabsParent || !cardsParent) {
     console.error('Не удалось найти необходимые элементы для табов');
@@ -755,7 +874,7 @@ function tabs(
     });
   }
 
-  function showTabContent(tabIndex = 0) {
+  function showTabContent() {
     tabsContent[tabIndex].classList.add('show', 'fade');
     tabsContent[tabIndex].classList.remove('hide');
     tabs[tabIndex].classList.add('tabheader__item_active');
@@ -770,7 +889,7 @@ function tabs(
 
     // Вызов tabsSlider в соответсвтии с текущей вкладкой
     if (tabsContent[tabIndex].querySelector(cardsParentItem)) {
-      (0,_tabsSlider__WEBPACK_IMPORTED_MODULE_0__["default"])(tabsContent[tabIndex].querySelector(cardsParentItem));
+      (0,_menuCardSlider__WEBPACK_IMPORTED_MODULE_0__["default"])(tabsContent[tabIndex].querySelector(cardsParentItem));
     }
 
     const tabcaloriesChoise = tabsContent[tabIndex].querySelector(
@@ -808,7 +927,7 @@ function tabs(
     // }
 
     // if (tabsContent[tabIndex].querySelector(tabcalories)) {
-    //   calcPriceAndDays(tabsContent[tabIndex].querySelector(tabcalories));
+    //   calcDays(tabsContent[tabIndex].querySelector(tabcalories));
     // }
   }
 
@@ -835,15 +954,17 @@ function tabs(
       if (targetElement) {
         tabs.forEach((item, i) => {
           if (targetElement === item) {
+            tabIndex = i;
             hideTabsContent();
-            showTabContent(i);
-            calcPriceAndDays(i);
+            showTabContent(tabIndex);
+            calcDays(tabIndex);
+            calcTotalPrice(tabIndex);
           }
         });
       }
     });
   }
-  function calcPriceAndDays(btnIndex = 0) {
+  function calcDays(btnIndex = 0) {
     // Обработчик для выбора дней
 
     choiseDays.addEventListener('click', (event) => {
@@ -868,7 +989,6 @@ function tabs(
     });
 
     // Обработчик для выбора калорий
-    //FIXME: сделать работоспособными при переключении вкладок
   }
   function calcKcal(parentSelector = choiseKcal, tabIndex) {
     // console.log(typeof choiseKcal);
@@ -901,7 +1021,7 @@ function tabs(
 
           target.classList.add('tabcalories__choise-btn--active');
           menuKcal.textContent = `${target.textContent} калорий`;
-          console.log(choiseKcal);
+          // console.log(choiseKcal);
         });
       } else {
         console.log(btnKcal[0]);
@@ -911,17 +1031,68 @@ function tabs(
     });
   }
 
-  function calcPrice() {}
+  //TODO: нужно вывод цены на экран бокового меню,
+  // на цену вляет - тариф( выбраннеы калории) ,
+  // количество выбранных дней ( скидка от 5 дней ),
+  // персональная скидка на первй заказ 15%,
+  function calcTotalPrice(tabIndex) {
+    switch (tabIndex) {
+      case 0:
+        price = 100;
+        break;
+      case 1:
+        price = 125;
+        break;
+      case 2:
+        price = 150;
+        break;
+      default:
+        price = 0;
+    }
+
+    // const price = {
+    //   950: 980,
+    //   1350: 1260,
+    //   1525: 1360,
+    //   2025: 1510,
+    //   2500: 1600,
+    //   3000: 1800,
+    // };
+    // const discount = {
+    //   5: 150,
+    //   7: 320,
+    //   10: 800,
+    //   14: 1390,
+    //   20: 2400,
+    //   28: 3880,
+    // };
+    // const firstBuyDiscount = 15%
+    // Проверяем, есть ли цена для указанных калорий
+    // if (!dsdf[dsas]) {
+    //   throw new Error("Неизвестное количество калорий");
+    // }
+
+    const daysMatch = menuDays.textContent.match(/\d+/);
+    const days = daysMatch ? parseInt(daysMatch[0], 10) : 0;
+    let totalPrice = days * price;
+    menuPrice.textContent = +totalPrice.toFixed(2) + ' руб.';
+
+    console.log(`Цена - ${price}`);
+    console.log(`Количество дней - ${days}`);
+    console.log(`Итоговая цена - ${totalPrice}`);
+    return totalPrice;
+  }
+
+  calcTotalPrice();
 
   hideTabsContent();
   showTabContent();
   // calcKcal();
   switchTab();
-  calcPriceAndDays();
+  calcDays();
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tabs);
-//TODO: сделать расчет калорий
 
 
 /***/ }),
@@ -1076,123 +1247,6 @@ function SliderV2(
 
 /***/ }),
 
-/***/ "./js/modules/tabsSlider.js":
-/*!**********************************!*\
-  !*** ./js/modules/tabsSlider.js ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-// js/modules/tabsSlider.js
-
-function tabsSlider(cardContainerOpt) {
-  // console.log('tabsSlider initialized');
-  // let cardContainer = document.querySelector('.tabcontent__bot-cards');
-  let cardContainer =
-    cardContainerOpt || document.querySelector('.tabcontent__bot-cards'); // FIM
-  // console.log(cardContainer);\
-
-  // function switchActiveCards(cardContainerOpt) {
-  //   // Pass cardContainerOpt as an argument
-  //   const tabheaderItems = document.querySelector('.tabheader__items');
-  //   const tabheaderItemClass = 'tabheader__item';
-  //   let cardContainer = cardContainerOpt; // Cache the card container
-
-  //   tabheaderItems.addEventListener('click', (event) => {
-  //     const clickedElement = event.target;
-
-  //     if (clickedElement.classList.contains(tabheaderItemClass)) {
-  //       tabsSlider();
-
-  //       // Only query the DOM if cardContainerOpt wasn't provided
-  //       if (!cardContainer) {
-  //         cardContainer = document.querySelector('.tabcontent__bot-cards');
-  //       }
-  //     }
-  //   });
-  // }
-  // switchActiveCards();
-
-  if (!cardContainer) return;
-
-  let isDown = false,
-    startX,
-    scrollLeft;
-  let isTouching = false,
-    touchStartX,
-    touchScrollLeft;
-
-  const handleMouseDown = (e) => {
-    isDown = true;
-    cardContainer.classList.add('active');
-    startX = e.clientX - cardContainer.getBoundingClientRect().left;
-    scrollLeft = cardContainer.scrollLeft;
-    cardContainer.style.userSelect = 'none';
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.clientX - cardContainer.getBoundingClientRect().left;
-    cardContainer.scrollLeft = scrollLeft - (x - startX) * 2;
-  };
-
-  const handleMouseUpOrLeave = () => {
-    if (isDown || isTouching) {
-      isDown = false;
-      isTouching = false;
-      cardContainer.classList.remove('active');
-      cardContainer.style.userSelect = 'auto';
-    }
-  };
-
-  const handleTouchStart = (e) => {
-    isTouching = true;
-    touchStartX =
-      e.touches[0].clientX - cardContainer.getBoundingClientRect().left;
-    touchScrollLeft = cardContainer.scrollLeft;
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isTouching) return;
-    const x = e.touches[0].clientX - cardContainer.getBoundingClientRect().left;
-    cardContainer.scrollLeft = touchScrollLeft - (x - touchStartX) * 2;
-  };
-
-  const handleTouchEnd = () => {
-    isTouching = false;
-    isDown = false;
-  };
-
-  cardContainer.addEventListener('mousedown', handleMouseDown);
-  cardContainer.addEventListener('touchstart', handleTouchStart);
-  cardContainer.addEventListener('touchmove', handleTouchMove);
-  cardContainer.addEventListener('touchend', handleTouchEnd);
-
-  window.addEventListener('mouseup', handleMouseUpOrLeave);
-  window.addEventListener('mousemove', handleMouseMove);
-  window.addEventListener('mouseleave', handleMouseUpOrLeave);
-
-  return () => {
-    cardContainer.removeEventListener('mousedown', handleMouseDown);
-    cardContainer.removeEventListener('touchstart', handleTouchStart);
-    cardContainer.removeEventListener('touchmove', handleTouchMove);
-    cardContainer.removeEventListener('touchend', handleTouchEnd);
-
-    window.removeEventListener('mouseup', handleMouseUpOrLeave);
-    window.removeEventListener('mousemove', handleMouseMove);
-    window.removeEventListener('mouseleave', handleMouseUpOrLeave);
-  };
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (tabsSlider);
-
-
-/***/ }),
-
 /***/ "./js/modules/timer.js":
 /*!*****************************!*\
   !*** ./js/modules/timer.js ***!
@@ -1343,7 +1397,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_tabs_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/tabs.js */ "./js/modules/tabs.js");
 /* harmony import */ var _modules_timer_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/timer.js */ "./js/modules/timer.js");
 /* harmony import */ var _modules_tabsAndSlider_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/tabsAndSlider.js */ "./js/modules/tabsAndSlider.js");
-/* harmony import */ var _modules_tabsSlider__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/tabsSlider */ "./js/modules/tabsSlider.js");
+/* harmony import */ var _modules_menuCardSlider_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/menuCardSlider.js */ "./js/modules/menuCardSlider.js");
 /* harmony import */ var _modules_fixedPromo__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/fixedPromo */ "./js/modules/fixedPromo.js");
 
 
@@ -1374,6 +1428,9 @@ document.addEventListener('DOMContentLoaded', () => {
     '.tabcontent__bot-cards',
     '.tabdays__choise-btn',
   );
+
+  //TODO:перенести таймер в promo вниз экрана 
+  //или переделать таймер в отдельное окно 
   (0,_modules_timer_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
 
   (0,_modules_tabsAndSlider_js__WEBPACK_IMPORTED_MODULE_8__["default"])(
@@ -1384,7 +1441,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '#current',
     '#total',
   );
-  (0,_modules_tabsSlider__WEBPACK_IMPORTED_MODULE_9__["default"])();
+  (0,_modules_menuCardSlider_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
 
   // tabsAndSlider();
   // tabsAndSlider(

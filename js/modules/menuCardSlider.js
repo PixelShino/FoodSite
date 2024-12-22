@@ -1,6 +1,6 @@
-// js/modules/tabsSlider.js
-
-function tabsSlider(cardContainerOpt) {
+// js/modules/tabsSlider.js           tabsSlider
+//TODO: нужно сделать плавнее , так же продумать на разных экранах,
+function menuCardSlider(cardContainerOpt) {
   // console.log('tabsSlider initialized');
   // let cardContainer = document.querySelector('.tabcontent__bot-cards');
   let cardContainer =
@@ -100,4 +100,4 @@ function tabsSlider(cardContainerOpt) {
   };
 }
 
-export default tabsSlider;
+export default menuCardSlider;

@@ -1,6 +1,6 @@
 // import { closeModal, openModal } from './modal';
 // const { openModal, closeModal } = modalModule();
-import tabsSlider from './tabsSlider';
+import menuCardSlider from './menuCardSlider';
 
 function tabs(
   tabsItem,
@@ -25,6 +25,8 @@ function tabs(
   const choiseKcal = document.querySelector('.tabcalories__choise');
   const btnKcal = document.querySelectorAll('.tabcalories__choise-btn');
   const tabcalories = document.querySelector('.tabcalories');
+  let tabIndex = 0;
+  let price = 0;
 
   if (!tabs.length || !tabsContent.length || !tabsParent || !cardsParent) {
     console.error('Не удалось найти необходимые элементы для табов');
@@ -42,7 +44,7 @@ function tabs(
     });
   }
 
-  function showTabContent(tabIndex = 0) {
+  function showTabContent() {
     tabsContent[tabIndex].classList.add('show', 'fade');
     tabsContent[tabIndex].classList.remove('hide');
     tabs[tabIndex].classList.add('tabheader__item_active');
@@ -57,7 +59,7 @@ function tabs(
 
     // Вызов tabsSlider в соответсвтии с текущей вкладкой
     if (tabsContent[tabIndex].querySelector(cardsParentItem)) {
-      tabsSlider(tabsContent[tabIndex].querySelector(cardsParentItem));
+      menuCardSlider(tabsContent[tabIndex].querySelector(cardsParentItem));
     }
 
     const tabcaloriesChoise = tabsContent[tabIndex].querySelector(
@@ -95,7 +97,7 @@ function tabs(
     // }
 
     // if (tabsContent[tabIndex].querySelector(tabcalories)) {
-    //   calcPriceAndDays(tabsContent[tabIndex].querySelector(tabcalories));
+    //   calcDays(tabsContent[tabIndex].querySelector(tabcalories));
     // }
   }
 
@@ -122,15 +124,17 @@ function tabs(
       if (targetElement) {
         tabs.forEach((item, i) => {
           if (targetElement === item) {
+            tabIndex = i;
             hideTabsContent();
-            showTabContent(i);
-            calcPriceAndDays(i);
+            showTabContent(tabIndex);
+            calcDays(tabIndex);
+            calcTotalPrice(tabIndex);
           }
         });
       }
     });
   }
-  function calcPriceAndDays(btnIndex = 0) {
+  function calcDays(btnIndex = 0) {
     // Обработчик для выбора дней
 
     choiseDays.addEventListener('click', (event) => {
@@ -155,7 +159,6 @@ function tabs(
     });
 
     // Обработчик для выбора калорий
-    //FIXME: сделать работоспособными при переключении вкладок
   }
   function calcKcal(parentSelector = choiseKcal, tabIndex) {
     // console.log(typeof choiseKcal);
@@ -188,7 +191,7 @@ function tabs(
 
           target.classList.add('tabcalories__choise-btn--active');
           menuKcal.textContent = `${target.textContent} калорий`;
-          console.log(choiseKcal);
+          // console.log(choiseKcal);
         });
       } else {
         console.log(btnKcal[0]);
@@ -198,14 +201,65 @@ function tabs(
     });
   }
 
-  function calcPrice() {}
+  //TODO: нужно вывод цены на экран бокового меню,
+  // на цену вляет - тариф( выбраннеы калории) ,
+  // количество выбранных дней ( скидка от 5 дней ),
+  // персональная скидка на первй заказ 15%,
+  function calcTotalPrice(tabIndex) {
+    switch (tabIndex) {
+      case 0:
+        price = 100;
+        break;
+      case 1:
+        price = 125;
+        break;
+      case 2:
+        price = 150;
+        break;
+      default:
+        price = 0;
+    }
+
+    // const price = {
+    //   950: 980,
+    //   1350: 1260,
+    //   1525: 1360,
+    //   2025: 1510,
+    //   2500: 1600,
+    //   3000: 1800,
+    // };
+    // const discount = {
+    //   5: 150,
+    //   7: 320,
+    //   10: 800,
+    //   14: 1390,
+    //   20: 2400,
+    //   28: 3880,
+    // };
+    // const firstBuyDiscount = 15%
+    // Проверяем, есть ли цена для указанных калорий
+    // if (!dsdf[dsas]) {
+    //   throw new Error("Неизвестное количество калорий");
+    // }
+
+    const daysMatch = menuDays.textContent.match(/\d+/);
+    const days = daysMatch ? parseInt(daysMatch[0], 10) : 0;
+    let totalPrice = days * price;
+    menuPrice.textContent = +totalPrice.toFixed(2) + ' руб.';
+
+    console.log(`Цена - ${price}`);
+    console.log(`Количество дней - ${days}`);
+    console.log(`Итоговая цена - ${totalPrice}`);
+    return totalPrice;
+  }
+
+  calcTotalPrice();
 
   hideTabsContent();
   showTabContent();
   // calcKcal();
   switchTab();
-  calcPriceAndDays();
+  calcDays();
 }
 
 export default tabs;
-//TODO: сделать расчет калорий

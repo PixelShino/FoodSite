@@ -9,7 +9,7 @@ import tabs from './modules/tabs.js';
 import timer from './modules/timer.js';
 
 import SliderV2 from './modules/tabsAndSlider.js';
-import tabsSlider from './modules/tabsSlider';
+import menuCardSlider from './modules/menuCardSlider.js';
 import fixedPromo from './modules/fixedPromo';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     '.tabcontent__bot-cards',
     '.tabdays__choise-btn',
   );
+
+  //TODO:перенести таймер в promo вниз экрана 
+  //или переделать таймер в отдельное окно 
   timer();
 
   SliderV2(
@@ -37,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '#current',
     '#total',
   );
-  tabsSlider();
+  menuCardSlider();
 
   // tabsAndSlider();
   // tabsAndSlider(
