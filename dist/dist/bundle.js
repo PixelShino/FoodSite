@@ -445,105 +445,105 @@ __webpack_require__.r(__webpack_exports__);
 // js/modules/tabsSlider.js           tabsSlider
 //TODO: нужно сделать плавнее , так же продумать на разных экранах,
 function menuCardSlider(cardContainerOpt) {
-  // console.log('tabsSlider initialized');
-  // let cardContainer = document.querySelector('.tabcontent__bot-cards');
   let cardContainer =
-    cardContainerOpt || document.querySelector('.tabcontent__bot-cards'); // FIM
-  // console.log(cardContainer);\
-
-  // function switchActiveCards(cardContainerOpt) {
-  //   // Pass cardContainerOpt as an argument
-  //   const tabheaderItems = document.querySelector('.tabheader__items');
-  //   const tabheaderItemClass = 'tabheader__item';
-  //   let cardContainer = cardContainerOpt; // Cache the card container
-
-  //   tabheaderItems.addEventListener('click', (event) => {
-  //     const clickedElement = event.target;
-
-  //     if (clickedElement.classList.contains(tabheaderItemClass)) {
-  //       tabsSlider();
-
-  //       // Only query the DOM if cardContainerOpt wasn't provided
-  //       if (!cardContainer) {
-  //         cardContainer = document.querySelector('.tabcontent__bot-cards');
-  //       }
-  //     }
-  //   });
-  // }
-  // switchActiveCards();
+    cardContainerOpt || document.querySelector('.tabcontent__bot-cards');
 
   if (!cardContainer) return;
 
-  let isDown = false,
-    startX,
-    scrollLeft;
-  let isTouching = false,
-    touchStartX,
-    touchScrollLeft;
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+  let velocity = 0; // Store the velocity for inertial scrolling
 
   const handleMouseDown = (e) => {
     isDown = true;
-    cardContainer.classList.add('active');
-    startX = e.clientX - cardContainer.getBoundingClientRect().left;
+    startX = e.pageX - cardContainer.offsetLeft;
     scrollLeft = cardContainer.scrollLeft;
-    cardContainer.style.userSelect = 'none';
+    velocity = 0; //reset velocity on new scroll
+    cardContainer.style.cursor = 'grabbing';
   };
 
   const handleMouseMove = (e) => {
     if (!isDown) return;
     e.preventDefault();
-    const x = e.clientX - cardContainer.getBoundingClientRect().left;
-    cardContainer.scrollLeft = scrollLeft - (x - startX) * 2;
+    const x = e.pageX - cardContainer.offsetLeft;
+    const walk = (x - startX) * 2;
+    velocity = walk; // set velocity to current scroll delta
+    cardContainer.scrollLeft = scrollLeft - walk;
   };
 
   const handleMouseUpOrLeave = () => {
-    if (isDown || isTouching) {
-      isDown = false;
-      isTouching = false;
-      cardContainer.classList.remove('active');
-      cardContainer.style.userSelect = 'auto';
-    }
+    isDown = false;
+    cardContainer.style.cursor = 'grab';
+    beginScrollDeceleration(); // Start decelerating after mouseup
   };
+
+  const beginScrollDeceleration = () => {
+    if (Math.abs(velocity) < 0.5) return; // Stop if velocity is too small
+
+    velocity *= 0.95; // Deceleration factor - adjust as needed
+    cardContainer.scrollLeft -= velocity;
+
+    requestAnimationFrame(beginScrollDeceleration); // Loop for smooth deceleration
+  };
+
+  cardContainer.addEventListener('mousedown', handleMouseDown);
+  window.addEventListener('mousemove', handleMouseMove);
+  window.addEventListener('mouseup', handleMouseUpOrLeave);
+  window.addEventListener('mouseleave', handleMouseUpOrLeave);
+  cardContainer.style.cursor = 'grab'; // Initial cursor state
+
+  // Touch Events
+  let isTouching = false;
+  let touchStartX;
+  let touchScrollLeft;
+  let touchVelocity = 0;
 
   const handleTouchStart = (e) => {
     isTouching = true;
-    touchStartX =
-      e.touches[0].clientX - cardContainer.getBoundingClientRect().left;
+    touchStartX = e.touches[0].pageX - cardContainer.offsetLeft;
     touchScrollLeft = cardContainer.scrollLeft;
+    touchVelocity = 0;
   };
 
   const handleTouchMove = (e) => {
     if (!isTouching) return;
-    const x = e.touches[0].clientX - cardContainer.getBoundingClientRect().left;
-    cardContainer.scrollLeft = touchScrollLeft - (x - touchStartX) * 2;
+    e.preventDefault();
+    const x = e.touches[0].pageX - cardContainer.offsetLeft;
+    const walk = (x - touchStartX) * 2;
+    touchVelocity = walk;
+    cardContainer.scrollLeft = touchScrollLeft - walk;
   };
 
   const handleTouchEnd = () => {
     isTouching = false;
-    isDown = false;
+    beginTouchDeceleration();
   };
 
-  cardContainer.addEventListener('mousedown', handleMouseDown);
+  const beginTouchDeceleration = () => {
+    if (Math.abs(touchVelocity) < 0.5) return;
+
+    touchVelocity *= 0.95;
+    cardContainer.scrollLeft -= touchVelocity;
+
+    requestAnimationFrame(beginTouchDeceleration);
+  };
+
   cardContainer.addEventListener('touchstart', handleTouchStart);
   cardContainer.addEventListener('touchmove', handleTouchMove);
   cardContainer.addEventListener('touchend', handleTouchEnd);
 
-  window.addEventListener('mouseup', handleMouseUpOrLeave);
-  window.addEventListener('mousemove', handleMouseMove);
-  window.addEventListener('mouseleave', handleMouseUpOrLeave);
-
   return () => {
     cardContainer.removeEventListener('mousedown', handleMouseDown);
+    window.removeEventListener('mousemove', handleMouseMove);
+    window.removeEventListener('mouseup', handleMouseUpOrLeave);
+    window.removeEventListener('mouseleave', handleMouseUpOrLeave);
+
     cardContainer.removeEventListener('touchstart', handleTouchStart);
     cardContainer.removeEventListener('touchmove', handleTouchMove);
     cardContainer.removeEventListener('touchend', handleTouchEnd);
-
-    window.removeEventListener('mouseup', handleMouseUpOrLeave);
-    window.removeEventListener('mousemove', handleMouseMove);
-    window.removeEventListener('mouseleave', handleMouseUpOrLeave);
   };
 }
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (menuCardSlider);
 
 
@@ -847,7 +847,7 @@ function tabs(
 
   const menuTariff = document.querySelector('.tabcontainer__bot-tariff');
   const menuDays = document.querySelector('.tabcontainer__bot-day');
-  const menuPrice = document.querySelector('.tabcontainer__bot-price');
+  const menuPrice = document.querySelector('.price-info');
   const menuKcal = document.querySelector('.tabcontainer__bot-calories');
 
   const choiseDays = document.querySelector('.tabdays__choise');
@@ -887,8 +887,8 @@ function tabs(
     tabsContent[tabIndex].classList.remove('hide');
     tabs[tabIndex].classList.add('tabheader__item_active');
 
-    menuTariff.textContent =
-      tabs[tabIndex].querySelector('.tabheader__item-title').textContent || 1;
+    // menuTariff.textContent =
+    //   tabs[tabIndex].querySelector('.tabheader__item-title').textContent || 1;
 
     // Инициализируем слайдер карточек меню, если он есть на текущем табе
     if (tabsContent[tabIndex].querySelector(cardsParentItem)) {
@@ -988,7 +988,26 @@ function tabs(
 
     choiseDays.addEventListener('click', handleChoiseDaysClick);
   }
-
+  function calculateDiscount(days) {
+    if (days >= 28) {
+      menuPrice;
+      return 0.2; // 20% скидка для 28 дней и более
+    } else if (days >= 20) {
+      return 0.15; // 15% скидка для 20-27 дней
+    } else if (days >= 14) {
+      return 0.1; // 10% скидка для 14-19 дней
+    } else if (days >= 10) {
+      return 0.07; // 7% скидка для 10-13 дней
+    } else if (days >= 7) {
+      return 0.05; // 5% скидка для 7-9 дней
+    } else if (days >= 5) {
+      return 0.03; // 3% скидка для 5-6 дней
+    } else if (days >= 2) {
+      return 0.01; // 1% скидка для 2-4 дней
+    } else {
+      return 0; // Нет скидки для 1 дня
+    }
+  }
   // Функция для обработки выбора калорий
   function calcKcal(parentSelector = choiseKcal, tabIndex, dayValue) {
     parentSelector.removeEventListener('click', handleKcalClick); // Удаляем предыдущий обработчик
@@ -1010,7 +1029,8 @@ function tabs(
         target.classList.add('tabcalories__choise-btn--active');
         menuKcal.textContent = `${target.textContent} калорий`;
         currentRatioValue = target.dataset.ratio;
-        calcTotalPrice(tabIndex, dayValue, currentRatioValue); // Пересчитываем общую цену
+        calcTotalPrice(tabIndex, dayValue, currentRatioValue);
+        resetDays(); // Пересчитываем общую цену
       }
     }
 
@@ -1025,7 +1045,7 @@ function tabs(
     console.log(`Значение дня ${dayValue}`);
     console.log(`Ратио калорий - ${ratio}`);
 
-    let defaultPrice = 100; // Цена по умолчанию
+    let defaultPrice = 410; // Цена по умолчанию
     let price = 0;
 
     // Определяем цену в зависимости от выбранного таба
@@ -1034,25 +1054,49 @@ function tabs(
         price = defaultPrice;
         break;
       case 1:
-        price = 125;
+        price = 360;
         break;
       case 2:
-        price = 150;
+        price = 320;
         break;
       default:
         price = defaultPrice;
     }
 
     const days = dayValue || 0; // Используем dayValue, если он определен, иначе 0
-    let totalPrice = days * price;
-    menuPrice.textContent = +totalPrice.toFixed(2) + ' руб.';
+    let totalPrice = days * price * ratio;
+
+    const discount = calculateDiscount(days); // Вычисляем скидку
+    const discountedPrice = totalPrice * (1 - discount); // Применяем скидку
+
+    // --- Добавляем логику отображения скидки ---
+    let discountElement = document.querySelector('.discount-info'); // Выбираем элемент скидки
+    if (!discountElement) {
+      // Создаем элемент, если он не существует
+      discountElement = document.createElement('div');
+      discountElement.classList.add('discount-info');
+      menuPrice.parentNode.insertBefore(discountElement, menuPrice); // Вставляем перед ценой
+    }
+
+    const discountPercentage = Math.round(discount * 100); // Вычисляем процент скидки
+    if (discountPercentage > 0) {
+      discountElement.textContent = `Скидка ${discountPercentage}%`;
+      discountElement.style.display = 'flex'; // Показываем скидку
+    } else {
+      discountElement.style.display = 'none'; // Скрываем, если скидки нет
+    }
+    // --- Конец логики отображения скидки ---
+
+    menuPrice.textContent = +discountedPrice.toFixed(0) + ' руб.';
+
+    // menuPrice.textContent = +totalPrice.toFixed(0) + ' руб.';
 
     // Вывод данных в консоль для отладки
     console.log(`Цена - ${price}`);
     console.log(`Количество дней - ${dayValue}`);
     console.log(`Ратио калорий - ${ratio}`);
     console.log(`Итоговая цена - ${totalPrice}`);
-    return totalPrice;
+    return totalPrice, discountedPrice;
   }
 
   // Инициализируем табы
@@ -1401,8 +1445,8 @@ document.addEventListener('DOMContentLoaded', () => {
     '.tabdays__choise-btn',
   );
 
-  //TODO:перенести таймер в promo вниз экрана 
-  //или переделать таймер в отдельное окно 
+  //TODO:перенести таймер в promo вниз экрана
+  //или переделать таймер в отдельное окно
   (0,_modules_timer_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
 
   (0,_modules_tabsAndSlider_js__WEBPACK_IMPORTED_MODULE_8__["default"])(

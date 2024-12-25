@@ -16,7 +16,7 @@ function tabs(
 
   const menuTariff = document.querySelector('.tabcontainer__bot-tariff');
   const menuDays = document.querySelector('.tabcontainer__bot-day');
-  const menuPrice = document.querySelector('.tabcontainer__bot-price');
+  const menuPrice = document.querySelector('.price-info');
   const menuKcal = document.querySelector('.tabcontainer__bot-calories');
 
   const choiseDays = document.querySelector('.tabdays__choise');
@@ -56,8 +56,8 @@ function tabs(
     tabsContent[tabIndex].classList.remove('hide');
     tabs[tabIndex].classList.add('tabheader__item_active');
 
-    menuTariff.textContent =
-      tabs[tabIndex].querySelector('.tabheader__item-title').textContent || 1;
+    // menuTariff.textContent =
+    //   tabs[tabIndex].querySelector('.tabheader__item-title').textContent || 1;
 
     // Инициализируем слайдер карточек меню, если он есть на текущем табе
     if (tabsContent[tabIndex].querySelector(cardsParentItem)) {
@@ -157,7 +157,26 @@ function tabs(
 
     choiseDays.addEventListener('click', handleChoiseDaysClick);
   }
-
+  function calculateDiscount(days) {
+    if (days >= 28) {
+      menuPrice;
+      return 0.2; // 20% скидка для 28 дней и более
+    } else if (days >= 20) {
+      return 0.15; // 15% скидка для 20-27 дней
+    } else if (days >= 14) {
+      return 0.1; // 10% скидка для 14-19 дней
+    } else if (days >= 10) {
+      return 0.07; // 7% скидка для 10-13 дней
+    } else if (days >= 7) {
+      return 0.05; // 5% скидка для 7-9 дней
+    } else if (days >= 5) {
+      return 0.03; // 3% скидка для 5-6 дней
+    } else if (days >= 2) {
+      return 0.01; // 1% скидка для 2-4 дней
+    } else {
+      return 0; // Нет скидки для 1 дня
+    }
+  }
   // Функция для обработки выбора калорий
   function calcKcal(parentSelector = choiseKcal, tabIndex, dayValue) {
     parentSelector.removeEventListener('click', handleKcalClick); // Удаляем предыдущий обработчик
@@ -179,7 +198,8 @@ function tabs(
         target.classList.add('tabcalories__choise-btn--active');
         menuKcal.textContent = `${target.textContent} калорий`;
         currentRatioValue = target.dataset.ratio;
-        calcTotalPrice(tabIndex, dayValue, currentRatioValue); // Пересчитываем общую цену
+        calcTotalPrice(tabIndex, dayValue, currentRatioValue);
+        resetDays(); // Пересчитываем общую цену
       }
     }
 
@@ -194,7 +214,7 @@ function tabs(
     console.log(`Значение дня ${dayValue}`);
     console.log(`Ратио калорий - ${ratio}`);
 
-    let defaultPrice = 100; // Цена по умолчанию
+    let defaultPrice = 410; // Цена по умолчанию
     let price = 0;
 
     // Определяем цену в зависимости от выбранного таба
@@ -203,25 +223,49 @@ function tabs(
         price = defaultPrice;
         break;
       case 1:
-        price = 125;
+        price = 360;
         break;
       case 2:
-        price = 150;
+        price = 320;
         break;
       default:
         price = defaultPrice;
     }
 
     const days = dayValue || 0; // Используем dayValue, если он определен, иначе 0
-    let totalPrice = days * price;
-    menuPrice.textContent = +totalPrice.toFixed(2) + ' руб.';
+    let totalPrice = days * price * ratio;
+
+    const discount = calculateDiscount(days); // Вычисляем скидку
+    const discountedPrice = totalPrice * (1 - discount); // Применяем скидку
+
+    // --- Добавляем логику отображения скидки ---
+    let discountElement = document.querySelector('.discount-info'); // Выбираем элемент скидки
+    if (!discountElement) {
+      // Создаем элемент, если он не существует
+      discountElement = document.createElement('div');
+      discountElement.classList.add('discount-info');
+      menuPrice.parentNode.insertBefore(discountElement, menuPrice); // Вставляем перед ценой
+    }
+
+    const discountPercentage = Math.round(discount * 100); // Вычисляем процент скидки
+    if (discountPercentage > 0) {
+      discountElement.textContent = `Скидка ${discountPercentage}%`;
+      discountElement.style.display = 'flex'; // Показываем скидку
+    } else {
+      discountElement.style.display = 'none'; // Скрываем, если скидки нет
+    }
+    // --- Конец логики отображения скидки ---
+
+    menuPrice.textContent = +discountedPrice.toFixed(0) + ' руб.';
+
+    // menuPrice.textContent = +totalPrice.toFixed(0) + ' руб.';
 
     // Вывод данных в консоль для отладки
     console.log(`Цена - ${price}`);
     console.log(`Количество дней - ${dayValue}`);
     console.log(`Ратио калорий - ${ratio}`);
     console.log(`Итоговая цена - ${totalPrice}`);
-    return totalPrice;
+    return totalPrice, discountedPrice;
   }
 
   // Инициализируем табы

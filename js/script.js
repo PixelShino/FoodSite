@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     '.tabdays__choise-btn',
   );
 
-  //TODO:перенести таймер в promo вниз экрана 
-  //или переделать таймер в отдельное окно 
+  //TODO:перенести таймер в promo вниз экрана
+  //или переделать таймер в отдельное окно
   timer();
 
   SliderV2(
