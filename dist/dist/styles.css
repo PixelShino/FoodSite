@@ -217,59 +217,155 @@ pre {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-height: 22vh;
-  min-width: 80vw;
+  max-width: 100%;
   padding: 1vw 0 0 0;
   flex-direction: column;
   background-color: #1f1f1f;
 }
-.header .header__left-block {
+@media (max-width: 425px) {
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10000;
+    height: 10vh;
+    padding: 0;
+  }
+}
+.header .header__top-block {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   min-width: 100%;
-  min-height: 10vh;
   color: #ffffff;
 }
-.header .header__left-block .header__logo {
-  width: 30vw;
+@media (max-width: 425px) {
+  .header .header__top-block {
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
+  }
 }
-.header .header__left-block .header__links {
+.header .header__top-block .header__logo {
+  flex: 30%;
+}
+.header .header__top-block .header__logo .header__logo-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  font-size: clamp(1.5rem, 0.7211538462rem + 3.4615384615vw, 3.75rem);
+  font-weight: 900;
+  text-decoration: underline;
+  color: rgba(84, 237, 57, 0.6352941176);
+}
+.header .header__top-block .header__links {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  width: 60vw;
+  justify-content: center;
+  flex: 70%;
 }
-.header .header__left-block .header__links .header__link {
+@media (max-width: 425px) {
+  .header .header__top-block .header__links {
+    display: none;
+  }
+}
+.header .header__top-block .header__links .header__link {
   display: flex;
-  width: 25%;
-  margin: 2vw;
-  font-size: 1.3vw;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.25rem;
+  margin: 1rem;
+  max-height: 50%;
+  font-size: clamp(1rem, 0.8701923077rem + 0.5769230769vw, 1.375rem);
   font-weight: 700;
   text-align: center;
+  border-radius: 30px;
+  border: #eeeeee solid 1px;
+  background: #e0e0e0;
+  height: 100%;
+  padding: 2rem;
 }
-.header .header__right-block {
+.header .header__top-block .header__burger {
+  display: none;
+}
+@media (max-width: 425px) {
+  .header .header__top-block .header__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .header .header__top-block .header__burger .header__burger-line {
+    width: 100%;
+    height: 3px;
+    background-color: rgb(255, 255, 255);
+  }
+}
+.header .header__bot-block {
   display: flex;
   align-items: center;
   align-content: center;
   justify-content: space-evenly;
-  display: flex;
-  min-width: 100%;
-  min-height: 10vh;
+  padding: 1rem;
+  width: 100%;
   color: #ffffff;
 }
-.header .header__right-block .header__links {
+@media (max-width: 425px) {
+  .header .header__bot-block {
+    display: none;
+  }
+}
+.header .header__bot-block .header__links {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-height: 10vh;
-  width: 90vw;
+  flex-wrap: wrap;
+  align-content: space-around;
+  align-items: center;
+  max-width: 80%;
 }
-.header .header__right-block .header__links .header__link {
+.header .header__bot-block .header__links .header__link {
   display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 1rem;
-  font-size: 1.3vw;
+  font-size: clamp(1rem, 0.8701923077rem + 0.5769230769vw, 1.375rem);
   font-weight: 700;
   text-align: center;
+}
+
+.burger__content {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  flex-direction: column;
+  background-color: #fff;
+  z-index: 1000;
+}
+.burger__content.active {
+  display: flex;
+}
+.burger__content.active .burger__links {
+  height: 100vh;
+  width: 100vw;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.burger__content.active .burger__links .burger__link {
+  color: black;
+  width: 200px;
+  height: 200px;
+  background-color: #ac8282;
 }
 
 .preview {

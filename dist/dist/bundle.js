@@ -2,6 +2,51 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./js/modules/burger.js":
+/*!******************************!*\
+  !*** ./js/modules/burger.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function toggleActive(
+  parent = '.header__burger',
+  item = '.header__burger-item',
+  toggleItemSelector = '.burger__content',
+) {
+  const parentElement = document.querySelector(parent);
+  const items = document.querySelectorAll(item);
+  const toggleItem = document.querySelector(toggleItemSelector);
+
+  if (!parentElement) {
+    console.error(`Parent element with selector "${parent}" not found.`);
+    return;
+  } else if (!items) {
+    console.error(`Items with selector "${item}" not found.`);
+    return;
+  } else if (!toggleItem) {
+    console.error(
+      `Toggle element with selector "${toggleItemSelector}" not found.`,
+    );
+    return;
+  } else {
+    function toggle() {
+      console.log('burger clicked');
+      console.log(toggleItem);
+      toggleItem.classList.toggle('active');
+    }
+
+    parentElement.addEventListener('click', toggle);
+  }
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (toggleActive);
+
+
+/***/ }),
+
 /***/ "./js/modules/calc.js":
 /*!****************************!*\
   !*** ./js/modules/calc.js ***!
@@ -1415,6 +1460,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_tabsAndSlider_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/tabsAndSlider.js */ "./js/modules/tabsAndSlider.js");
 /* harmony import */ var _modules_menuCardSlider_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/menuCardSlider.js */ "./js/modules/menuCardSlider.js");
 /* harmony import */ var _modules_fixedPromo__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/fixedPromo */ "./js/modules/fixedPromo.js");
+/* harmony import */ var _modules_burger_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/burger.js */ "./js/modules/burger.js");
+
 
 
 
@@ -1459,27 +1506,7 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   (0,_modules_menuCardSlider_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
 
-  // tabsAndSlider();
-  // tabsAndSlider(
-  //   '.offer__slide', // Селектор для слайдов
-  //   '.tabcontent', // Селектор для контента табов
-  //   '.tabheader__items', // Родительский элемент табов
-  //   '.prev', // Селектор кнопки предыдущего слайда
-  //   '.next', // Селектор кнопки следующего слайда
-  //   '#current', // Селектор текущего номера слайда
-  //   '#total', // Селектор общего количества слайдов
-  //   '.tabheader__item', // Селектор для табов
-  //   '.tabcontent', // Селектор для контента табов
-  //   '.tabheader__items' // Родительский элемент табов
-  // );
-
-  // tabsSelector,
-  // contentSelector,
-  // parentSelector,
-  // sliderPrev,
-  // sliderNext,
-  // current,
-  // total,
+  (0,_modules_burger_js__WEBPACK_IMPORTED_MODULE_11__["default"])();
 });
 
 })();

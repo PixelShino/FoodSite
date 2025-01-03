@@ -11,6 +11,7 @@ import timer from './modules/timer.js';
 import SliderV2 from './modules/tabsAndSlider.js';
 import menuCardSlider from './modules/menuCardSlider.js';
 import fixedPromo from './modules/fixedPromo';
+import burger from './modules/burger.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('its work');
@@ -42,25 +43,5 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   menuCardSlider();
 
-  // tabsAndSlider();
-  // tabsAndSlider(
-  //   '.offer__slide', // Селектор для слайдов
-  //   '.tabcontent', // Селектор для контента табов
-  //   '.tabheader__items', // Родительский элемент табов
-  //   '.prev', // Селектор кнопки предыдущего слайда
-  //   '.next', // Селектор кнопки следующего слайда
-  //   '#current', // Селектор текущего номера слайда
-  //   '#total', // Селектор общего количества слайдов
-  //   '.tabheader__item', // Селектор для табов
-  //   '.tabcontent', // Селектор для контента табов
-  //   '.tabheader__items' // Родительский элемент табов
-  // );
-
-  // tabsSelector,
-  // contentSelector,
-  // parentSelector,
-  // sliderPrev,
-  // sliderNext,
-  // current,
-  // total,
+  burger();
 });
