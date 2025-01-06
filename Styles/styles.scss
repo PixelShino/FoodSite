@@ -1,7 +1,8 @@
 @use 'old';
 @use 'reset';
 @use 'mixin';
-
+@use '_variables';
+@use 'bottom-menu.scss';
 @use 'btn';
 @use 'header';
 @use 'tabs';
@@ -13,6 +14,7 @@
 @use 'footer';
 @use 'sidepanel';
 @use 'modal';
+
 // @use 'mediaMixin';
 
 // * {

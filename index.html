@@ -11,7 +11,7 @@
       <div class="header__top-block">
         <div class="header__logo">
           <!-- <img src="./img/icon/logo-removebg-preview.png" alt="Логотип" /> -->
-          <div class="header__logo-text">NutriLife</div>
+          <div data-modal class="header__logo-text">NutriLife</div>
         </div>
         <nav class="header__links">
           <button data-modal class="header__link">Связаться с нами</button>
@@ -39,23 +39,16 @@
             />Москва</a
           >
         </nav>
-        <div class="burger__content">
-          <nav class="burger__links">
-            <a href="#" class="burger__link">Меню и тарифы</a>
-            <a href="#" class="burger__link">Отзывы</a>
-            <a href="#" class="burger__link">Как работает</a>
-            <a href="#" class="burger__link">О компании</a>
-            <a href="#" class="burger__link">Вопросы</a>
-            <a href="#" class="burger__link"
-              ><img
-                width="20"
-                height="20"
-                src="https://img.icons8.com/ios/50/marker--v1.png"
-                alt="marker--v1"
-              />Москва</a
-            >
-          </nav>
-        </div>
+      </div>
+      <div class="burger__content">
+        <nav class="burger__links">
+          <a href="#" class="burger__link">Меню и тарифы</a>
+          <a href="#" class="burger__link">Отзывы</a>
+          <a href="#" class="burger__link">Как работает</a>
+          <a href="#" class="burger__link">О компании</a>
+          <a href="#" class="burger__link">Вопросы</a>
+          <a href="#" class="burger__link">Авторизация</a>
+        </nav>
       </div>
     </header>
     <main class="main">
@@ -1909,7 +1902,22 @@
         </div>
       </div>
     </div>
-    <div class="tabcontainer__bot-promo">Скидка 15% на первый заказ !</div>
+    <div class="bottom__menu">
+      <div class="bottom__menu-promo">Скидка 15% на первый заказ !</div>
+      <div class="bottom__menu-btns">
+        <button data-modal="" class="bottom__menu-btns-btn">
+          Связаться с нами
+        </button>
+        <button class="bottom__menu-btns-btn">
+          <img
+            width="20"
+            height="20"
+            src="https://img.icons8.com/ios/50/marker--v1.png"
+            alt="marker--v1"
+          />Москва
+        </button>
+      </div>
+    </div>
     <script type="module" src="./dist/dist/bundle.js"></script>
   </body>
 </html>

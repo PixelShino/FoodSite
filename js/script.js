@@ -12,9 +12,10 @@ import SliderV2 from './modules/tabsAndSlider.js';
 import menuCardSlider from './modules/menuCardSlider.js';
 import fixedPromo from './modules/fixedPromo';
 import burger from './modules/burger.js';
+import bodyNoScroll from './modules/bodyNoScroll.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('its work');
+  console.log('script js  work');
   // fixedPromo();
   calc();
   cards();
@@ -28,11 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     '.tabcontent__bot-cards',
     '.tabdays__choise-btn',
   );
-
   //TODO:перенести таймер в promo вниз экрана
   //или переделать таймер в отдельное окно
   timer();
-
   SliderV2(
     '.offer__slide', // изменить на слайды вместо .offer__descr
     '.offer__slider', // изменить на родительский элемент слайдера
@@ -42,6 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     '#total',
   );
   menuCardSlider();
-
   burger();
+  // bodyNoScroll();
 });

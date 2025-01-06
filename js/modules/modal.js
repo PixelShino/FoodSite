@@ -9,17 +9,21 @@ function modal(triggerSelector, modalSelector, closeSelector) {
 
     // Открытие модального окна и добавление обработчика `keydown`
     openModal = () => {
-      modal.classList.add('show');
-      document.addEventListener('keydown', onEscapePress);
-      document.body.style.overflow = 'hidden';
-      clearInterval(timerModal);
+      if (document.body.classList.contains('no-scroll')) {
+        return;
+      } else {
+        modal.classList.add('show');
+        document.addEventListener('keydown', onEscapePress);
+        document.body.classList.add('no-scroll');
+        clearInterval(timerModal);
+      }
     };
 
     // Закрытие модального окна и удаление обработчика `keydown`
     closeModal = () => {
       modal.classList.remove('show');
       document.removeEventListener('keydown', onEscapePress);
-      document.body.style.overflow = 'auto';
+      document.body.classList.remove('no-scroll');
     };
 
     // Обработчик для закрытия модального окна по клавише Escape
@@ -44,7 +48,7 @@ function modal(triggerSelector, modalSelector, closeSelector) {
     });
 
     // Вызов modal по истечению 50с
-    let timerModal = setTimeout(openModal, 50000);
+    let timerModal = setTimeout(openModal, 40000);
 
     // вызов modal на конце страницы
     //TODO: Сделать запрет на повторное срабатывание в течении определенного времени
@@ -64,4 +68,4 @@ function modal(triggerSelector, modalSelector, closeSelector) {
   initModal();
 }
 export default modal;
-export { openModal, closeModal };
+export { modal, openModal, closeModal };

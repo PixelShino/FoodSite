@@ -673,43 +673,6 @@
   margin-right: 0;
 }
 
-.tabcontainer__bot-promo {
-  display: flex;
-  align-self: flex-end;
-  margin-top: auto;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  @include BTNmedium;
-  @include fluid-text(24, 16);
-  position: relative;
-  background-color: $green;
-  @include no-border-radius();
-
-  /* Фиксируем элемент внизу экрана */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 5vh;
-  z-index: 1000;
-
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0px);
-    }
-  }
-  animation: fadeInUp 1.5s forwards;
-}
-
 @include respond-to(desktop) {
 }
 @include respond-to(large-desktop) {

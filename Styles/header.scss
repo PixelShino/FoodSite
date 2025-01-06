@@ -13,15 +13,21 @@
     position: sticky;
     top: 0;
     z-index: 10000;
-    height: 10vh;
+    --header-height: 10vh;
+    height: var(--header-height);
     padding: 0;
   }
   .header__top-block {
     display: flex;
     justify-content: space-around;
     min-width: 100%;
+    max-width: 100%;
+    height: 100%;
 
     color: #ffffff;
+    @include respond-to(tablet) {
+      flex-wrap: wrap;
+    }
     @include respond-to(mobile) {
       height: 100%;
       justify-content: space-around;
@@ -42,6 +48,7 @@
         text-decoration: underline;
         color: $green;
         @include respond-to(mobile) {
+          @include fluid-text(60, 30);
         }
       }
     }
@@ -73,13 +80,17 @@
     .header__burger {
       display: none;
       @include respond-to(mobile) {
+        position: absolute;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+
+        right: 10vw;
         width: 30px;
-        height: 20px;
+        height: 50%;
         cursor: pointer;
+        // margin-right: 10vw;
         .header__burger-line {
           width: 100%;
           height: 3px;
@@ -112,6 +123,9 @@
       align-items: center;
 
       max-width: 80%;
+      @include respond-to(mobile) {
+        display: none;
+      }
       .header__link {
         display: flex;
         align-items: center;
@@ -127,33 +141,68 @@
   }
 }
 
-.burger__content {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  flex-direction: column;
-  background-color: #fff;
-  z-index: 1000;
+.burger {
+  &__content {
+    display: block; // Change to block instead of none
+    position: fixed;
+    inset: 0;
+    flex-direction: column;
+    background-color: #000000b7;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-100%); // Start position off-screen to the left
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease,
+      transform 0.3s ease; // Add transform to transitions
+    top: var(--header-height);
+    overflow: scroll;
 
-  &.active {
-    display: flex;
-
-    .burger__links {
-      height: 100vh;
-      width: 100vw;
-      color: black;
+    &.active {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      .burger__link {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0); // End position at original location
+      height: 100%;
+
+      .burger__links {
+        display: flex;
+        position: relative; // Changed from absolute to relative
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        // width: 100%;
+        // height: 100vh;
+        // padding-top: 20vh;
         color: black;
-        width: 200px;
-        height: 200px;
-        background-color: #ac8282;
+        overflow: scroll;
+        // height: 100%;
+        // flex-wrap: wrap;
+        @include container;
+
+        .burger__link {
+          color: black;
+
+          background-color: #ac8282;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          transition: background-color 0.3s ease;
+          @include BTN;
+          text-align: center;
+
+          width: 70vw;
+          margin: 1rem;
+          min-height: none;
+          height: 10vh;
+
+          // &:hover {
+          //   background-color: darken(#ac8282, 10%);
+          // }
+        }
       }
     }
   }

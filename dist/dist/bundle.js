@@ -2,6 +2,28 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./js/modules/bodyNoScroll.js":
+/*!************************************!*\
+  !*** ./js/modules/bodyNoScroll.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function bodyNoScroll(item = '.burger__content', active = '.active') {
+  const body = document.querySelector('body');
+  if (item && active) {
+    body.classList.toggle('no-scroll');
+    console.log('bodyNoScroll work');
+  }
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (bodyNoScroll);
+
+
+/***/ }),
+
 /***/ "./js/modules/burger.js":
 /*!******************************!*\
   !*** ./js/modules/burger.js ***!
@@ -12,6 +34,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _bodyNoScroll_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bodyNoScroll.js */ "./js/modules/bodyNoScroll.js");
+/* harmony import */ var _modal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modal.js */ "./js/modules/modal.js");
+
+
+
 function toggleActive(
   parent = '.header__burger',
   item = '.header__burger-item',
@@ -20,6 +47,7 @@ function toggleActive(
   const parentElement = document.querySelector(parent);
   const items = document.querySelectorAll(item);
   const toggleItem = document.querySelector(toggleItemSelector);
+  const body = document.querySelector('body');
 
   if (!parentElement) {
     console.error(`Parent element with selector "${parent}" not found.`);
@@ -34,9 +62,12 @@ function toggleActive(
     return;
   } else {
     function toggle() {
+      (0,_bodyNoScroll_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
       console.log('burger clicked');
       console.log(toggleItem);
       toggleItem.classList.toggle('active');
+
+      console.log('else work');
     }
 
     parentElement.addEventListener('click', toggle);
@@ -604,6 +635,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   closeModal: () => (/* binding */ closeModal),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   modal: () => (/* binding */ modal),
 /* harmony export */   openModal: () => (/* binding */ openModal)
 /* harmony export */ });
 //TODO: убрать засорение глобальной области видимости
@@ -617,17 +649,21 @@ function modal(triggerSelector, modalSelector, closeSelector) {
 
     // Открытие модального окна и добавление обработчика `keydown`
     openModal = () => {
-      modal.classList.add('show');
-      document.addEventListener('keydown', onEscapePress);
-      document.body.style.overflow = 'hidden';
-      clearInterval(timerModal);
+      if (document.body.classList.contains('no-scroll')) {
+        return;
+      } else {
+        modal.classList.add('show');
+        document.addEventListener('keydown', onEscapePress);
+        document.body.classList.add('no-scroll');
+        clearInterval(timerModal);
+      }
     };
 
     // Закрытие модального окна и удаление обработчика `keydown`
     closeModal = () => {
       modal.classList.remove('show');
       document.removeEventListener('keydown', onEscapePress);
-      document.body.style.overflow = 'auto';
+      document.body.classList.remove('no-scroll');
     };
 
     // Обработчик для закрытия модального окна по клавише Escape
@@ -652,7 +688,7 @@ function modal(triggerSelector, modalSelector, closeSelector) {
     });
 
     // Вызов modal по истечению 50с
-    let timerModal = setTimeout(openModal, 50000);
+    let timerModal = setTimeout(openModal, 40000);
 
     // вызов modal на конце страницы
     //TODO: Сделать запрет на повторное срабатывание в течении определенного времени
@@ -1461,6 +1497,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_menuCardSlider_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/menuCardSlider.js */ "./js/modules/menuCardSlider.js");
 /* harmony import */ var _modules_fixedPromo__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/fixedPromo */ "./js/modules/fixedPromo.js");
 /* harmony import */ var _modules_burger_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/burger.js */ "./js/modules/burger.js");
+/* harmony import */ var _modules_bodyNoScroll_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/bodyNoScroll.js */ "./js/modules/bodyNoScroll.js");
+
 
 
 
@@ -1477,7 +1515,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('its work');
+  console.log('script js  work');
   // fixedPromo();
   (0,_modules_calc_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
   (0,_modules_cards_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
@@ -1491,11 +1529,9 @@ document.addEventListener('DOMContentLoaded', () => {
     '.tabcontent__bot-cards',
     '.tabdays__choise-btn',
   );
-
   //TODO:перенести таймер в promo вниз экрана
   //или переделать таймер в отдельное окно
   (0,_modules_timer_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
-
   (0,_modules_tabsAndSlider_js__WEBPACK_IMPORTED_MODULE_8__["default"])(
     '.offer__slide', // изменить на слайды вместо .offer__descr
     '.offer__slider', // изменить на родительский элемент слайдера
@@ -1505,8 +1541,8 @@ document.addEventListener('DOMContentLoaded', () => {
     '#total',
   );
   (0,_modules_menuCardSlider_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
-
   (0,_modules_burger_js__WEBPACK_IMPORTED_MODULE_11__["default"])();
+  // bodyNoScroll();
 });
 
 })();
