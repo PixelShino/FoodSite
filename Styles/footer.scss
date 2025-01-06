@@ -1,10 +1,14 @@
 @import 'mixin';
+@import 'mediaMixin';
 .footer {
   min-height: 180px;
   background-color: #303030;
   padding: 45px 0 50px 0;
   color: #fff;
-
+  margin-bottom: var(--bottom-menu-height);
+  @include respond-to(mobile) {
+    margin-bottom: var(--bottom-menu-height-mobile);
+  }
   .container {
     height: 100%;
     display: flex;

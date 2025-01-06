@@ -25,8 +25,9 @@
   height: 5vh;
   z-index: 1000;
   flex-direction: column;
+  height: var(--bottom-menu-height);
   @include respond-to(mobile) {
-    height: 10vh;
+    height: var(--bottom-menu-height-mobile);
     padding: 0;
   }
   &-promo,

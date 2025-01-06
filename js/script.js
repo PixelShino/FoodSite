@@ -13,6 +13,7 @@ import menuCardSlider from './modules/menuCardSlider.js';
 import fixedPromo from './modules/fixedPromo';
 import burger from './modules/burger.js';
 import bodyNoScroll from './modules/bodyNoScroll.js';
+import collapsed from './modules/collapsed.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('script js  work');
@@ -42,5 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
   );
   menuCardSlider();
   burger();
+  collapsed();
   // bodyNoScroll();
 });

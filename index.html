@@ -155,29 +155,7 @@
                   </div>
                   <!-- <img src="img/slider/pepper.jpg" alt="pepper" /> -->
                 </div>
-                <div class="offer__slide">
-                  <div class="offer__descr">
-                    <div class="offer__descr-left">
-                      <div class="offer__descr-left--info">
-                        4 Сбалансированное Lorem ipsum dolor sit amet
-                        consectetur adipisicing elit. Ex quidem perspiciatis
-                        veniam delectus sapiente. Amet omnis voluptates
-                        provident repellat doloremque!
-                      </div>
-                      <div class="offer__descr-left--action">
-                        <button data-modal class="btn-sldier">
-                          Связаться с нами
-                        </button>
-                      </div>
-                    </div>
-                    <div class="offer__descr-right">
-                      <div class="offer__descr-right--img">
-                        <img src="img/icon/onion.svg" alt="pepper" />
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <img src="img/slider/pepper.jpg" alt="pepper" /> -->
-                </div>
+
                 <!-- <div class="next offer__slider-next"></div> -->
               </div>
               <div class="offer__slider-counter">
@@ -195,7 +173,15 @@
       </div>
 
       <div class="divider"></div>
-      <div class="preview">
+      <div class="menu">
+        <h2 class="title">Наше меню на день</h2>
+        <h3 class="expand">Развернуть</h3>
+
+        <div class="menu__field">
+          <div class="container"></div>
+        </div>
+      </div>
+      <div class="preview" id="preview">
         <div class="bgc_blue"></div>
         <div class="container">
           <div class="tabcontainer">
@@ -985,7 +971,7 @@
                         <h3>
                           Выберите свою норму калорий, свою норму можно
                           посчитать в
-                          <a href="selectATariff">калькуляторе</a>
+                          <a href="#selectATariff">калькуляторе</a>
                         </h3>
                       </div>
                       <div class="tabcalories__choise">
@@ -1411,7 +1397,7 @@
                         <h3>
                           Выберите свою норму калорий, свою норму можно
                           посчитать в
-                          <a href="selectATariff">калькуляторе</a>
+                          <a href="#selectATariff">калькуляторе</a>
                         </h3>
                       </div>
                       <div class="tabcalories__choise">
@@ -1604,7 +1590,11 @@
               <div class="tabheader">
                 <h3>Выберите тариф питания</h3>
                 <div class="tabheader__items">
-                  <div class="tabheader__item tabheader__item_active">
+                  <div
+                    class="tabheader__item tabheader__item_active"
+                    id="tab-0"
+                    data-tab="tab-0"
+                  >
                     <div class="tabheader__item--left">
                       <div class="tabheader__item-title">Набор веса</div>
                       <div class="tabheader__item-cKal">2500-3000</div>
@@ -1616,7 +1606,7 @@
                     </div>
                   </div>
 
-                  <div class="tabheader__item">
+                  <div class="tabheader__item" id="tab-1" data-tab="tab-1">
                     <div class="tabheader__item--left">
                       <div class="tabheader__item-title">Баланс</div>
                       <div class="tabheader__item-cKal">1500-2500</div>
@@ -1628,7 +1618,7 @@
                     </div>
                   </div>
 
-                  <div class="tabheader__item">
+                  <div class="tabheader__item" id="tab-2" data-tab="tab-2">
                     <div class="tabheader__item--left">
                       <div class="tabheader__item-title">Похудение</div>
                       <div class="tabheader__item-cKal">1300-2200</div>
@@ -1785,14 +1775,6 @@
 
       <div class="divider"></div>
 
-      <div class="menu">
-        <h2 class="title">Наше меню на день</h2>
-
-        <div class="menu__field">
-          <div class="container"></div>
-        </div>
-      </div>
-
       <div class="order">
         <div class="container">
           <div class="title">Заказывай пробный день прямо сейчас!</div>
@@ -1802,17 +1784,17 @@
               placeholder="Ваше имя"
               name="name"
               type="text"
-              class="order__input"
+              class="order__input order__input--name"
             />
             <input
               required
               placeholder="Ваш номер телефона"
               name="phone"
               type="phone"
-              class="order__input"
+              class="order__input order__input--number"
             />
-            <img src="icons/right.svg" alt="right" />
-            <button class="btn">Перезвонить мне</button>
+            <!-- <img src="icons/right.svg" alt="right" /> -->
+            <button class="order__btn">Перезвонить мне</button>
           </form>
         </div>
       </div>

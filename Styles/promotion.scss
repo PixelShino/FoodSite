@@ -1,30 +1,40 @@
 @import 'mixin';
-.promotion {
-  padding: 70px 0 240px 0;
-  position: relative;
+@import 'mediaMixin';
 
+.promotion {
+  // padding: 5vh;
+  margin: 5vh 0 5vh 0;
+  position: relative;
+  @include container;
+  // background: $black;
   .bgc_y {
+    @include BTN;
     position: absolute;
-    width: 50%;
-    height: 499px;
-    background: rgba(243, 255, 222, 0.35);
+    width: 100%;
+    height: 100%;
+    background: $black;
     z-index: -1;
-    top: -50px;
+    // top: -50px;
     left: 0;
   }
 
   .container {
-    @include container;
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
+    padding: 3vw;
+    max-width: 100%;
+    @include respond-to(mobile) {
+      padding: 2vw;
+    }
 
     .promotion__text {
-      width: 50%;
+      flex: 0 0 50%;
+      color: $white;
 
       .title {
-        // Add styles for the title if needed
+        @include fluid-text(40, 20);
+        font-weight: 900;
       }
-
       .promotion__descr {
         margin-top: 40px;
         font-size: 20px;
@@ -43,27 +53,41 @@
       display: flex;
       //   flex-wrap: wrap;
       flex-direction: column;
-
+      flex: 0 0 50%;
       .title {
-        text-align: right;
+        @include fluid-text(40, 20);
+        font-weight: 900;
+        text-align: center;
+        color: $white;
       }
 
       .timer {
-        margin-top: 60px;
-        padding-left: 95px;
+        padding: 10%;
         display: flex;
-        flex-wrap: wrap;
+        flex-flow: row nowrap;
         justify-content: space-between;
         align-items: center;
+        @include respond-to(desktop) {
+          flex-flow: column nowrap;
+        }
 
         .timer__block {
-          width: 102px;
-          height: 120px;
-          background: #fff;
+          width: 25%;
+          height: 100%;
+          background: $orange;
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
           font-size: 16px;
           font-weight: 300;
           text-align: center;
+          margin: 1%;
+          // color: $white;
+          @include respond-to(desktop) {
+            width: 100%;
+          }
+          @include respond-to(mobile) {
+            width: 100%;
+            height: 25%;
+          }
 
           span {
             display: block;
