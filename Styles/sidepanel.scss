@@ -1,32 +1,85 @@
+@import 'mediaMixin';
+@import 'mixin'; // Variables
+$sidepanel-offset-top: 0;
+$sidepanel-width: 15%; // Use percentage for width
+$text-size: 14px;
+$icon-size: 3.5vw;
+
+// Main sidepanel container
 .sidepanel {
   position: fixed;
-  left: 60px;
-  top: 240px;
-  height: 400px;
-  width: 25px;
+  left: 0; // Stick to the left edge
+  top: $sidepanel-offset-top;
+  height: calc(100% - var(--bottom-menu-height));
+  // width: $sidepanel-width;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  z-index: 100;
+  width: 7.5vw;
+  @include respond-to(mobile) {
+    height: calc(100% - var(--bottom-menu-height-mobile)) !important;
+    $icon-size: 7.5vw;
+  }
+  &__bg {
+    @include BTN;
+    height: auto;
+    background: #fffafa57;
+    padding: 0;
+    margin: 0;
+  }
 }
+
+// Text element
 .sidepanel__text {
-  width: 120px;
-  height: 120px;
-  font-size: 14px;
+  // display: none;
+  max-width: 100%;
+  width: auto; // Adjust width automatically
+  height: auto; // Adjust height automatically
+  font-size: $text-size;
+  // padding: 10px; // Add padding for better spacing
+  margin: 4.5vh 0 4.5vh 0;
+  transform: rotate(-90deg);
+  // transform-origin: top left; // Rotate from top-left corner
+
+  span {
+    display: block; // No need for flex
+    white-space: nowrap;
+    font-weight: 700;
+    @include fluid-text(20, 10);
+  }
 }
-.sidepanel__text span {
-  display: flex;
-  transform: rotate(-90deg) translateX(-50px);
-}
+
+// Divider element
 .sidepanel__divider {
+  display: none;
   width: 1px;
-  height: 165px;
+  height: calc(100% - 2 * ($icon-size + 20px)); // Dynamic height calculation
   background-color: #000;
+  opacity: 0.75;
+  margin: 10px 0; // Add margin for spacing
 }
+
+// Icon container
 .sidepanel__icon {
-  width: 24px;
-  height: 24px;
-}
-.sidepanel__icon img {
-  width: 100%;
+  max-width: 100%;
+  width: $icon-size;
+  height: $icon-size;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0; // Add margin for spacing
+  justify-self: center;
+
+  @include respond-to(mobile) {
+    width: 7.5vw;
+    height: 7.5vw;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }

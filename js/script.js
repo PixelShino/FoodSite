@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '#current',
     '#total',
   );
+  // menuCardSlider('.offer__slider-inner');
   menuCardSlider();
   burger();
   collapsed();

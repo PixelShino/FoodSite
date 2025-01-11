@@ -53,14 +53,16 @@
     </header>
     <main class="main">
       <div class="sidepanel">
-        <div class="sidepanel__text"><span>Социальные сети</span></div>
-        <div class="sidepanel__divider"></div>
-        <a href="#" class="sidepanel__icon">
-          <img src="icons/instagram.svg" alt="instagram" />
-        </a>
-        <a href="#" class="sidepanel__icon">
-          <img src="icons/facebook.svg" alt="facebook" />
-        </a>
+        <div class="sidepanel__bg">
+          <div class="sidepanel__text"><span>SHIN4X</span></div>
+          <div class="sidepanel__divider"></div>
+          <a href="#" class="sidepanel__icon">
+            <img src="img/icon/github.png" alt="GitHub" />
+          </a>
+          <a href="#" class="sidepanel__icon">
+            <img src="img/icon/telegram.png" alt="TG" />
+          </a>
+        </div>
       </div>
 
       <div class="offer">
@@ -82,12 +84,18 @@
                 <img src="icons/right.svg" alt="next" />
               </div>
             </div> -->
-            <div class="prev offer__slider-prev"></div>
+            <div class="prev offer__slider-prev">
+              <img src="img/icon/arrow-left.png" alt="" />
+            </div>
             <div class="offer__slider-wrapper">
               <div class="offer__slider-inner">
                 <!-- <div class="prev offer__slider-prev"></div> -->
                 <div class="offer__slide">
                   <div class="offer__descr">
+                    <!-- <div class="prev">
+                      <img src="img/icon/arrow-left.png" alt="" />
+                    </div> -->
+
                     <div class="offer__descr-left">
                       <div class="offer__descr-left--info">
                         1 Фитнес Lorem ipsum dolor sit amet consectetur
@@ -126,7 +134,7 @@
                     </div>
                     <div class="offer__descr-right">
                       <div class="offer__descr-right--img">
-                        <img src="img/icon/onion.svg" alt="pepper" />
+                        <img src="img/icon/onion.webp" alt="pepper" />
                       </div>
                     </div>
                   </div>
@@ -149,7 +157,7 @@
                     </div>
                     <div class="offer__descr-right">
                       <div class="offer__descr-right--img">
-                        <img src="img/icon/onion.svg" alt="pepper" />
+                        <img src="img/icon/onion.webp" alt="pepper" />
                       </div>
                     </div>
                   </div>
@@ -164,7 +172,9 @@
                 <span id="total">04</span>
               </div>
             </div>
-            <div class="next offer__slider-next"></div>
+            <div class="next offer__slider-next">
+              <img src="img/icon/arrow-right.png" alt="" />
+            </div>
           </div>
           <!-- <div class="offer__text">
             <h2 class="title">Что мы можем вам предложить?</h2>
@@ -181,6 +191,7 @@
           <div class="container"></div>
         </div>
       </div>
+
       <div class="preview" id="preview">
         <div class="bgc_blue"></div>
         <div class="container">
@@ -1842,18 +1853,26 @@
     <footer class="footer">
       <div class="container">
         <div class="social">
-          <div class="subtitle">Мы в социальных сетях:</div>
-          <a href="#" class="link">instagram</a>
-          <a href="#" class="link">facebook</a>
+          <div class="subtitle">Дмитрий Голдобин</div>
+          <a href="#" class="link">GitHub</a>
+          <a href="#" class="link">Telegram</a>
         </div>
-        <div class="pepper">
-          <img src="icons/veg.svg" alt="pepper" />
+
+        <div class="footer__logo">
+          <div class="footer__logo-text">NutriLife</div>
         </div>
-        <div class="call">
+
+        <div
+          onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
+          class="footer__logo-up"
+        >
+          <img src="img/icon/arrowUp.png" alt="pepper" />
+        </div>
+        <!-- <div class="call">
           <div class="subtitle">Или позвоните нам</div>
           <a href="#" class="link">+380678341034</a>
           <a href="#" class="link">+380500941356</a>
-        </div>
+        </div> -->
       </div>
     </footer>
 

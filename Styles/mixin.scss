@@ -18,6 +18,12 @@
     #{$maxSize * 1rem}
   );
 }
+@mixin center-flex($direction: row) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
 @mixin BTN {
   border-radius: 30px;
   border: $white solid 1px;

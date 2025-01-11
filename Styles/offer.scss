@@ -1,376 +1,171 @@
 @import 'mixin';
 
-// .offer {
-//   display: flex;
-//   flex-direction: column;
-//   width: 100%;
-
-//   align-items: center;
-
-//   // Фоновый элемент
-//   .bgc_y {
-//     position: absolute;
-//     width: 100vw;
-//     height: 40vw;
-//     background: $medium-dark;
-//     z-index: -4;
-//   }
-
-//   // Основной контейнер
-//   .container {
-//     display: flex;
-//     width: 100vw;
-//     flex-direction: column;
-//     align-items: center;
-//   }
-
-//   // Слайдер
-//   &__slider {
-//     width: 100%;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     position: relative;
-
-//     // Счетчик слайдов
-//     &-counter {
-//       display: flex;
-//       width: 100%;
-//       align-items: center;
-//       font-size: 2vw;
-//       color: rgba(0, 0, 0, 0.5);
-//       align-self: center;
-//       justify-content: center;
-//       background-color: $medium;
-//       width: 100%;
-//       z-index: 1;
-//       margin-top: 40px;
-//     }
-
-//     // Обертка слайдера
-//     &-wrapper {
-//       width: 100%;
-//       height: 60vh;
-//       margin: 0 0 10vh 0;
-//       box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
-//       // overflow: hidden;
-//       // position: relative;
-//       // display: flex;
-//       // flex-direction: column;
-//     }
-
-//     // Контейнер для слайдов
-//     &-inner {
-//       display: flex;
-//       transition: 0.5s all;
-//       height: 100%;
-//       width: 400%; // 4 слайда по 100%
-//       background: $medium-dark;
-//       // max-width: 1000px;
-//     }
-//   }
-
-//   // Слайд
-//   &__slide {
-//     width: 25%; // 100% / 4 слайда
-//     height: 100%;
-//     // position: relative;
-//     @include no-select;
-//     overflow: hidden;
-//     // z-index: 1;
-
-//     display: flex;
-
-//     &-container {
-//       position: relative;
-
-//       height: 100%;
-//       position: relative;
-//       display: flex;
-//       height: 100%;
-//       flex-direction: row; // Изменено на row для горизонтального расположения
-//       justify-content: space-between; // Обеспечивает пространство между описанием и изображением
-//       align-items: center; // Центрирует элементы по вертикали
-//     }
-
-//     // Описание в слайде
-//     &-descr {
-//       // justify-self: center;
-//       // position: absolute;
-//       // top: 50%;
-//       // left: 50%;
-//       // transform: translate(-50%, -50%);
-//       width: 94%;
-//       height: 100%;
-//       justify-self: center;
-//       // z-index: 1;
-
-//       background-color: rgba(60, 60, 60, 0.9);
-//       background: $light;
-//       color: #fff;
-//       // padding: 2vw;
-//       // z-index: 2;
-//       max-width: 1240px;
-//       padding: 0 20px;
-//       margin: 0 auto;
-//       width: 100%;
-//       display: flex;
-//       align-items: center;
-//       justify-content: space-between;
-//       z-index: 3;
-//       &--left {
-//         .offer__slide-descr--info {
-//           font-size: 1.3vw;
-//           line-height: 1.6;
-//           margin-bottom: 2vw;
-//           @include no-select;
-//           @include fluid-text(24, 12);
-//         }
-
-//         .offer__slide-descr--action {
-//           display: flex;
-//           justify-content: center;
-//         }
-//       }
-//       &--right {
-//       }
-//       display: flex;
-//       @include no-select;
-//     }
-//     &-img {
-//       width: 100%;
-//       height: 100%;
-//       object-fit: cover;
-//       overflow: hidden;
-
-//       img {
-//         width: 100%;
-//         height: 100%;
-//         object-fit: cover;
-//         overflow: hidden;
-//       }
-//     }
-//   }
-// }
-
-// // Кнопки навигации
-// .prev,
-// .next {
-//   // position: absolute;
-//   // top: 50%;
-//   // transform: translateY(-50%);
-//   width: 10%;
-//   height: 100%;
-//   background-color: $black;
-//   cursor: pointer;
-//   // z-index: 2;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   // z-index: 1;
-// }
-
-// // .prev {
-// //   left: 0;
-// // }
-
-// // .next {
-// //   right: 0;
-// // }
-
-// // Кнопка
-// .btn_dark {
-//   background-color: #303030;
-//   color: #fff;
-//   border: none;
-//   padding: 12px 45px;
-//   font-size: 18px;
-//   cursor: pointer;
-//   transition: 0.3s all;
-
-//   &:hover {
-//     background-color: darken(#303030, 10%);
-//   }
-// }
-
-// .show {
-//   display: flex;
-// }
-// .hide {
-//   display: none;
-// }
-
 .offer {
   display: flex;
   flex-direction: column;
   width: 100%;
-
   align-items: center;
-  margin-bottom: 2vw;
+  // margin-bottom: 2vw;
+  // height: 80vh;
+  background-color: $black;
 
-  // Фоновый элемент
   .bgc_y {
-    position: absolute;
-    width: 100vw;
-    height: 40vw;
-    background: $medium-dark;
-    z-index: -1;
+    // position: absolute;
+    // width: 100vw;
+    // height: 100%;
+    // // background: $medium-dark;
+    // z-index: -1;
   }
 
-  // Основной контейнер
   .container {
     display: flex;
     width: 100vw;
     flex-direction: column;
     align-items: center;
     @include container;
+    border-radius: 0;
+    box-shadow: none;
   }
-  // &controls {
-  //   display: flex;
-  //   justify-content: space-between;
-  //   width: 100%;
-  //   margin-bottom: 10px; // Отступ снизу, чтобы кнопки не перекрывали слайды
-  // }
 
-  // Слайдер
   &__slider {
     width: 100vw;
+    height: 45vh;
     display: flex;
-    // flex-direction: column;
-    // align-items: center;
     position: relative;
-    overflow: hidden; // Скрыть переполнение
+    overflow: hidden;
 
-    // Счетчик слайдов
     &-counter {
       display: flex;
-      width: 30vw;
+      width: 100%;
       align-items: center;
       font-size: 2vw;
-      color: rgba(0, 0, 0, 0.5);
-      align-self: center;
+      font-weight: 700;
+      color: $white;
       justify-content: center;
-      background-color: $medium;
+      // background-color: $medium;
       width: 100%;
+      #current {
+        font-weight: 800;
+        span {
+          font-weight: 800;
+        }
+      }
+      #total {
+        font-weight: 800;
+        span {
+          font-weight: 800;
+        }
+      }
     }
 
-    // Обертка слайдера
     &-wrapper {
       width: 100%;
-      height: 40vw;
-      // margin: 0 0 5vw 0;
-      box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
-      // overflow: hidden;
+      height: 100%;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
       position: relative;
       display: flex;
       flex-direction: column;
       order: 2;
+      @include container;
     }
 
-    // Контейнер для слайдов
     &-inner {
       display: flex;
-      transition: 0.5s all;
       height: 100%;
-      width: 400%; // 4 слайда по 100%
-      // background: $light;
+      width: 400%;
       overflow: hidden;
       transition: transform 0.5s ease-in-out;
     }
   }
 
-  // Слайд
   &__slide {
-    width: 25%; // 100% / 4 слайда
-
+    width: 25%;
     height: 100%;
     position: relative;
-    animation: fadeIn 0.3s ease-in-out; // Apply fade-in animation
+    animation: fadeIn 0.3s ease-in-out;
+    @include no-select;
   }
 
-  // Описание в слайде
   &__descr {
-    // width: 60%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
+    // background-color: rgba(255, 255, 255, 0.9);
     padding: 2vw;
     z-index: 0;
     display: flex;
-
+    background-color: $black;
     &-left {
-      padding: 3%;
       display: flex;
+      flex: 0 0 65%;
       flex-direction: column;
       justify-content: space-around;
+
       &--info {
         @include fluid-text(32, 9);
+        color: $white;
         justify-content: center;
         text-align: center;
       }
+
       &--action {
         display: flex;
         justify-content: center;
+
         .btn-sldier {
           height: 6vw;
           width: 20vw;
-          @include fluid-text(24, 18);
+          @include fluid-text(40, 9);
           @include BTN;
         }
       }
     }
+
     &-right {
-      padding: 3%;
+      // padding: 3%;
+      flex: 0 0 35%;
+
       &--img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        @include no-select;
+
         img {
-          // background-color: #9a6565;
-          width: 600px;
-          max-width: 400px;
-          object-fit: cover;
-          justify-self: right;
+          // object-fit: cover;
+          // justify-self: right;
+          // border: 1px solid #000;
+          // border-radius: 5px;
+          max-width: 200px;
+          max-height: 200px;
+          @include no-select;
         }
       }
     }
   }
 }
 
-// Кнопки навигации
 .prev,
 .next {
-  // position: absolute;
-  // top: 50%;
-  // transform: translateY(-50%);
-  // width: 3vw;
-  // height: 100%;
-  // background-color: rgba(0, 0, 0, 0.564);
-  // // background: $black;
-  // cursor: pointer;
-  // z-index: 2;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-
   width: 10%;
-  // height: 100%;
   background-color: rgba(0, 0, 0, 0.251);
-  // color: #343434;
   cursor: pointer;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
   z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
 }
 
 .prev {
-  // left: 0;
   order: 1;
 }
 
 .next {
-  // right: 0;
   order: 3;
 }
 
-// Кнопка
 .btn_dark {
   background-color: #303030;
   color: #fff;
@@ -393,3 +188,15 @@
     opacity: 1;
   }
 }
+// .fade_slider {
+//   // opacity: 0;
+//   transition: opacity 0.5s ease-in-out;
+// }
+
+// .show_slider {
+//   // display: block;
+// }
+
+// .hide_slider {
+//   // display: none;
+// }

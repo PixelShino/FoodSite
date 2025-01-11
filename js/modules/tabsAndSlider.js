@@ -5,9 +5,8 @@ function SliderV2(
   sliderNext,
   current,
   total,
-  // tabsSelector,
 ) {
-  // const tabs = document.querySelectorAll(tabsSelector);
+  // DOM Elements
   const tabsContent = document.querySelectorAll(contentSelector);
   const tabsParent = document.querySelector(parentSelector);
   const prev = document.querySelector(sliderPrev);
@@ -15,33 +14,39 @@ function SliderV2(
   const currentCounter = document.querySelector(current);
   const totalCounter = document.querySelector(total);
 
+  // State
   let slideIndex = 0;
-  let startX = 0;
-  let endX = 0;
+  let touchStartX = 0;
+  let touchEndX = 0;
 
-  // if (!tabs.length || !tabsContent.length || !tabsParent) {
-  //   console.error('Элементы не найдены');
-  //   return;
-  // }
+  // Guard clause for required elements
+  if (
+    !tabsContent.length ||
+    !tabsParent ||
+    !prev ||
+    !next ||
+    !currentCounter ||
+    !totalCounter
+  ) {
+    console.error('Required elements not found');
+    return;
+  }
 
   function hideContent() {
     tabsContent.forEach((item) => {
       item.classList.add('hide');
-      item.classList.remove('show', 'fade');
+      item.classList.remove('show');
     });
-
-    // tabs.forEach((tab) => {
-    //   tab.classList.remove('tabheader__item_active');
-    // });
   }
 
-  function showContent(i = 0) {
-    tabsContent[i].classList.add('show', 'fade');
-    tabsContent[i].classList.remove('hide');
-    // tabs[i].classList.add('tabheader__item_active');
+  function showContent(index = 0) {
+    tabsContent[index].classList.add('show');
+    tabsContent[index].classList.remove('hide');
+    updateCounter(index);
+  }
 
-    // Обновляем счетчик
-    currentCounter.textContent = getZero(i + 1);
+  function updateCounter(index) {
+    currentCounter.textContent = getZero(index + 1);
     totalCounter.textContent = getZero(tabsContent.length);
   }
 
@@ -49,88 +54,101 @@ function SliderV2(
     return num >= 0 && num < 10 ? `0${num}` : num;
   }
 
-  // Обработчик для табов
-  // tabsParent.addEventListener('click', (event) => {
-  //   const target = event.target;
-
-  //   if (target && target.classList.contains(tabsSelector.replace('.', ''))) {
-  //     tabs.forEach((item, i) => {
-  //       if (target === item) {
-  //         slideIndex = i;
-  //         hideContent();
-  //         showContent(slideIndex);
-  //       }
-  //     });
-  //   }
-  // });
-
-  // Обработчики для стрелок
-  prev.addEventListener('click', () => {
-    slideIndex = slideIndex === 0 ? tabsContent.length - 1 : slideIndex - 1;
-    hideContent();
-    showContent(slideIndex);
-  });
-
-  next.addEventListener('click', () => {
-    slideIndex = slideIndex === tabsContent.length - 1 ? 0 : slideIndex + 1;
-    hideContent();
-    showContent(slideIndex);
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') {
-      // Обработка нажатия стрелки влево
+  function changeSlide(direction) {
+    if (direction === 'prev') {
       slideIndex = slideIndex === 0 ? tabsContent.length - 1 : slideIndex - 1;
-      hideContent();
-      showContent(slideIndex);
-    } else if (event.key === 'ArrowRight') {
-      // Обработка нажатия стрелки вправо
+    } else {
       slideIndex = slideIndex === tabsContent.length - 1 ? 0 : slideIndex + 1;
-      hideContent();
-      showContent(slideIndex);
     }
-  });
+    hideContent();
+    showContent(slideIndex);
+  }
 
-  // Обработчики для свайпа
-  tabsParent.addEventListener('touchstart', (event) => {
-    startX = event.touches[0].clientX;
-    endX = startX;
-  });
+  // Event Handlers
+  function handleKeyPress(event) {
+    if (event.key === 'ArrowLeft') {
+      changeSlide('prev');
+    } else if (event.key === 'ArrowRight') {
+      changeSlide('next');
+    }
+  }
 
-  tabsParent.addEventListener('touchmove', (event) => {
-    endX = event.touches[0].clientX;
-  });
+  function handleTouchStart(event) {
+    touchStartX = event.touches[0].clientX;
+    touchEndX = touchStartX;
+  }
 
-  tabsParent.addEventListener('touchend', () => {
-    const swipeDistance = endX - startX;
-    const swipeThreshold = 50; // минимальная дистанция
+  function handleTouchMove(event) {
+    touchEndX = event.touches[0].clientX;
+  }
+
+  function handleTouchEnd() {
+    const swipeDistance = touchEndX - touchStartX;
+    const swipeThreshold = 50;
 
     if (Math.abs(swipeDistance) > swipeThreshold) {
-      if (swipeDistance < 0) {
-        // Swipe left
-        slideIndex = slideIndex === tabsContent.length - 1 ? 0 : slideIndex + 1;
-      } else {
-        // Swipe right
-        slideIndex = slideIndex === 0 ? tabsContent.length - 1 : slideIndex - 1;
-      }
-      hideContent();
-      showContent(slideIndex);
+      changeSlide(swipeDistance < 0 ? 'next' : 'prev');
     }
-  });
+  }
 
-  // Инициализация
+  // Mouse drag handlers
+  let isDragging = false;
+  let startX;
+
+  function handleMouseDown(event) {
+    isDragging = true;
+    startX = event.pageX;
+    tabsParent.style.cursor = 'grabbing';
+  }
+
+  function handleMouseMove(event) {
+    if (!isDragging) return;
+
+    const x = event.pageX;
+    const distance = startX - x;
+
+    if (Math.abs(distance) > 50) {
+      changeSlide(distance > 0 ? 'next' : 'prev');
+      isDragging = false;
+      tabsParent.style.cursor = 'grab';
+    }
+  }
+
+  function handleMouseUp() {
+    isDragging = false;
+    tabsParent.style.cursor = 'grab';
+  }
+
+  // Event Listeners
+  prev.addEventListener('click', () => changeSlide('prev'));
+  next.addEventListener('click', () => changeSlide('next'));
+  document.addEventListener('keydown', handleKeyPress);
+
+  tabsParent.addEventListener('touchstart', handleTouchStart);
+  tabsParent.addEventListener('touchmove', handleTouchMove);
+  tabsParent.addEventListener('touchend', handleTouchEnd);
+
+  tabsParent.addEventListener('mousedown', handleMouseDown);
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', handleMouseUp);
+
+  // Set initial cursor style
+  tabsParent.style.cursor = 'grab';
+
+  // Initialize
   hideContent();
   showContent();
+
+  // Cleanup function
+  return function cleanup() {
+    document.removeEventListener('keydown', handleKeyPress);
+    tabsParent.removeEventListener('touchstart', handleTouchStart);
+    tabsParent.removeEventListener('touchmove', handleTouchMove);
+    tabsParent.removeEventListener('touchend', handleTouchEnd);
+    tabsParent.removeEventListener('mousedown', handleMouseDown);
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  };
 }
-// // Использование в script.js:
-// document.addEventListener('DOMContentLoaded', () => {
-//   combinedTabsSlider(
-//     '.tabheader__item',
-//     '.tabcontent',
-//     '.tabheader__items',
-//     '.offer__slider-prev',
-//     '.offer__slider-next',
-//     '#current',
-//     '#total',
-//   );
-// });
+
 export default SliderV2;

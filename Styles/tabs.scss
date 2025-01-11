@@ -14,7 +14,7 @@
     @include BRo;
     padding: 1rem;
     height: 100%;
-
+    flex-direction: column;
     @include respond-to(desktop) {
       flex-direction: column;
     }
@@ -25,17 +25,23 @@
       flex-grow: 1;
       padding: 2rem;
       grid-auto-rows: 0.5fr;
-      @include BRo;
+      // @include BRo;
       height: 50%;
       align-self: center;
 
+      display: flex;
+      padding: 0;
+      margin: 1vw 1vw 0 1vw;
+      flex-flow: row wrap;
+      max-width: 100%;
+      width: 100%;
       @include respond-to(desktop) {
-        display: flex;
-        padding: 0;
-        margin: 3vw 3vw 0 3vw;
-        flex-flow: row wrap;
-        max-width: 100%;
-        width: 100%;
+        // display: flex;
+        // padding: 0;
+        // margin: 1vw 1vw 0 1vw;
+        // flex-flow: row wrap;
+        // max-width: 100%;
+        // width: 100%;
       }
 
       &-title,
@@ -53,13 +59,13 @@
         @include fluid-text(22, 14);
         font-weight: 600;
         margin-bottom: 1rem;
-        @include BTNshadow;
+        @include BTN;
         font-weight: 800;
 
         @include respond-to(desktop) {
           padding: 3vw;
           max-height: 15vw;
-          height: 15vw;
+          height: 10vw;
         }
       }
 
@@ -75,7 +81,7 @@
 
         @include respond-to(desktop) {
           flex-direction: row-reverse;
-          padding: 1rem;
+          // padding: 1rem;
         }
 
         &--icon,
@@ -187,7 +193,7 @@
       flex-grow: 1;
       flex-direction: column;
       height: 100%;
-      max-width: 75%;
+      max-width: 100%;
 
       @include respond-to(desktop) {
         max-width: 100%;
@@ -273,10 +279,10 @@
 
         .tabcontent__bot-cards {
           @include respond-to(tablet) {
-            display: grid;
+            // display: grid;
             grid-template-columns: repeat(3, 1fr); // Two columns
             gap: 0.5rem; // Adjust gap as needed
-            padding: 1.5rem; // Adjust padding as needed
+            // padding: 1.5rem; // Adjust padding as needed
             overflow-x: auto;
 
             &--card {
@@ -303,7 +309,7 @@
           -webkit-overflow-scrolling: touch;
           scroll-snap-type: x mandatory;
           cursor: grab;
-          padding: 1.5rem;
+          // padding: 1.5rem;
           align-items: center;
           justify-content: space-around;
           scrollbar-width: thin;
@@ -343,6 +349,11 @@
             }
             @include respond-to(tablet) {
               width: 50%;
+              padding: 0.125rem;
+              margin: 0;
+            }
+            @include respond-to(mobile) {
+              width: 85%;
               padding: 0.125rem;
               margin: 0;
             }
