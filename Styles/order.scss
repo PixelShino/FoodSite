@@ -4,7 +4,6 @@
   //   padding-bottom: 80px;
 
   .container {
-    margin: 3vw;
     @include container;
     @include BTN;
     background-color: $black;
@@ -20,8 +19,6 @@
       padding: 1rem;
     }
     .order__form {
-      margin: 3.25vw;
-
       display: flex;
       justify-content: space-around;
       align-items: center;

@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Food</title>
     <link rel="stylesheet" href="./dist/dist/styles.css" />
+    <link rel="stylesheet" href="/Styles/uicons.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css"
+    />
   </head>
   <body>
     <header class="header">
@@ -14,8 +19,8 @@
           <div data-modal class="header__logo-text">NutriLife</div>
         </div>
         <nav class="header__links">
-          <button data-modal class="header__link">Связаться с нами</button>
-          <button class="header__link">Авторизация</button>
+          <!-- <button data-modal class="header__link">Связаться с нами</button> -->
+          <!-- <button class="header__link">Авторизация</button> -->
         </nav>
         <div class="header__burger">
           <div class="header__burger-line"></div>
@@ -25,19 +30,30 @@
       </div>
       <div class="header__bot-block">
         <nav class="header__links">
-          <a href="#" class="header__link">Меню и тарифы</a>
-          <a href="#" class="header__link">Отзывы</a>
-          <a href="#" class="header__link">Как работает</a>
-          <a href="#" class="header__link">О компании</a>
-          <a href="#" class="header__link">Вопросы</a>
-          <a href="#" class="header__link"
-            ><img
-              width="20"
-              height="20"
-              src="https://img.icons8.com/ios/50/marker--v1.png"
-              alt="marker--v1"
-            />Москва</a
+          <a href="#" class="header__link">
+            <i class="fi fi-br-grocery-bag"></i>Меню и тарифы</a
           >
+          <a href="#" class="header__link"
+            ><i class="fi fi-br-feedback-alt"></i>Отзывы</a
+          >
+          <a href="#" class="header__link"
+            ><i class="fi fi-br-comments-question"></i>Как работает</a
+          >
+          <a href="#" class="header__link"
+            ><i class="fi fi-br-building"></i>О компании</a
+          >
+          <a href="#" class="header__link">
+            <i class="fi fi-br-question"></i>Вопросы</a
+          >
+          <!-- <button data-modal class="header__link">Связаться с нами</button> -->
+          <a href="#" class="header__link"
+            ><i class="fi fi-br-sign-in-alt"></i>Авторизация</a
+          >
+          <div id="city">
+            <a href="#" class="header__link"
+              ><i class="fi fi-br-marker"></i>Москва</a
+            >
+          </div>
         </nav>
       </div>
       <div class="burger__content">
@@ -96,12 +112,11 @@
                       <img src="img/icon/arrow-left.png" alt="" />
                     </div> -->
 
-                    <div class="offer__descr-left">
+                    <div class="offer__descr-left offer__descr-left--0">
                       <div class="offer__descr-left--info">
-                        1 Фитнес Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Ex quidem perspiciatis veniam delectus
-                        sapiente. Amet omnis voluptates provident repellat
-                        doloremque!
+                        NutriLife предлагает разнообразные блюда, которые
+                        помогут вам поддерживать здоровый образ жизни.
+                        Наслаждайтесь вкусной и полезной едой каждый день.
                       </div>
                       <div class="offer__descr-left--action">
                         <button data-modal class="btn-sldier">
@@ -109,9 +124,9 @@
                         </button>
                       </div>
                     </div>
-                    <div class="offer__descr-right">
+                    <div class="offer__descr-right offer__descr-right--0">
                       <div class="offer__descr-right--img">
-                        <img src="img/icon/onion.webp" alt="pepper" />
+                        <img src="img/food/slider_food1.png" alt="pepper" />
                       </div>
                     </div>
                   </div>
@@ -119,12 +134,11 @@
                 </div>
                 <div class="offer__slide">
                   <div class="offer__descr">
-                    <div class="offer__descr-left">
+                    <div class="offer__descr-left offer__descr-left--1">
                       <div class="offer__descr-left--info">
-                        2 Премиум Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Ex quidem perspiciatis veniam delectus
-                        sapiente. Amet omnis voluptates provident repellat
-                        doloremque!
+                        Наши блюда готовятся из свежих и качественных
+                        ингредиентов, чтобы вы могли наслаждаться вкусной и
+                        полезной едой каждый день.
                       </div>
                       <div class="offer__descr-left--action">
                         <button data-modal class="btn-sldier">
@@ -132,9 +146,9 @@
                         </button>
                       </div>
                     </div>
-                    <div class="offer__descr-right">
+                    <div class="offer__descr-right offer__descr-right--1">
                       <div class="offer__descr-right--img">
-                        <img src="img/icon/onion.webp" alt="pepper" />
+                        <img src="img/food/slider__food2.png" alt="pepper" />
                       </div>
                     </div>
                   </div>
@@ -142,12 +156,10 @@
                 </div>
                 <div class="offer__slide">
                   <div class="offer__descr">
-                    <div class="offer__descr-left">
+                    <div class="offer__descr-left offer__descr-left--2">
                       <div class="offer__descr-left--info">
-                        3 Постное Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Ex quidem perspiciatis veniam delectus
-                        sapiente. Amet omnis voluptates provident repellat
-                        doloremque!
+                        Откройте для себя удобный сервис доставки от NutriLife и
+                        ощутите разницу в качестве и вкусе наших блюд
                       </div>
                       <div class="offer__descr-left--action">
                         <button data-modal class="btn-sldier">
@@ -155,9 +167,9 @@
                         </button>
                       </div>
                     </div>
-                    <div class="offer__descr-right">
+                    <div class="offer__descr-right offer__descr-right--2">
                       <div class="offer__descr-right--img">
-                        <img src="img/icon/onion.webp" alt="pepper" />
+                        <img src="img/food/slider__food3.png" alt="pepper" />
                       </div>
                     </div>
                   </div>
@@ -167,9 +179,9 @@
                 <!-- <div class="next offer__slider-next"></div> -->
               </div>
               <div class="offer__slider-counter">
-                <span id="current">03</span>
+                <span id="current">01</span>
                 /
-                <span id="total">04</span>
+                <span id="total">03</span>
               </div>
             </div>
             <div class="next offer__slider-next">
@@ -191,7 +203,7 @@
           <div class="container"></div>
         </div>
       </div>
-
+      <div class="divider"></div>
       <div class="preview" id="preview">
         <div class="bgc_blue"></div>
         <div class="container">
@@ -220,128 +232,13 @@
                     <div class="tabcontent__bot-cards">
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 1
+                          Омлет с беконом и сыром
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
-                        </div>
-                        <div class="tabcontent__bot-cards--card--impact">
-                          <div id="cKal">
-                            <div
-                              class="tabcontent__bot-cards--card--impact--title"
-                            >
-                              кКал
-                            </div>
-                            <div
-                              class="tabcontent__bot-cards--card--impact--value"
-                            >
-                              350
-                            </div>
-                          </div>
-                          <div id="protein">
-                            <div
-                              class="tabcontent__bot-cards--card--impact--title"
-                            >
-                              белков
-                            </div>
-                            <div
-                              class="tabcontent__bot-cards--card--impact--value"
-                            >
-                              20
-                            </div>
-                          </div>
-                          <div id="fats">
-                            <div
-                              class="tabcontent__bot-cards--card--impact--title"
-                            >
-                              жиров
-                            </div>
-                            <div
-                              class="tabcontent__bot-cards--card--impact--value"
-                            >
-                              5
-                            </div>
-                          </div>
-                          <div id="carbs">
-                            <div
-                              class="tabcontent__bot-cards--card--impact--title"
-                            >
-                              углеводов
-                            </div>
-                            <div
-                              class="tabcontent__bot-cards--card--impact--value"
-                            >
-                              60
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="tabcontent__bot-cards--card">
-                        <div class="tabcontent__bot-cards--card--title">
-                          Карточка 2
-                        </div>
-                        <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
-                        </div>
-                        <div class="tabcontent__bot-cards--card--impact">
-                          <div id="cKal">
-                            <div
-                              class="tabcontent__bot-cards--card--impact--title"
-                            >
-                              кКал
-                            </div>
-                            <div
-                              class="tabcontent__bot-cards--card--impact--value"
-                            >
-                              500
-                            </div>
-                          </div>
-                          <div id="protein">
-                            <div
-                              class="tabcontent__bot-cards--card--impact--title"
-                            >
-                              белков
-                            </div>
-                            <div
-                              class="tabcontent__bot-cards--card--impact--value"
-                            >
-                              30
-                            </div>
-                          </div>
-                          <div id="fats">
-                            <div
-                              class="tabcontent__bot-cards--card--impact--title"
-                            >
-                              жиров
-                            </div>
-                            <div
-                              class="tabcontent__bot-cards--card--impact--value"
-                            >
-                              15
-                            </div>
-                          </div>
-                          <div id="carbs">
-                            <div
-                              class="tabcontent__bot-cards--card--impact--title"
-                            >
-                              углеводов
-                            </div>
-                            <div
-                              class="tabcontent__bot-cards--card--impact--value"
-                            >
-                              70
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="tabcontent__bot-cards--card">
-                        <div class="tabcontent__bot-cards--card--title">
-                          Карточка 3
-                        </div>
-                        <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/1Omelette_with_bacon_and_cheese.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -365,7 +262,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              40
+                              30
                             </div>
                           </div>
                           <div id="fats">
@@ -377,7 +274,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              20
+                              45г
                             </div>
                           </div>
                           <div id="carbs">
@@ -389,7 +286,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              80
+                              10г
                             </div>
                           </div>
                         </div>
@@ -397,10 +294,72 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 4
+                          Паста Карбонара
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img src="./img/food/1Pasta_Carbonara.png" alt="" />
+                        </div>
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              750
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              25г
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              35г
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              80г
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="tabcontent__bot-cards--card">
+                        <div class="tabcontent__bot-cards--card--title">
+                          Куриное филе с картофельным пюре
+                        </div>
+                        <div class="tabcontent__bot-cards--card--img">
+                          <img
+                            src="./img/food/1Chicken_fillet_with_mashed_potatoes.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -424,7 +383,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              50
+                              40г
                             </div>
                           </div>
                           <div id="fats">
@@ -436,7 +395,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              25
+                              25г
                             </div>
                           </div>
                           <div id="carbs">
@@ -448,7 +407,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              90
+                              60г
                             </div>
                           </div>
                         </div>
@@ -456,10 +415,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 5
+                          Бургер с говядиной и авокадо
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/1Beef_and_Avocado_Burger-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -483,7 +445,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              60
+                              35г
                             </div>
                           </div>
                           <div id="fats">
@@ -495,7 +457,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              30
+                              50г
                             </div>
                           </div>
                           <div id="carbs">
@@ -507,7 +469,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              100
+                              60г
                             </div>
                           </div>
                         </div>
@@ -515,10 +477,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 6
+                          Ризотто с морепродуктами
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/1Risotto_with_seafood-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -530,7 +495,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              900
+                              650
                             </div>
                           </div>
                           <div id="protein">
@@ -542,7 +507,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              70
+                              30г
                             </div>
                           </div>
                           <div id="fats">
@@ -554,7 +519,7 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              35
+                              20г
                             </div>
                           </div>
                           <div id="carbs">
@@ -566,7 +531,69 @@
                             <div
                               class="tabcontent__bot-cards--card--impact--value"
                             >
-                              120
+                              85г
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="tabcontent__bot-cards--card">
+                        <div class="tabcontent__bot-cards--card--title">
+                          Шоколадный смузи
+                        </div>
+                        <div class="tabcontent__bot-cards--card--img">
+                          <img
+                            src="./img/food/1Chocolate_Smoothie-removebg-preview.png"
+                            alt=""
+                          />
+                        </div>
+                        <div class="tabcontent__bot-cards--card--impact">
+                          <div id="cKal">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              кКал
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              500
+                            </div>
+                          </div>
+                          <div id="protein">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              белков
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              20г
+                            </div>
+                          </div>
+                          <div id="fats">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              жиров
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              15г
+                            </div>
+                          </div>
+                          <div id="carbs">
+                            <div
+                              class="tabcontent__bot-cards--card--impact--title"
+                            >
+                              углеводов
+                            </div>
+                            <div
+                              class="tabcontent__bot-cards--card--impact--value"
+                            >
+                              60г
                             </div>
                           </div>
                         </div>
@@ -625,10 +652,13 @@
                     >
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 1
+                          Салат с курицей и киноа
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/2Chicken_and_Quinoa_Salad-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -684,10 +714,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 2
+                          Тушеная говядина с овощами
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/2Stewed_beef_with_vegetables-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -743,10 +776,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 3
+                          Рыба на гриле с овощами
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/2Grilled_fish_with_vegetables-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -802,10 +838,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 4
+                          Куриное филе с булгуром
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/2Chicken_fillet_with_bulgur-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -861,10 +900,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 5
+                          Суп из чечевицы
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/2Lentil_soup-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -920,10 +962,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 6
+                          Фруктовый салат с йогуртом
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/2Fruit_salad_with_yogurt-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -1051,10 +1096,13 @@
                     >
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 1
+                          Овсянка с ягодами
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/3Oatmeal_with_berries-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -1110,10 +1158,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 2
+                          Куриное филе с брокколи
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/3Chicken_fille__with_broccoli-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -1169,10 +1220,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 3
+                          Салат с тунцом и фасолью
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/3Tuna_and_Bean_Salad-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -1228,10 +1282,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 4
+                          Овощной суп-пюре
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/3Vegetable_puree_soup-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -1287,10 +1344,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 5
+                          Тофу с овощами на пару
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/3Steamed_tofu_with_vegetables-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -1346,10 +1406,13 @@
 
                       <div class="tabcontent__bot-cards--card">
                         <div class="tabcontent__bot-cards--card--title">
-                          Карточка 6
+                          Яблочный смузи
                         </div>
                         <div class="tabcontent__bot-cards--card--img">
-                          <img src="./img/icon/soymilk.webp" alt="" />
+                          <img
+                            src="./img/food/3Apple_Smoothie-removebg-preview.png"
+                            alt=""
+                          />
                         </div>
                         <div class="tabcontent__bot-cards--card--impact">
                           <div id="cKal">
@@ -1611,9 +1674,9 @@
                       <div class="tabheader__item-cKal">2500-3000</div>
                     </div>
                     <div class="tabheader__item--right">
-                      <div class="tabheader__item-img">
+                      <!-- <div class="tabheader__item-img">
                         <img src="./img/icon/meet.webp" alt="" />
-                      </div>
+                      </div> -->
                     </div>
                   </div>
 
@@ -1623,9 +1686,9 @@
                       <div class="tabheader__item-cKal">1500-2500</div>
                     </div>
                     <div class="tabheader__item--right">
-                      <div class="tabheader__item-img">
+                      <!-- <div class="tabheader__item-img">
                         <img src="./img/icon/salat.webp" alt="" />
-                      </div>
+                      </div> -->
                     </div>
                   </div>
 
@@ -1635,9 +1698,9 @@
                       <div class="tabheader__item-cKal">1300-2200</div>
                     </div>
                     <div class="tabheader__item--right">
-                      <div class="tabheader__item-img">
+                      <!-- <div class="tabheader__item-img">
                         <img src="./img/icon/carrot.webp" alt="" />
-                      </div>
+                      </div> -->
                     </div>
                   </div>
 
@@ -1681,11 +1744,15 @@
               </div>
               <div class="tabcontainer__bot-action">
                 <div class="tabcontainer__bot-action--icon">
-                  <img src="./img/icon/buy2.png" alt="BUY" />
+                  <!-- <img src="./img/icon/buy2.png" alt="BUY" />
+                   -->
+                  <i class="fi fi-br-shopping-cart"></i>
                 </div>
                 <div class="tabcontainer__bot-action--text">Оформить заказ</div>
               </div>
-              <div class="tabcontainer__bot-reset">Сбросить настройки</div>
+              <div class="tabcontainer__bot-reset">
+                <i class="fi fi-br-settings-sliders"></i>Сбросить настройки
+              </div>
             </div>
           </div>
           <!-- <div class="preview__life">Живи полной жизнью!</div> -->
@@ -1698,19 +1765,34 @@
         <div class="container">
           <h2 class="title">Рассчитаем вашу потребность в калориях?</h2>
           <div class="calculating__field">
-            <div class="calculating__subtitle">Ваш пол</div>
+            <div class="calculating__subtitle"><h3>Ваш пол</h3></div>
             <div class="calculating__choose" id="gender">
               <div
                 id="female"
                 class="calculating__choose-item calculating__choose-item_active"
+                data-img="./img/user/woman_green.png"
+                data-active-img="./img/user/woman.png"
               >
-                Женщина
+                <div class="calculating__choose-item--text">Женщина</div>
+                <div class="calculating__choose-item--img">
+                  <img src="./img/user/woman.png" alt="" />
+                </div>
               </div>
 
-              <div id="male" class="calculating__choose-item">Мужчина</div>
+              <div
+                id="male"
+                class="calculating__choose-item"
+                data-img="./img/user/man_green.png"
+                data-active-img="./img/user/man.png"
+              >
+                <div class="calculating__choose-item--text">Мужчина</div>
+                <div class="calculating__choose-item--img">
+                  <img src="./img/user/man.png" alt="" />
+                </div>
+              </div>
             </div>
 
-            <div class="calculating__subtitle">Ваша конституция</div>
+            <div class="calculating__subtitle"><h3>Ваша конституция</h3></div>
             <div class="calculating__choose calculating__choose_medium">
               <input
                 type="text"
@@ -1733,32 +1815,64 @@
             </div>
 
             <div class="calculating__subtitle">
-              Выберите вашу физическая активность
+              <h3>Выберите вашу физическая активность</h3>
             </div>
             <div class="calculating__choose calculating__choose_big">
-              <div data-ratio="1.2" id="low" class="calculating__choose-item">
-                Низкая активность
+              <div
+                data-ratio="1.2"
+                id="low"
+                class="calculating__choose-item"
+                data-img="./img/activity/low_activity_active.png"
+                data-active-img="./img/activity/low_activity.png"
+              >
+                <div class="calculating__choose-item--text">
+                  Низкая активность
+                </div>
+                <div class="calculating__choose-item--img">
+                  <img src="./img/activity/low_activity_active.png" alt="" />
+                </div>
               </div>
               <div
                 data-ratio="1.375"
                 id="small"
                 class="calculating__choose-item calculating__choose-item_active"
+                data-img="./img/activity/little_activity_active.png"
+                data-active-img="./img/activity/little_activity.png"
               >
-                Невысокая активность
+                <div class="calculating__choose-item--text">
+                  Невысокая активность
+                </div>
+                <div class="calculating__choose-item--img">
+                  <img src="./img/activity/little_activity_active.png" alt="" />
+                </div>
               </div>
               <div
                 data-ratio="1.55"
                 id="medium"
                 class="calculating__choose-item"
+                data-img="./img/activity/middle_activity_active.png"
+                data-active-img="./img/activity/middle_activity.png"
               >
-                Умеренная активность
+                <div class="calculating__choose-item--text">
+                  Умеренная активность
+                </div>
+                <div class="calculating__choose-item--img">
+                  <img src="./img/activity/middle_activity_active.png" alt="" />
+                </div>
               </div>
               <div
                 data-ratio="1.725"
                 id="high"
                 class="calculating__choose-item"
+                data-img="./img/activity/hight_activity_active.png"
+                data-active-img="./img/activity/hight_activity.png"
               >
-                Высокая активность
+                <div class="calculating__choose-item--text">
+                  Высокая активность
+                </div>
+                <div class="calculating__choose-item--img">
+                  <img src="./img/activity/hight_activity_active.png" alt="" />
+                </div>
               </div>
             </div>
 
@@ -1776,13 +1890,101 @@
                 <div class="calculating__subtitle">Ваш индекс массы тела:</div>
                 <div class="calculating__result bmi"><span></span></div>
               </div>
-              <div class="calculating__total bmi info">
-                <div class="calculating__subtitle"><span></span></div>
+
+              <div class="calc-addition--wrapper">
+                <div class="calculating__total bmi info">
+                  <div class="calculating__subtitle"><span></span></div>
+                </div>
+
+                <div class="calculating__total bmi tariff">
+                  <div class="calculating__result bmi tariff">
+                    <div class="calculating__subtitle">Вам подходит тарифф</div>
+                  </div>
+                  <span></span>
+
+                  <!-- <img
+                    src=""
+                    alt="Tariff Image"
+                    class="tariff--img"
+                    style="display: none"
+                  /> -->
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="divider"></div>
+
+      <section class="sequence">
+        <div class="container">
+          <div class="sequence__bg"></div>
+          <div class="sequence__wrapper">
+            <article class="sequence__item">
+              <div class="sequence__item-figure">
+                <div class="sequence__item-figure--circle">1</div>
+                <div class="sequence__item-figure--arrow"></div>
+              </div>
+              <div class="sequence__item-text">
+                <h3 class="sequence__item-text--subtitle">
+                  Выберите тариф питание и количество дней
+                </h3>
+                <p class="sequence__item-text--descr">
+                  У нас представлены тарифы для различных потребностей.Выберите
+                  сами или расчитайте в нашем калькуляторе
+                </p>
+              </div>
+            </article>
+            <article class="sequence__item">
+              <div class="sequence__item-figure">
+                <div class="sequence__item-figure--circle">2</div>
+                <div class="sequence__item-figure--arrow"></div>
+              </div>
+              <div class="sequence__item-text">
+                <h3 class="sequence__item-text--subtitle">
+                  Оплатите заказ на сайте
+                </h3>
+                <p class="sequence__item-text--descr">
+                  У нас возможна только полная предоплата.Вы можете получить
+                  скидку за выбор большего количества дней
+                </p>
+              </div>
+            </article>
+            <article class="sequence__item">
+              <div class="sequence__item-figure">
+                <div class="sequence__item-figure--circle">3</div>
+                <div class="sequence__item-figure--arrow"></div>
+              </div>
+              <div class="sequence__item-text">
+                <h3 class="sequence__item-text--subtitle">
+                  Получите ваши готовые рационы
+                </h3>
+                <p class="sequence__item-text--descr">
+                  Мы доставим вам ваш рацион на день раньше на 1 день , вечером
+                  , вы можете заранее указать адресс , но поменять его можно не
+                  позже 16:00
+                </p>
+              </div>
+            </article>
+            <article class="sequence__item">
+              <div class="sequence__item-figure">
+                <div class="sequence__item-figure--circle">4</div>
+                <div class="sequence__item-figure--arrow"></div>
+              </div>
+              <div class="sequence__item-text">
+                <h3 class="sequence__item-text--subtitle">
+                  Питайтесь правильно и экономьте время
+                </h3>
+                <p class="sequence__item-text--descr">
+                  Запаситесь силами для своих целей, поддежривайте здоровое
+                  питание и чувствуйте себя великолепно
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
 
       <div class="divider"></div>
 
@@ -1848,26 +2050,351 @@
           </div>
         </div>
       </div>
+
+      <div class="divider"></div>
+
+      <section class="reviews">
+        <div class="container">
+          <h2 class="reviews__title">Отзывы наших клиентов</h2>
+
+          <div class="reviews__list">
+            <div class="reviews__item">
+              <div class="reviews__item-header">
+                <div class="reviews__item-user">
+                  <div class="reviews__item-avatar">
+                    <img
+                      src="/placeholder.svg?height=48&width=48"
+                      alt="Аватар пользователя"
+                    />
+                  </div>
+                  <div class="reviews__item-info">
+                    <h3 class="reviews__item-name">Анна Петрова</h3>
+                    <span class="reviews__item-date">12.01.2024</span>
+                    <div class="reviews__item-rating">
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="reviews__item-content">
+                <div class="reviews__item-photo">
+                  <img
+                    src="/placeholder.svg?height=200&width=200"
+                    alt="Фото от пользователя"
+                  />
+                </div>
+                <p class="reviews__item-text">
+                  Отличное качество еды и сервиса! Очень довольна результатом.
+                  Буду заказывать ещё.
+                </p>
+              </div>
+            </div>
+            <div class="reviews__item">
+              <div class="reviews__item-header">
+                <div class="reviews__item-user">
+                  <div class="reviews__item-avatar">
+                    <img
+                      src="/placeholder.svg?height=48&width=48"
+                      alt="Аватар пользователя"
+                    />
+                  </div>
+                  <div class="reviews__item-info">
+                    <h3 class="reviews__item-name">Анна Петрова</h3>
+                    <span class="reviews__item-date">12.01.2024</span>
+                    <div class="reviews__item-rating">
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="reviews__item-content">
+                <div class="reviews__item-photo">
+                  <img
+                    src="/placeholder.svg?height=200&width=200"
+                    alt="Фото от пользователя"
+                  />
+                </div>
+                <p class="reviews__item-text">
+                  Отличное качество еды и сервиса! Очень довольна результатом.
+                  Буду заказывать ещё.
+                </p>
+              </div>
+            </div>
+
+            <div class="reviews__item">
+              <div class="reviews__item-header">
+                <div class="reviews__item-user">
+                  <div class="reviews__item-avatar">
+                    <img
+                      src="/placeholder.svg?height=48&width=48"
+                      alt="Аватар пользователя"
+                    />
+                  </div>
+                  <div class="reviews__item-info">
+                    <h3 class="reviews__item-name">Анна Петрова</h3>
+                    <span class="reviews__item-date">12.01.2024</span>
+                    <div class="reviews__item-rating">
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="reviews__item-content">
+                <div class="reviews__item-photo">
+                  <img
+                    src="/placeholder.svg?height=200&width=200"
+                    alt="Фото от пользователя"
+                  />
+                </div>
+                <p class="reviews__item-text">
+                  Отличное качество еды и сервиса! Очень довольна результатом.
+                  Буду заказывать ещё.
+                </p>
+              </div>
+            </div>
+
+            <div class="reviews__item">
+              <div class="reviews__item-header">
+                <div class="reviews__item-user">
+                  <div class="reviews__item-avatar">
+                    <img
+                      src="/placeholder.svg?height=48&width=48"
+                      alt="Аватар пользователя"
+                    />
+                  </div>
+                  <div class="reviews__item-info">
+                    <h3 class="reviews__item-name">Анна Петрова</h3>
+                    <span class="reviews__item-date">12.01.2024</span>
+                    <div class="reviews__item-rating">
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="reviews__item-content">
+                <div class="reviews__item-photo">
+                  <img
+                    src="/placeholder.svg?height=200&width=200"
+                    alt="Фото от пользователя"
+                  />
+                </div>
+                <p class="reviews__item-text">
+                  Отличное качество еды и сервиса! Очень довольна результатом.
+                  Буду заказывать ещё.
+                </p>
+              </div>
+            </div>
+
+            <div class="reviews__item">
+              <div class="reviews__item-header">
+                <div class="reviews__item-user">
+                  <div class="reviews__item-avatar">
+                    <img
+                      src="/placeholder.svg?height=48&width=48"
+                      alt="Аватар пользователя"
+                    />
+                  </div>
+                  <div class="reviews__item-info">
+                    <h3 class="reviews__item-name">Анна Петрова</h3>
+                    <span class="reviews__item-date">12.01.2024</span>
+                    <div class="reviews__item-rating">
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="reviews__item-content">
+                <div class="reviews__item-photo">
+                  <img
+                    src="/placeholder.svg?height=200&width=200"
+                    alt="Фото от пользователя"
+                  />
+                </div>
+                <p class="reviews__item-text">
+                  Отличное качество еды и сервиса! Очень довольна результатом.
+                  Буду заказывать ещё.
+                </p>
+              </div>
+            </div>
+
+            <div class="reviews__item">
+              <div class="reviews__item-header">
+                <div class="reviews__item-user">
+                  <div class="reviews__item-avatar">
+                    <img
+                      src="/placeholder.svg?height=48&width=48"
+                      alt="Аватар пользователя"
+                    />
+                  </div>
+                  <div class="reviews__item-info">
+                    <h3 class="reviews__item-name">Анна Петрова</h3>
+                    <span class="reviews__item-date">12.01.2024</span>
+                    <div class="reviews__item-rating">
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                      <i class="fi fi-br-star"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="reviews__item-content">
+                <div class="reviews__item-photo">
+                  <img
+                    src="/placeholder.svg?height=200&width=200"
+                    alt="Фото от пользователя"
+                  />
+                </div>
+                <p class="reviews__item-text">
+                  Отличное качество еды и сервиса! Очень довольна результатом.
+                  Буду заказывать ещё.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="reviews__form">
+            <h3 class="reviews__form-title">Оставить отзыв</h3>
+            <form id="reviewForm" class="form">
+              <div class="form__field">
+                <input
+                  type="text"
+                  id="userName"
+                  class="form__input"
+                  placeholder="Ваше имя"
+                  required
+                />
+              </div>
+
+              <div class="form__field">
+                <div class="form__rating" id="ratingStars">
+                  <i class="fi fi-br-star" data-rating="1"></i>
+                  <i class="fi fi-br-star" data-rating="2"></i>
+                  <i class="fi fi-br-star" data-rating="3"></i>
+                  <i class="fi fi-br-star" data-rating="4"></i>
+                  <i class="fi fi-br-star" data-rating="5"></i>
+                </div>
+              </div>
+
+              <div class="form__field">
+                <input
+                  type="file"
+                  id="userPhoto"
+                  class="form__input-file"
+                  accept="image/*"
+                />
+                <label for="userPhoto" class="form__file-label"
+                  >Добавить фото</label
+                >
+              </div>
+
+              <div class="form__field">
+                <textarea
+                  id="reviewText"
+                  class="form__textarea"
+                  placeholder="Ваш отзыв"
+                  required
+                ></textarea>
+              </div>
+
+              <button type="submit" class="form__submit">
+                Отправить отзыв
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
       <div class="container">
-        <div class="social">
-          <div class="subtitle">Дмитрий Голдобин</div>
-          <a href="#" class="link">GitHub</a>
-          <a href="#" class="link">Telegram</a>
-        </div>
+        <section class="footer__top">
+          <div class="footer__logo">
+            <div class="footer__logo-text">NutriLife</div>
+          </div>
+        </section>
+        <section class="footer__mid">
+          <div class="footer__mid-social social">
+            <div class="subtitle">Дмитрий Голдобин</div>
+            <a href="#" class="footer__link">GitHub</a>
+            <a href="#" class="footer__link">Telegram</a>
+          </div>
 
-        <div class="footer__logo">
-          <div class="footer__logo-text">NutriLife</div>
-        </div>
+          <div class="footer__mid-company">
+            <div class="subtitle">Компания</div>
+            <a href="#" class="footer__link">Меню и тарифы</a>
+            <a href="#" class="footer__link"> Отзывы</a>
+            <a href="#" class="footer__link">Как работает</a>
+            <a href="#" class="footer__link">О компании</a>
+            <a href="#" class="footer__link">Вопросы</a>
+            <a href="#" class="footer__link">Авторизация</a>
+          </div>
 
-        <div
-          onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
-          class="footer__logo-up"
-        >
-          <img src="img/icon/arrowUp.png" alt="pepper" />
-        </div>
+          <div class="footer__mid-tariff">
+            <div class="subtitle">Тарифы</div>
+            <a href="#" class="footer__link">Набор веса</a>
+            <a href="#" class="footer__link">Баланс</a>
+            <a href="#" class="footer__link">Похудение</a>
+          </div>
+        </section>
+        <section class="footer__bottom">
+          <div class="footer__bottom-call">
+            <div class="footer__bottom-call--number">8 (919) 231-89-30</div>
+
+            <div class="footer__bottom-call--schedule">
+              Без выходных и перерывов
+            </div>
+          </div>
+          <div
+            onclick="window.scrollTo({ top: 0, behavior: 'smooth' });"
+            class="footer__logo-up"
+          >
+            Наверх
+            <!-- <img src="img/icon/arrowUp.png" alt="pepper" /> -->
+          </div>
+          <div class="footer__bottom-payment">
+            <div class="footer__bottom-payment--subtitle">
+              Принимаем к оплате
+            </div>
+            <div class="footer__bottom-img--container">
+              <div class="footer__bottom-img">
+                <img src="/img/icon/visa.png" alt="VISA" srcset="" />
+              </div>
+              <div class="footer__bottom-img">
+                <img
+                  src="/img/icon/mastercard.svg"
+                  alt="MASTERCARD"
+                  srcset=""
+                />
+              </div>
+              <div class="footer__bottom-img">
+                <img src="/img/icon/Mir.png" alt="MIR" srcset="" />
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- <div class="call">
           <div class="subtitle">Или позвоните нам</div>
           <a href="#" class="link">+380678341034</a>

@@ -62,6 +62,24 @@
   //   48px 48px 300px #d9d9d9e1,
   //   -48px -48px 300px #e7e7e7a5;
 }
+@mixin h3 {
+  // padding: 1rem;
+  font-weight: 700;
+  text-align: center;
+  @include fluid-text(36, 20);
+  margin: 1.5vw 0 1.5vw 0;
+}
+@mixin h2 {
+  // padding: 1rem;
+  font-weight: 800;
+  text-align: center;
+  @include fluid-text(42, 25);
+  margin: 1.5vw 0 1.5vw 0;
+}
+@mixin word-break {
+  overflow-wrap: normal; // Перенос слов только целиком
+  word-break: normal; // Перенос слов только целиком
+}
 
 @mixin no-border-radius($side: all) {
   // Default value 'all'
@@ -86,20 +104,16 @@
 
 @mixin container {
   width: 85%;
-  max-width: math.div(85, 100) * 100%; // This ensures the width is calculated as 85% of the parent
+  max-width: math.div(85, 100) * 100%;
   margin-left: auto;
   margin-right: auto;
+
+  @media (max-width: $breakpoint-mobile) {
+    width: 95%;
+    max-width: math.div(95, 100) * 100%;
+  }
 }
 
-$orange: #f5bc53; // bright
-$white: #eeeeee;
-$light: #8b8b8b; // light
-$medium: #6e6e6e; // medium
-$medium-dark: #515151; // dark
-$dark: #3e3e3e; // dark
-$black: #1f1f1f;
-$green: #62eb55;
-$half-green: #54ed397b; // Определение миксина для запрета выделения
 @mixin no-select {
   user-drag: none;
   -webkit-user-drag: none;
@@ -109,50 +123,18 @@ $half-green: #54ed397b; // Определение миксина для запр
   -ms-user-select: none;
 }
 
-// В файле mixin.scss
-// @mixin respond-to($breakpoint) {
-//   @if $breakpoint == mobile {
-//     @media (max-width: 425px) {
-//       @content;
-//     }
-//   } @else if $breakpoint == tablet {
-//     @media (min-width: 426px) and (max-width: 768px) {
-//       @content;
-//     }
-//   } @else if $breakpoint == desktop {
-//     @media (min-width: 769px) and (max-width: 1440px) {
-//       @content;
-//     }
-//   } @else if $breakpoint == large-desktop {
-//     @media (min-width: 1441px) {
-//       @content;
-//     }
-//   }
-// }
-
 // Определение точек останова как переменных для согласованности и простоты поддержки
 $breakpoint-mobile: 425px;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1440px;
 
-// Миксин для адаптивного дизайна
-// Миксин для адаптивного дизайна
-// @mixin respond-to($breakpoint) {
-//   @if $breakpoint == mobile {
-//     @media (max-width: 425px) {
-//       @content;
-//     }
-//   } @else if $breakpoint == tablet {
-//     @media (min-width: 426px) {
-//       @content;
-//     }
-//   } @else if $breakpoint == desktop {
-//     @media (min-width: 769) {
-//       @content;
-//     }
-//   } @else if $breakpoint == large-desktop {
-//     @media (min-width: 1441px) {
-//       @content;
-//     }
-//   }
-// }
+$main-bg-color: #ecf5ec;
+$orange: #f5bc53; // bright
+$white: #eeeeee;
+$light: #8b8b8b; // light
+$medium: #6e6e6e; // medium
+$medium-dark: #515151; // dark
+$dark: #3e3e3e; // dark
+$black: #1f1f1f;
+$green: #76da6d;
+$half-green: #54ed397b; // Определение миксина для запрета выделения

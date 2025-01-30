@@ -14,9 +14,13 @@ import fixedPromo from './modules/fixedPromo';
 import burger from './modules/burger.js';
 import bodyNoScroll from './modules/bodyNoScroll.js';
 import collapsed from './modules/collapsed.js';
+import insertContent from './modules/moveContent';
+import replaceImg from './modules/replaceImg';
+import reviews from './modules/reviews';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('script js  work');
+
   // fixedPromo();
   calc();
   cards();
@@ -41,9 +45,22 @@ document.addEventListener('DOMContentLoaded', () => {
     '#current',
     '#total',
   );
+  insertContent();
   // menuCardSlider('.offer__slider-inner');
   menuCardSlider();
   burger();
   collapsed();
+  insertContent();
+  replaceImg(
+    '.calculating__choose_big',
+    'calculating__choose-item',
+    'calculating__choose-item_active',
+  );
+  replaceImg(
+    '#gender',
+    'calculating__choose-item',
+    'calculating__choose-item_active',
+  );
+  reviews();
   // bodyNoScroll();
 });

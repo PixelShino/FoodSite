@@ -1,7 +1,9 @@
 @use 'old';
+// @use 'uicons';
 @use 'reset';
 @use 'mixin';
 @use '_variables';
+@use '_colors';
 @use 'bottom-menu.scss';
 @use 'btn';
 @use 'header';
@@ -14,6 +16,8 @@
 @use 'footer';
 @use 'sidepanel';
 @use 'modal';
+@use 'sequence';
+@use 'reviews';
 
 // @use 'mediaMixin';
 

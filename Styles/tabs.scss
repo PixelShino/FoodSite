@@ -20,21 +20,20 @@
     }
 
     &__bot {
-      display: grid;
-      max-width: 20%;
+      display: flex;
+      flex-flow: row wrap;
+      align-self: center;
       flex-grow: 1;
       padding: 2rem;
-      grid-auto-rows: 0.5fr;
+
       // @include BRo;
       height: 50%;
-      align-self: center;
-
-      display: flex;
-      padding: 0;
-      margin: 1vw 1vw 0 1vw;
-      flex-flow: row wrap;
       max-width: 100%;
       width: 100%;
+
+      padding: 0;
+      margin: 1vw 1vw 0 1vw;
+
       @include respond-to(desktop) {
         // display: flex;
         // padding: 0;
@@ -51,21 +50,31 @@
       &-price,
       &-action,
       &-reset {
+        display: flex;
         justify-content: center;
         text-align: center;
         align-items: center;
         align-content: center;
         flex-grow: 1;
-        @include fluid-text(22, 14);
-        font-weight: 600;
+        // max-height: 80px;
+        // height: 80px;
+
         margin-bottom: 1rem;
+
         @include BTN;
-        font-weight: 800;
+        background-color: $half-green;
+        color: $black;
+
+        @include fluid-text(24, 14);
+        font-weight: 900;
 
         @include respond-to(desktop) {
-          padding: 3vw;
+          // padding: 1vw;
           max-height: 15vw;
-          height: 10vw;
+          height: 7vw;
+        }
+        @include respond-to(mobile) {
+          margin: 0;
         }
       }
 
@@ -75,14 +84,9 @@
         justify-content: center;
         @include BTNshadow;
         background-color: $orange;
-        padding: 1rem;
+        // padding: 1rem;
         order: 1;
         flex-grow: 1;
-
-        @include respond-to(desktop) {
-          flex-direction: row-reverse;
-          // padding: 1rem;
-        }
 
         &--icon,
         &--text {
@@ -91,20 +95,31 @@
         }
 
         &--icon {
-          padding: 0 1rem;
+          // padding: 0 1rem;
 
-          img {
-            width: 4rem;
-            @include respond-to(tablet) {
-              width: 2rem;
-            }
+          // img {
+          //   width: 4rem;
+          //   @include respond-to(tablet) {
+          //     width: 2rem;
+          //   }
+          // }
+          i {
+            padding: 0 1rem;
           }
         }
 
         &--text {
           font-weight: 900;
           @include fluid-text(26, 16);
-          padding: 0 1rem;
+          // padding: 0 1rem;
+        }
+        @include respond-to(desktop) {
+          // flex-direction: row-reverse;
+          // padding: 1rem;
+          // padding: 2rem;
+        }
+        @include respond-to(mobile) {
+          // margin-top: 1rem;
         }
       }
 
@@ -185,6 +200,11 @@
       }
 
       &-reset {
+        background-color: $green;
+        cursor: pointer;
+        i {
+          padding: 0 1rem;
+        }
       }
     }
 
@@ -278,6 +298,41 @@
         }
 
         .tabcontent__bot-cards {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          overflow-y: hidden;
+          @include no-select;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          scroll-snap-type: x mandatory;
+          cursor: grab;
+          // padding: 1.5rem;
+          align-items: center;
+          justify-content: space-around;
+          scrollbar-width: thin;
+          scrollbar-color: $green transparent;
+          margin-top: 2vw;
+          gap: 1rem;
+          // max-height: 300px;
+
+          &:active {
+            cursor: grabbing;
+          }
+
+          &::-webkit-scrollbar {
+            height: 8px;
+          }
+          &::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          &::-webkit-scrollbar-thumb {
+            background-color: $green transparent;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+          }
+
           @include respond-to(tablet) {
             // display: grid;
             grid-template-columns: repeat(3, 1fr); // Two columns
@@ -300,62 +355,34 @@
             &--card {
             }
           }
-          display: flex;
-          flex-wrap: nowrap;
-          overflow-x: auto;
-          overflow-y: hidden;
-          @include no-select;
-          scroll-behavior: smooth;
-          -webkit-overflow-scrolling: touch;
-          scroll-snap-type: x mandatory;
-          cursor: grab;
-          // padding: 1.5rem;
-          align-items: center;
-          justify-content: space-around;
-          scrollbar-width: thin;
-          scrollbar-color: $green transparent;
-
-          &:active {
-            cursor: grabbing;
-          }
-
-          &::-webkit-scrollbar {
-            height: 8px;
-          }
-          &::-webkit-scrollbar-track {
-            background: transparent;
-          }
-          &::-webkit-scrollbar-thumb {
-            background-color: $green transparent;
-            border-radius: 4px;
-            border: 2px solid transparent;
-            background-clip: content-box;
-          }
-
           &--card {
             display: flex;
             flex-direction: column;
             scroll-snap-align: start;
             flex: 0 0 auto;
-            margin: 1rem;
+            // margin-top: 1rem;
             min-width: max-content;
             width: calc((100% / 3) - 2rem);
             padding: 0.25rem;
             @include no-select;
             @include BTNopiacity;
+            background-color: $black;
+            height: 100%;
 
+            // .card--left {
+            //   display: flex;
+            //   flex-direction: column;
+            // }
             @include respond-to(desktop) {
               width: calc((100% / 2) - 2rem);
             }
             @include respond-to(tablet) {
               width: 50%;
               padding: 0.125rem;
-              margin: 0;
+              // margin: 0;
             }
             @include respond-to(mobile) {
-              width: 85%;
-              padding: 0.125rem;
-              margin: 0;
+              width: 75%;
             }
 
             &--title {
@@ -365,6 +392,16 @@
               @include fluid-text(18, 14);
               font-weight: 700;
               color: $black;
+              color: $white;
+              padding: 1vw;
+              flex-wrap: wrap;
+              @include word-break;
+              @include respond-to(mobile) {
+                max-width: 278.81px; //card width
+                padding: 3vw;
+                height: 60px;
+                align-items: center;
+              }
             }
 
             &--img {
@@ -373,13 +410,34 @@
               align-items: center;
               order: 1;
               @include no-select;
+              background-color: $white;
+              border-radius: 30px;
+
+              // box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+
+              // For multiple shadows (both inner and outer)
+              // box-shadow:
+              //   inset 0 0 20px rgba(0, 0, 0, 0.568),
+              //   inset 0 0 50px rgba(0, 0, 0, 0.1);
+
+              // For a more dramatic effect
+              // box-shadow:
+              //   inset 0 2px 10px rgba(0, 0, 0, 0.2),
+              //   inset 0 5px 15px rgba(0, 0, 0, 0.1);
 
               img {
-                height: 10rem;
-                width: 10rem;
+                height: 100%;
+                max-height: 225px;
+                width: 100%;
+                max-width: 225px;
                 overflow: hidden;
-                object-fit: scale-down;
+                object-fit: cover;
                 @include no-select;
+                @include respond-to(mobile) {
+                  width: 150px;
+                  height: 150px;
+                  // max-width: min-content;
+                }
               }
             }
 
@@ -389,7 +447,14 @@
               flex-direction: row;
               justify-content: space-between;
               align-items: center;
-              @include BTNshadow;
+              @include BTN;
+              // background-color: $orange;
+              background-color: $white;
+              padding: 0;
+              @include respond-to(mobile) {
+                @include no-border-radius(top);
+                padding: 2vw;
+              }
 
               #cKal,
               #protein,
@@ -400,6 +465,15 @@
                 padding: 0.3rem;
                 border-radius: 20px;
                 width: 100%;
+
+                .tabcontent__bot-cards--card--impact--title {
+                  font-weight: 500;
+                  @include fluid-text(14, 12);
+                }
+                .tabcontent__bot-cards--card--impact--value {
+                  font-weight: 700;
+                  @include fluid-text(18, 14);
+                }
               }
 
               @include no-select;
@@ -454,13 +528,15 @@
       flex: 0 1 100%;
 
       h3 {
-        padding: 1rem;
-        font-weight: 700;
-        text-align: center;
-        @include fluid-text(30, 20);
+        // padding: 1rem;
+        // font-weight: 700;
+        // text-align: center;
+        // @include fluid-text(30, 20);
+        @include h3;
       }
 
       &__items {
+        min-height: 150px;
         display: grid;
         gap: 2rem;
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -475,13 +551,36 @@
           margin: 0;
           gap: 1rem;
         }
-
+        #tab-0,
+        #tab-1,
+        #tab-2 {
+          background-repeat: no-repeat;
+          background-position: top right;
+          background-size: contain;
+          background-size: 18vw;
+          // background-attachment: fixed;
+          @include respond-to(mobile) {
+            background-size: 135px;
+          }
+        }
+        #tab-0 {
+          background-image: url(../img/food/slider_food1.png);
+        }
+        #tab-1 {
+          background-image: url(../img/food/slider__food2.png);
+        }
+        #tab-2 {
+          background-image: url(../img/food/slider__food3.png);
+        }
         .tabheader__item {
           display: flex;
           width: 100%;
+          height: 100%;
           height: auto;
           justify-content: space-around;
           color: rgba(0, 0, 0, 0.6);
+          color: rgba(255, 255, 255, 0.6);
+
           transition: 0.3s all;
           cursor: pointer;
           flex-direction: column;
@@ -489,12 +588,15 @@
           padding: 1rem;
           @include no-select;
           z-index: 3;
+          background-color: $black;
 
           @include respond-to(desktop) {
             flex-direction: row;
           }
           @include respond-to(tablet) {
             // @include fluid-text(22, 16);
+          }
+          @include respond-to(mobile) {
           }
 
           .tabheader__item--left {
@@ -508,13 +610,15 @@
             flex-grow: 0;
 
             .tabheader__item-title {
-              @include fluid-text(33, 26);
+              @include fluid-text(33, 18);
               font-weight: 500;
               display: flex;
               align-self: flex-start;
               flex-grow: 0;
-              flex-wrap: wrap;
+              flex-wrap: nowrap;
               align-content: flex-end;
+              color: $green;
+              font-weight: 700;
             }
 
             .tabheader__item-cKal {
@@ -554,11 +658,13 @@
 
           &_active {
             background-color: $green;
+            color: rgba(0, 0, 0, 0.6);
 
             .tabheader__item--left {
               .tabheader__item-title {
                 transition: 0.1s all;
                 font-weight: 900;
+                color: $black;
               }
               .tabheader__item-cKal {
                 transition: 0.1s all;
@@ -577,10 +683,11 @@
 
       &__title {
         h3 {
-          padding: 1rem;
-          font-weight: 700;
-          text-align: center;
-          @include fluid-text(30, 20);
+          // padding: 1rem;
+          // font-weight: 700;
+          // text-align: center;
+          // @include fluid-text(30, 20);
+          @include h3;
 
           a {
             color: $orange;
@@ -592,6 +699,8 @@
       &__choise {
         display: flex;
         max-width: 100%;
+        font-weight: 600;
+        gap: 1rem;
 
         @include respond-to(desktop) {
           display: flex;
@@ -602,6 +711,9 @@
           display: flex;
           width: 100%;
           @include BTN;
+          // background-color: $black;
+          // background-color: $white;
+          color: $black;
           justify-content: center;
           text-align: center;
           align-content: center;
@@ -617,6 +729,9 @@
           &--active {
             transition: 0.3s all;
             background-color: $green;
+            color: $black;
+            font-weight: 900;
+            @include fluid-text(28, 20);
           }
         }
       }
@@ -629,19 +744,24 @@
 
       &__title {
         h3 {
-          padding: 1rem;
-          font-weight: 700;
-          text-align: center;
-          @include fluid-text(30, 20);
+          // padding: 1rem;
+          // font-weight: 700;
+          // text-align: center;
+          // @include fluid-text(30, 20);
+          @include h3;
         }
       }
 
       &__choise {
         display: flex;
         max-width: 100%;
-
+        gap: 1rem;
         @include respond-to(desktop) {
-          display: flex;
+          // display: flex;
+          // flex-wrap: wrap;
+        }
+        @include respond-to(tablet) {
+          gap: 0rem;
           flex-wrap: wrap;
         }
 
@@ -649,6 +769,9 @@
           display: flex;
           width: 100%;
           @include BTN;
+
+          // background-color: $black;
+          // color: $green;
           justify-content: center;
           text-align: center;
           align-content: center;
@@ -665,6 +788,8 @@
           &--active {
             transition: 0.3s all;
             background-color: $green;
+            color: black;
+            font-weight: 900;
           }
         }
       }

@@ -1,3 +1,5 @@
+// tabsAndSlider.js
+import insertContent from './moveContent';
 function SliderV2(
   contentSelector,
   parentSelector,
@@ -43,6 +45,7 @@ function SliderV2(
     tabsContent[index].classList.add('show');
     tabsContent[index].classList.remove('hide');
     updateCounter(index);
+    insertContent(index);
   }
 
   function updateCounter(index) {
@@ -55,13 +58,18 @@ function SliderV2(
   }
 
   function changeSlide(direction) {
+    console.log(`Changing slide: ${direction}`);
     if (direction === 'prev') {
       slideIndex = slideIndex === 0 ? tabsContent.length - 1 : slideIndex - 1;
     } else {
       slideIndex = slideIndex === tabsContent.length - 1 ? 0 : slideIndex + 1;
     }
+    console.log(`New slide index: ${slideIndex}`);
     hideContent();
     showContent(slideIndex);
+
+    // Call moveContent function after changing the slide
+    insertContent(slideIndex);
   }
 
   // Event Handlers

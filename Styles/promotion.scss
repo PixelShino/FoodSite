@@ -1,46 +1,57 @@
 @import 'mixin';
 @import 'mediaMixin';
-
+@import 'colors';
 .promotion {
   // padding: 5vh;
-  margin: 5vh 0 5vh 0;
+  // margin: 5vh 0 5vh 0;
   position: relative;
-  @include container;
+
   // background: $black;
+
   .bgc_y {
-    @include BTN;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: $black;
-    z-index: -1;
-    // top: -50px;
-    left: 0;
+    // @include BTN;
+    // position: absolute;
+    // width: 100%;
+    // height: 100%;
+    // background-color: $black;
+    // z-index: -1;
+    // // top: -50px;
+    // left: 0;
   }
 
   .container {
     display: flex;
+    flex-flow: rod nowrap;
     // flex-wrap: wrap;
-    padding: 3vw;
+    // padding: 3vw;
     max-width: 100%;
+    z-index: 0;
+
+    @include container;
+    @include BTN;
+
+    background-color: $black;
+
     @include respond-to(mobile) {
-      padding: 2vw;
+      // padding: 2vw;
     }
 
     .promotion__text {
       flex: 0 0 50%;
       color: $white;
+      width: 50%;
 
       .title {
-        @include fluid-text(40, 20);
+        @include fluid-text(40, 18);
         font-weight: 900;
+        text-align: center;
+        justify-content: center;
+        margin-bottom: 3.25vw;
       }
       .promotion__descr {
-        margin-top: 40px;
-        font-size: 20px;
         line-height: 24px;
         font-weight: 300;
-
+        @include fluid-text(24, 14);
         span {
           font-weight: 700;
           font-size: 26px;
@@ -49,25 +60,42 @@
     }
 
     .promotion__timer {
-      //   width: 50%;
+      width: 50%;
       display: flex;
       //   flex-wrap: wrap;
       flex-direction: column;
+      justify-content: space-between;
       flex: 0 0 50%;
       .title {
-        @include fluid-text(40, 20);
+        @include fluid-text(40, 18);
         font-weight: 900;
         text-align: center;
+        justify-content: center;
         color: $white;
+        margin-bottom: 3.25vw;
       }
 
       .timer {
-        padding: 10%;
+        padding: 5vw;
+        padding-bottom: 0;
+        padding-top: 0;
+        height: 100%;
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
         align-items: center;
         @include respond-to(desktop) {
+          padding: 3vw;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: repeat(2, 1fr);
+        }
+        @include respond-to(tablet) {
+          grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
+
+          grid-template-columns: 1fr;
+        }
+        @include respond-to(mobile) {
           flex-flow: column nowrap;
         }
 
@@ -76,25 +104,32 @@
           height: 100%;
           background: $orange;
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-          font-size: 16px;
+          @include fluid-text(30, 18);
           font-weight: 300;
           text-align: center;
           margin: 1%;
           // color: $white;
+          display: flex;
+          flex-flow: column nowrap;
           @include respond-to(desktop) {
             width: 100%;
           }
+          @include respond-to(tablet) {
+          }
           @include respond-to(mobile) {
-            width: 100%;
-            height: 25%;
+            max-width: 100%;
+            // width: 75%;
           }
 
           span {
-            display: block;
-            margin-top: 20px;
-            margin-bottom: 5px;
-            font-size: 56px;
-            font-weight: 700;
+            // display: flex;
+            @include BTN;
+            @include no-border-radius(top);
+            font-weight: 900;
+            height: auto;
+            width: auto;
+
+            @include fluid-text(40, 30);
           }
         }
       }

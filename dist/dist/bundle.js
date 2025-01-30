@@ -88,6 +88,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _replaceImg_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./replaceImg.js */ "./js/modules/replaceImg.js");
+// Import your replaceImg module
+
 function calc() {
   //Calc
   function calc() {
@@ -97,6 +100,10 @@ function calc() {
     const indexInfo = document.querySelector(
       '.calculating__total.bmi.info span',
     );
+    const tariffInfo = document.querySelector(
+      '.calculating__total.bmi.tariff span',
+    );
+    const tariffImg = document.querySelector('.tariff--img');
 
     if (localStorage.getItem('sex')) {
       sex = localStorage.getItem('sex');
@@ -160,34 +167,81 @@ function calc() {
       console.log('Height:', height, 'Weight:', weight);
       let indexValueContainer = document.querySelector(
         '.calculating__total.bmi.info',
-      ); // Добавьте это для отладки
+      );
+      let tariffInfoContainer = document.querySelector(
+        '.calculating__total.bmi.tariff',
+      );
+      let tariffSubtitle = document.querySelector(
+        '.calculating__total.bmi.tariff.calculating__subtitle',
+      );
+      const imageUrls = {
+        underweight: '../img/food/slider_food1.png',
+        normal: '../img/food/slider__food2.png',
+        overweight: '../img/food/slider__food3.png',
+        obesity: '../img/food/slider__food4.png',
+      };
+      // #tab-0 {
+      //   background-image: url(../img/food/slider_food1.png);
+      // }
+      // #tab-1 {
+      //   background-image: url(../img/food/slider__food2.png);
+      // }
+      // #tab-2 {
+      //   background-image: url(../img/food/slider__food3.png);
+      // }
+
       if (!height || !weight) {
         index.textContent = '____';
         console.log('index = ____');
         console.log(indexValueContainer);
         indexValueContainer.style.display = 'none';
+        tariffInfoContainer.style.display = 'none';
+        // tariffImg.style.display = 'none';
         return;
       } else {
         console.log('index find');
-        indexValueContainer.style.display = 'grid';
+        indexValueContainer.style.display = 'flex';
+        tariffInfoContainer.style.display = 'flex';
+        // tariffImg.style.display = 'grid';
         let indexValue = +((10000 * weight) / (height * height)).toFixed(1);
         index.textContent = indexValue;
         console.log((10000 * weight) / (height * height));
 
         if (indexValue <= 16) {
           indexInfo.textContent = 'Выраженный дефицит массы тела';
+          tariffInfo.textContent = 'Набор веса';
+          // tariffImg.src = imageUrls.underweight;
+          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
         } else if (indexValue >= 16 && indexValue <= 18.4) {
           indexInfo.textContent = 'Недостаточная (дефицит) масса тела';
+          tariffInfo.textContent = 'Набор веса';
+          // tariffImg.src = imageUrls.underweight;
+          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
         } else if (indexValue >= 18.5 && indexValue <= 24.9) {
           indexInfo.textContent = 'Норма';
+          tariffInfo.textContent = 'Баланс';
+          // tariffImg.src = imageUrls.normal;
+          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
         } else if (indexValue >= 25 && indexValue <= 29.9) {
           indexInfo.textContent = 'Избыточная масса тела';
+          tariffInfo.textContent = 'Похудение';
+          // tariffImg.src = imageUrls.overweight;
+          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
         } else if (indexValue >= 30 && indexValue <= 34.9) {
           indexInfo.textContent = 'Ожирение первой степени';
+          tariffInfo.textContent = 'Похудение';
+          // tariffImg.src = imageUrls.overweight;
+          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
         } else if (indexValue >= 35 && indexValue <= 39.9) {
           indexInfo.textContent = 'Ожирение второй степени';
+          tariffInfo.textContent = 'Похудение';
+          // tariffImg.src = imageUrls.overweight;
+          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
         } else if (indexValue >= 40) {
           indexInfo.textContent = 'Ожирение третьей степени (морбидное)';
+          tariffInfo.textContent = 'Похудение';
+          // tariffImg.src = imageUrls.overweight;
+          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
         }
       }
     }
@@ -201,12 +255,15 @@ function calc() {
       document
         .querySelector(parentSelector)
         .addEventListener('click', (event) => {
-          if (event.target.getAttribute('data-ratio')) {
-            ratio = +event.target.getAttribute('data-ratio');
-            localStorage.setItem(
-              'ratio',
-              +event.target.getAttribute('data-ratio'),
-            );
+          const elementWithRatio = event.target.closest('[data-ratio]');
+
+          if (elementWithRatio) {
+            const ratioValue = elementWithRatio.getAttribute('data-ratio');
+            ratio = parseFloat(ratioValue);
+
+            if (!isNaN(ratio)) {
+              localStorage.setItem('ratio', ratioValue);
+            }
           } else if (
             event.target.id === 'female' ||
             event.target.id === 'male'
@@ -219,8 +276,22 @@ function calc() {
             elem.classList.remove(activeClass);
           });
 
-          if (event.target.classList.contains('calculating__choose-item')) {
-            event.target.classList.add(activeClass);
+          if (
+            event.target.matches(
+              '.calculating__choose-item, .calculating__choose-item *',
+            )
+          ) {
+            const targetElement =
+              event.target.closest('.calculating__choose-item') || event.target;
+
+            targetElement.classList.add(activeClass);
+            (0,_replaceImg_js__WEBPACK_IMPORTED_MODULE_0__["default"])(parentSelector, 'calculating__choose-item', activeClass);
+
+            console.error('ELEMENT HAS CLASS calculating__choose-item');
+          } else {
+            console.error(
+              'ELEMENT DOES NOT HAVE CLASS calculating__choose-item',
+            );
           }
 
           calcTotal();
@@ -779,6 +850,228 @@ function modal(triggerSelector, modalSelector, closeSelector) {
 
 /***/ }),
 
+/***/ "./js/modules/moveContent.js":
+/*!***********************************!*\
+  !*** ./js/modules/moveContent.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ insertContent)
+/* harmony export */ });
+function insertContent(
+  slideIndex,
+  elementBase = '.offer__descr-right',
+  wrapperBase = '.offer__descr-left',
+  breakpoint = 768,
+) {
+  const element = `${elementBase}--${slideIndex}`;
+  const wrapper = `${wrapperBase}--${slideIndex}`;
+
+  const originalParent = document.querySelector(element);
+  const targetParent = document.querySelector(wrapper);
+  const originalContent = [];
+
+  // Store original content
+  if (originalParent) {
+    originalContent.push(...originalParent.childNodes);
+  }
+
+  function moveContentForMobile() {
+    const descrLeft = document.querySelector(wrapper);
+    const descrRight = document.querySelector(element);
+
+    if (window.matchMedia(`(max-width: ${breakpoint}px)`).matches) {
+      if (descrRight && descrLeft) {
+        while (descrRight.firstChild) {
+          descrLeft.appendChild(descrRight.firstChild);
+        }
+      }
+    } else {
+      // Move content back to the original element if the screen width is greater than the breakpoint
+      if (descrRight && originalContent.length > 0) {
+        originalContent.forEach((node) => {
+          descrRight.appendChild(node);
+        });
+      }
+    }
+  }
+
+  // Initial check
+  moveContentForMobile();
+
+  // Debounce function to limit the rate at which moveContentForMobile is called
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+
+  // Add debounced event listener for window resize
+  window.addEventListener('resize', debounce(moveContentForMobile, 100));
+}
+
+
+/***/ }),
+
+/***/ "./js/modules/replaceImg.js":
+/*!**********************************!*\
+  !*** ./js/modules/replaceImg.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// replaceImg.js
+function replaceImg(containerSelector, itemClass, activeClass) {
+  // Select the parent container
+  const container = document.querySelector(containerSelector);
+
+  if (!container) {
+    console.error(`Container with selector "${containerSelector}" not found.`);
+    return;
+  }
+
+  // Function to update images based on active state
+  function updateImages() {
+    const items = container.querySelectorAll(`.${itemClass}`);
+    items.forEach((item) => {
+      const img = item.querySelector('img');
+      if (img) {
+        const newSrc = item.dataset.img;
+        const activeSrc = item.dataset.activeImg;
+        const isActive = item.classList.contains(activeClass);
+        img.src = isActive ? activeSrc : newSrc;
+      }
+    });
+  }
+
+  // Add event listener to the parent container
+
+  // Ensure the clicked element matches the itemClass
+
+  // Update images for all items
+  updateImages();
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (replaceImg);
+
+
+/***/ }),
+
+/***/ "./js/modules/reviews.js":
+/*!*******************************!*\
+  !*** ./js/modules/reviews.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function reviews() {
+  // Рейтинг звезд
+  const ratingContainer = document.getElementById('ratingStars');
+  let selectedRating = 0;
+
+  if (ratingContainer) {
+    ratingContainer.addEventListener('click', function (e) {
+      if (e.target.matches('i')) {
+        const rating = parseInt(e.target.dataset.rating);
+        selectedRating = rating;
+        updateStars(rating);
+      }
+    });
+
+    ratingContainer.addEventListener('mouseover', function (e) {
+      if (e.target.matches('i')) {
+        const rating = parseInt(e.target.dataset.rating);
+        updateStars(rating);
+      }
+    });
+
+    ratingContainer.addEventListener('mouseleave', function () {
+      updateStars(selectedRating);
+    });
+  }
+
+  function updateStars(rating) {
+    const stars = ratingContainer.querySelectorAll('i');
+    stars.forEach((star, index) => {
+      if (index < rating) {
+        star.classList.add('active');
+      } else {
+        star.classList.remove('active');
+      }
+    });
+  }
+
+  // Предпросмотр загруженного изображения
+  const fileInput = document.getElementById('userPhoto');
+  if (fileInput) {
+    fileInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const preview = document.createElement('div');
+          preview.className = 'form__preview';
+          preview.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button type="button" class="form__preview-remove">×</button>
+                    `;
+
+          const existingPreview =
+            fileInput.parentElement.querySelector('.form__preview');
+          if (existingPreview) {
+            existingPreview.remove();
+          }
+
+          fileInput.parentElement.appendChild(preview);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  // Обработка отправки формы
+  const form = document.getElementById('reviewForm');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      formData.append('rating', selectedRating);
+
+      // Здесь можно добавить код для отправки данных на сервер
+      console.log('Отправка формы:', {
+        name: formData.get('userName'),
+        rating: selectedRating,
+        text: formData.get('reviewText'),
+        photo: formData.get('userPhoto'),
+      });
+
+      // Очистка формы после отправки
+      form.reset();
+      selectedRating = 0;
+      updateStars(0);
+      const preview = form.querySelector('.form__preview');
+      if (preview) {
+        preview.remove();
+      }
+    });
+  }
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reviews);
+
+
+/***/ }),
+
 /***/ "./js/modules/slider.js":
 /*!******************************!*\
   !*** ./js/modules/slider.js ***!
@@ -1245,6 +1538,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _moveContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./moveContent */ "./js/modules/moveContent.js");
+// tabsAndSlider.js
+
 function SliderV2(
   contentSelector,
   parentSelector,
@@ -1290,6 +1586,7 @@ function SliderV2(
     tabsContent[index].classList.add('show');
     tabsContent[index].classList.remove('hide');
     updateCounter(index);
+    (0,_moveContent__WEBPACK_IMPORTED_MODULE_0__["default"])(index);
   }
 
   function updateCounter(index) {
@@ -1302,13 +1599,18 @@ function SliderV2(
   }
 
   function changeSlide(direction) {
+    console.log(`Changing slide: ${direction}`);
     if (direction === 'prev') {
       slideIndex = slideIndex === 0 ? tabsContent.length - 1 : slideIndex - 1;
     } else {
       slideIndex = slideIndex === tabsContent.length - 1 ? 0 : slideIndex + 1;
     }
+    console.log(`New slide index: ${slideIndex}`);
     hideContent();
     showContent(slideIndex);
+
+    // Call moveContent function after changing the slide
+    (0,_moveContent__WEBPACK_IMPORTED_MODULE_0__["default"])(slideIndex);
   }
 
   // Event Handlers
@@ -1416,7 +1718,7 @@ __webpack_require__.r(__webpack_exports__);
 function timer() {
   // TIMER
 
-  const deadline = '2024-12-31';
+  const deadline = '2026-01-01';
 
   function getTimeRemaining(endtime) {
     const total = Date.parse(endtime) - Date.parse(new Date());
@@ -1558,6 +1860,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_burger_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/burger.js */ "./js/modules/burger.js");
 /* harmony import */ var _modules_bodyNoScroll_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/bodyNoScroll.js */ "./js/modules/bodyNoScroll.js");
 /* harmony import */ var _modules_collapsed_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/collapsed.js */ "./js/modules/collapsed.js");
+/* harmony import */ var _modules_moveContent__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/moveContent */ "./js/modules/moveContent.js");
+/* harmony import */ var _modules_replaceImg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/replaceImg */ "./js/modules/replaceImg.js");
+/* harmony import */ var _modules_reviews__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/reviews */ "./js/modules/reviews.js");
+
+
+
 
 
 
@@ -1577,6 +1885,7 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('script js  work');
+
   // fixedPromo();
   (0,_modules_calc_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
   (0,_modules_cards_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
@@ -1601,10 +1910,23 @@ document.addEventListener('DOMContentLoaded', () => {
     '#current',
     '#total',
   );
+  (0,_modules_moveContent__WEBPACK_IMPORTED_MODULE_14__["default"])();
   // menuCardSlider('.offer__slider-inner');
   (0,_modules_menuCardSlider_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
   (0,_modules_burger_js__WEBPACK_IMPORTED_MODULE_11__["default"])();
   (0,_modules_collapsed_js__WEBPACK_IMPORTED_MODULE_13__["default"])();
+  (0,_modules_moveContent__WEBPACK_IMPORTED_MODULE_14__["default"])();
+  (0,_modules_replaceImg__WEBPACK_IMPORTED_MODULE_15__["default"])(
+    '.calculating__choose_big',
+    'calculating__choose-item',
+    'calculating__choose-item_active',
+  );
+  (0,_modules_replaceImg__WEBPACK_IMPORTED_MODULE_15__["default"])(
+    '#gender',
+    'calculating__choose-item',
+    'calculating__choose-item_active',
+  );
+  (0,_modules_reviews__WEBPACK_IMPORTED_MODULE_16__["default"])();
   // bodyNoScroll();
 });
 

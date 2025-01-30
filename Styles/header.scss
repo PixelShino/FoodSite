@@ -13,16 +13,17 @@
     position: sticky;
     top: 0;
     z-index: 10000;
-    --header-height: 10vh;
+
     height: var(--header-height);
     padding: 0;
   }
   .header__top-block {
     display: flex;
-    justify-content: space-around;
-    min-width: 100%;
-    max-width: 100%;
+    justify-content: space-between;
+    // min-width: 100%;
+    // max-width: 100%;
     height: 100%;
+    @include container;
 
     color: #ffffff;
     @include respond-to(tablet) {
@@ -34,7 +35,7 @@
       align-items: center;
     }
     .header__logo {
-      flex: 30%;
+      // flex: 30%;
       .header__logo-text {
         display: flex;
         justify-content: center;
@@ -103,11 +104,8 @@
     display: flex;
     align-items: center;
     align-content: center;
-    justify-content: space-evenly;
-
-    padding: 1rem;
-    width: 100%;
-
+    justify-content: flex-start;
+    @include container;
     color: #ffffff;
 
     @include respond-to(mobile) {
@@ -117,12 +115,33 @@
     .header__links {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       flex-wrap: wrap;
       align-content: space-around;
       align-items: center;
+      width: 100%;
+      i.fi {
+        margin-left: 0.7vw;
+        margin-right: 0.35vw;
+      }
 
-      max-width: 80%;
+      @include respond-to(desktop) {
+        justify-content: space-around;
+        // justify-items: flex-end;
+        // justify-tracks: flex-end;
+        // justify-content: flex-end;
+      }
+      // @include container;
+      #city {
+        display: flex;
+        margin-left: auto;
+        color: $orange;
+        @include respond-to(desktop) {
+          margin: 0;
+        }
+      }
+
+      // max-width: 80%;
       @include respond-to(mobile) {
         display: none;
       }
@@ -130,12 +149,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        // margin-left: auto;
+        padding: 1rem 1rem 1rem 0;
+        // width: 20%;
 
-        padding: 1rem;
-
-        @include fluid-text(22, 16);
+        @include fluid-text(20, 12);
         font-weight: 700;
         text-align: center;
+        @include respond-to(desktop) {
+        }
       }
     }
   }
