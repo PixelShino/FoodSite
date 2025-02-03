@@ -34,7 +34,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url(../img/icon/onion.webp);
+  // background-image: url(../img/icon/onion.webp);
   background-repeat: repeat-y;
   background-size: contain;
 
@@ -113,7 +113,11 @@
       @include calculating-choose-item;
       background-color: $black;
       color: $white;
+      flex-wrap: nowrap;
 
+      @include hover-effect(glow);
+      @include hover-effect(lift);
+      @include hover-effect(scale);
       &.calculating__choose-item_active {
         // background-color: #54ed39 !important;
         // color: $black;
@@ -177,6 +181,17 @@
         margin: 0 1rem;
         @include BTNmedium;
         @include calculating-choose-item();
+
+        @include hover-effect(glow);
+        @include hover-effect(lift);
+        @include hover-effect(scale);
+        &:focus {
+          outline: 5px solid $green;
+          outline-offset: 2px;
+
+          scale: 1.05;
+        }
+
         input {
           width: 100%;
         }
@@ -185,6 +200,10 @@
         }
         @include respond-to(desktop) {
           margin: 0;
+        }
+        @include respond-to(mobile) {
+          height: 2rem;
+          padding: 0 2rem;
         }
       }
       @include respond-to(desktop) {
@@ -230,7 +249,11 @@
         flex-flow: row nowrap;
         flex-wrap: nowrap;
         justify-content: space-between;
+
         @include no-select;
+        @include hover-effect(glow);
+        @include hover-effect(lift);
+        @include hover-effect(scale);
         &.calculating__choose-item_active {
           // background-color: #54ed39 !important;
         }
@@ -251,6 +274,9 @@
         @include respond-to(tablet) {
           padding: 0 2rem;
           height: 4rem;
+        }
+        @include respond-to(mobile) {
+          height: 3rem;
         }
       }
       @include respond-to(tablet) {
@@ -363,8 +389,7 @@
     @include respond-to(desktop) {
       width: 100% !important;
     }
-
-    @include respond-to(mobile) {
+    @include respond-to(tablet) {
       display: flex;
       height: 100%;
       width: auto;
@@ -379,11 +404,12 @@
         }
       }
     }
-    @include respond-to(tablet) {
+    @include respond-to(mobile) {
       display: flex;
       height: 100%;
       width: auto;
       flex-direction: column;
+      padding: 0.25rem 1rem;
       &.kcal,
       &.bmi {
         .calculating__subtitle {

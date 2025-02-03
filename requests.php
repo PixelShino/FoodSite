@@ -23,18 +23,23 @@ try {
     }
 
     // Validate required fields
-    if (empty($data['name']) || empty($data['phone'])) {
-        throw new Exception('Missing required fields: name or phone');
+    if (
+        !isset($data['tab_index']) ||
+        !isset($data['days']) ||
+        !isset($data['total_price']) ||
+        !isset($data['discount'])
+    ) {
+        throw new Exception('Missing required fields');
     }
 
     // Sanitize input data
-    $name = htmlspecialchars(trim($data['name']));
-    $phone = htmlspecialchars(trim($data['phone']));
-    $time = htmlspecialchars(trim($data['time'] ?? 'Unknown'));
-    $location = $data['location'] ?? ['latitude' => null, 'longitude' => null];
+    $tabIndex = intval($data['tab_index']);
+    $days = intval($data['days']);
+    $totalPrice = floatval($data['total_price']);
+    $discount = floatval($data['discount']);
 
     // Save data to a file (or database)
-    $filePath = 'callMeBack.json';
+    $filePath = 'requests.json';
     $existingData = [];
     if (file_exists($filePath)) {
         $existingData = json_decode(file_get_contents($filePath), true) ?? [];
@@ -42,10 +47,11 @@ try {
 
     // Add new entry
     $newEntry = [
-        'name' => $name,
-        'phone' => $phone,
-        'time' => $time,
-        'location' => $location,
+        'tab_index' => $tabIndex,
+        'days' => $days,
+        'total_price' => $totalPrice,
+        'discount' => $discount,
+        'timestamp' => date('Y-m-d H:i:s'),
     ];
     $existingData[] = $newEntry;
 

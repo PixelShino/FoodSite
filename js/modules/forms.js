@@ -2,7 +2,7 @@ import { openModal, closeModal } from './modal.js';
 
 function forms() {
   //FORM
-  const forms = document.querySelectorAll('form');
+  const forms = document.querySelectorAll('.modalForm');
   const message = {
     loading: 'img/form/spinner.svg',
     success: 'Спасибо! Скоро мы с вами свяжемся',

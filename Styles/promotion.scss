@@ -111,6 +111,7 @@
           // color: $white;
           display: flex;
           flex-flow: column nowrap;
+          justify-content: space-around;
           @include respond-to(desktop) {
             width: 100%;
           }
@@ -123,8 +124,10 @@
 
           span {
             // display: flex;
-            @include BTN;
-            @include no-border-radius(top);
+            // @include BTN;
+            color: $white;
+
+            background-color: $orange;
             font-weight: 900;
             height: auto;
             width: auto;

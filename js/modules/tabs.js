@@ -20,11 +20,15 @@ function tabs(
   const choiseKcal = document.querySelector('.tabcalories__choise');
   const btnKcal = document.querySelectorAll('.tabcalories__choise-btn');
   const selectBtn = document.querySelectorAll('.menu__item-select');
+
+  const orderButton = document.querySelector('.tabcontainer__bot-action');
   console.log(selectBtn);
 
   let tabIndex = 0;
   let currentDayValue = 1;
   let currentRatioValue;
+  let latestOrderData = null;
+  let cooldownInterval = null;
 
   if (!tabs.length || !tabsContent.length || !tabsParent || !cardsParent) {
     console.error('Не удалось найти необходимые элементы для табов');
@@ -199,15 +203,97 @@ function tabs(
     }
   }
 
-  // ... (other code)
+  let lastSendTime = 0; // Stores the timestamp of the last successful send
+
+  function sendOrderData(tabIndex, dayValue, ratio) {
+    const currentTime = Date.now();
+
+    // Check if 10 seconds have passed since the last send
+    if (currentTime - lastSendTime < 10000) {
+      const remainingTime = 10000 - (currentTime - lastSendTime);
+      const minutes = Math.floor(remainingTime / 60000);
+      const seconds = Math.floor((remainingTime % 60000) / 1000);
+
+      if (orderButton) {
+        orderButton.textContent = `Ожидайте: ${minutes} минут${minutes !== 1 ? 'ы' : ''} ${seconds} секунд${seconds !== 1 ? 'ы' : ''}`;
+        cooldownInterval = setInterval(updateCountdown, 1000, remainingTime);
+      }
+      return;
+    }
+
+    // Reset button text
+    if (orderButton) {
+      orderButton.textContent = 'Оформить заказ';
+      clearInterval(cooldownInterval);
+    }
+
+    // Check if 10 seconds have passed since the last send
+    if (currentTime - lastSendTime < 10000) {
+      alert.log('Отправка данных слишком часто. Подождите 10 секунд.');
+      return;
+    }
+
+    console.log('Отправка данных:', latestOrderData);
+    if (!latestOrderData) return; // Если данных нет, не отправляем
+
+    fetch('http://localhost:3000/order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(latestOrderData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Ответ сервера:', data);
+        lastSendTime = Date.now(); // Update the last send time
+      })
+      .catch((error) => {
+        console.error('Ошибка отправки:', error);
+        // Reset lastSendTime if send failed
+        lastSendTime = Date.now();
+      });
+  }
+  function updateCountdown(remainingTime) {
+    const currentTime = Date.now();
+    const timeLeft = remainingTime - (currentTime - lastSendTime);
+
+    if (timeLeft <= 0) {
+      clearInterval(cooldownInterval);
+      if (orderButton) {
+        orderButton.textContent = 'Оформить заказ';
+      }
+      return;
+    }
+
+    const minutes = Math.floor(timeLeft / 60000);
+    const seconds = Math.floor((timeLeft % 60000) / 1000);
+
+    if (orderButton) {
+      orderButton.textContent = `Ожидайте: ${minutes} минут${minutes !== 1 ? 'ы' : ''} ${seconds} секунд${seconds !== 1 ? 'ы' : ''}`;
+    }
+  }
+
+  // Функция для обработки клика на кнопку заказа
+  function setupOrderButton() {
+    // const orderButton = document.querySelector('.tabcontainer__bot-action');
+
+    if (orderButton) {
+      orderButton.removeEventListener('click', sendOrderData); // Убираем старый обработчик
+      orderButton.addEventListener('click', sendOrderData); // Добавляем новый
+    }
+  }
 
   function calcTotalPrice(tabIndex, dayValue, ratio) {
     console.log('Приходит в calcTotalPrice');
     console.log(`Таб индекс - ${tabIndex}`);
     console.log(`Значение дня ${dayValue}`);
     console.log(`Ратио калорий - ${ratio}`);
+
+    const tariffs = ['набор веса', 'баланс', 'похудение'];
     let defaultPrice = 410;
     let price = 0;
+
     switch (tabIndex) {
       case 0:
         price = defaultPrice;
@@ -221,32 +307,47 @@ function tabs(
       default:
         price = defaultPrice;
     }
+
     const days = dayValue || 0;
     let totalPrice = days * price * ratio;
     const discount = calculateDiscount(days);
     const discountedPrice = totalPrice * (1 - discount);
+    const discountPercentage = Math.round(discount * 100);
+
     let discountElement = document.querySelector('.discount-info');
     if (!discountElement) {
       discountElement = document.createElement('div');
       discountElement.classList.add('discount-info');
       menuPrice.parentNode.insertBefore(discountElement, menuPrice);
     }
-    const discountPercentage = Math.round(discount * 100);
+
     if (discountPercentage > 0) {
       discountElement.textContent = `Скидка ${discountPercentage}%`;
       discountElement.style.display = 'flex';
     } else {
       discountElement.style.display = 'none';
     }
+
     menuPrice.textContent = +discountedPrice.toFixed(0) + ' руб.';
+
     console.log(`Цена - ${price}`);
     console.log(`Количество дней - ${dayValue}`);
     console.log(`Ратио калорий - ${ratio}`);
     console.log(`Итоговая цена - ${totalPrice}`);
-    return totalPrice, discountedPrice;
+
+    // Обновляем глобальную переменную с последними данными заказа
+    latestOrderData = {
+      тариф: tariffs[tabIndex] || 'неизвестный',
+      количество_дней: days,
+      цена_без_скидки: totalPrice.toFixed(2),
+      размер_скидки: `${discountPercentage}%`,
+      итоговая_стоимость: discountedPrice.toFixed(2),
+    };
+
+    setupOrderButton(); // Настраиваем кнопку с актуальными данными
   }
 
-  calcTotalPrice(tabIndex, currentDayValue, currentRatioValue);
+  // calcTotalPrice(tabIndex, currentDayValue, currentRatioValue);
   hideTabsContent();
   showTabContent();
   switchTab();

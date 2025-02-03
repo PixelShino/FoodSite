@@ -51,6 +51,7 @@
         @include respond-to(mobile) {
           @include fluid-text(60, 30);
         }
+        @include hover-effect();
       }
     }
     .header__links {
@@ -58,6 +59,7 @@
       align-items: center;
       justify-content: center;
       flex: 70%;
+      @include hover-effect();
       @include respond-to(mobile) {
         display: none;
       }
@@ -136,6 +138,8 @@
         display: flex;
         margin-left: auto;
         color: $orange;
+        @include hover-effect();
+        @include hover-effect(border);
         @include respond-to(desktop) {
           margin: 0;
         }
@@ -146,6 +150,9 @@
         display: none;
       }
       .header__link {
+        @include hover-effect();
+        @include hover-effect(scale);
+
         display: flex;
         align-items: center;
         justify-content: center;
@@ -156,6 +163,7 @@
         @include fluid-text(20, 12);
         font-weight: 700;
         text-align: center;
+
         @include respond-to(desktop) {
         }
       }
@@ -193,7 +201,7 @@
         position: relative; // Changed from absolute to relative
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
         // width: 100%;
         // height: 100vh;
         // padding-top: 20vh;
@@ -201,23 +209,23 @@
         overflow: scroll;
         // height: 100%;
         // flex-wrap: wrap;
-        @include container;
 
         .burger__link {
-          color: black;
-
-          background-color: #ac8282;
+          color: $white;
+          @include fluid-text(40, 26);
+          // background-color: rgba(67, 67, 67, 0.647);
+          border-bottom: #ffffff7b 1px solid;
 
           display: flex;
           align-items: center;
           justify-content: center;
           text-decoration: none;
           transition: background-color 0.3s ease;
-          @include BTN;
+          // @include BTN;
           text-align: center;
 
-          width: 70vw;
-          margin: 1rem;
+          width: 100%;
+
           min-height: none;
           height: 10vh;
 

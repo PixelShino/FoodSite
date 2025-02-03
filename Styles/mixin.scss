@@ -1,4 +1,5 @@
 @use 'sass:math';
+@import 'colors';
 
 @mixin fluid-text($max: 48, $min: 16) {
   $maxViewportWidth: 1400;
@@ -121,6 +122,124 @@
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+@mixin flex($direction: row, $justify: flex-start, $align: stretch) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+$transition-base: 0.3s ease;
+$shadow-light: rgba(0, 0, 0, 0.1);
+$shadow-medium: rgba(0, 0, 0, 0.15);
+$glow-light: rgba(255, 255, 255, 0.2);
+
+// Универсальный миксин для hover эффектов
+@mixin hover-effect($effect: 'lift') {
+  transition: all $transition-base;
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @if $effect == 'lift' {
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px $shadow-light;
+    }
+  }
+
+  @if $effect == 'scale' {
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px $shadow-light;
+    }
+  }
+
+  @if $effect == 'glow' {
+    &:hover {
+      box-shadow: 0 0 15px $glow-light;
+      filter: brightness(1.1);
+    }
+  }
+
+  @if $effect == 'border' {
+    border: 2px solid transparent;
+    &:hover {
+      border-color: currentColor;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+// Основные переменные
+$focus-transition: 0.3s ease-in-out;
+
+// Универсальный миксин для focus эффектов
+@mixin focus-effect($effect: 'default') {
+  transition: all $focus-transition;
+  outline: none;
+
+  @if $effect == 'default' {
+    &:focus {
+      border-color: $green;
+      box-shadow: 0 0 0 3px $green;
+    }
+  }
+
+  @if $effect == 'glow' {
+    &:focus {
+      border-color: $green;
+      box-shadow: 0 0 10px $green;
+    }
+  }
+
+  @if $effect == 'border' {
+    &:focus {
+      border: 2px solid $green;
+      box-shadow: none;
+    }
+  }
+
+  @if $effect == 'underline' {
+    position: relative;
+
+    &:focus {
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -px;
+        width: 100%;
+        height: 2px;
+        background-color: $green;
+        transform: scaleX(1);
+        transition: transform $focus-transition;
+      }
+    }
+  }
+
+  @if $effect == 'pulse' {
+    &:focus {
+      animation: focus-pulse 1.5s infinite;
+      border-color: $green;
+    }
+  }
+}
+
+// Анимация пульсации для pulse эффекта
+@keyframes focus-pulse {
+  0% {
+    box-shadow: 0 0 0 0 $green;
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(74, 144, 226, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
+  }
 }
 
 // Определение точек останова как переменных для согласованности и простоты поддержки

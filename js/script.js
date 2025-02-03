@@ -17,6 +17,9 @@ import collapsed from './modules/collapsed.js';
 import insertContent from './modules/moveContent';
 import replaceImg from './modules/replaceImg';
 import reviews from './modules/reviews';
+import callMeBack from './modules/callMeBack';
+import request from './modules/request.js';
+import location from './modules/location';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('script js  work');
@@ -50,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   menuCardSlider();
   burger();
   collapsed();
+  collapsed('.reviews__list', '.reviews .expand');
   insertContent();
   replaceImg(
     '.calculating__choose_big',
@@ -62,5 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'calculating__choose-item_active',
   );
   reviews();
-  // bodyNoScroll();
+  callMeBack();
+  // request();
+  location();
 });

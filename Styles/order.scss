@@ -55,6 +55,16 @@
         text-align: center;
         padding: 0 20px;
         outline: 0;
+        @include fluid-text(26, 14);
+        @include hover-effect(glow);
+        @include hover-effect(lift);
+        @include hover-effect(scale);
+        &:focus {
+          outline: 5px solid $green;
+          outline-offset: 2px;
+
+          scale: 1.05;
+        }
       }
 
       img {
@@ -75,6 +85,12 @@
         height: 7vw;
         @include fluid-text(26, 18);
         font-weight: 700;
+
+        @include no-select;
+        @include hover-effect(glow);
+        @include hover-effect(lift);
+        @include hover-effect(scale);
+
         @include respond-to(desktop) {
           width: 100%;
           margin: 1vw;

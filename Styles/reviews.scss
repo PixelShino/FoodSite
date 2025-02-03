@@ -1,3 +1,5 @@
+@import 'mixin';
+@import 'mediaMixin';
 // Variables
 $color-primary: #4cd964;
 $color-primary-dark: #3cb551;
@@ -6,39 +8,58 @@ $color-text: #333;
 $border-radius: 16px;
 $transition: all 0.3s ease;
 
-// Mixins
-@mixin flex($direction: row, $justify: flex-start, $align: stretch) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: $justify;
-  align-items: $align;
-}
-
-@mixin hover-effect {
-  transition: $transition;
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-}
-
-// Container
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
 // Reviews Section
 .reviews {
   padding: 4rem 0;
-  background-color: #fff;
+  // background-color: #fff;
 
+  // Container
+  .container {
+    @include container;
+
+    display: flex;
+    flex-flow: column nowrap;
+
+    max-width: 100%;
+    z-index: 0;
+
+    @include BTN;
+
+    background-color: $black;
+  }
+  .expand {
+    text-align: center;
+    width: 50%;
+    margin: 1vw;
+    position: relative;
+    z-index: 2;
+    @include BTN;
+    background-color: $orange;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+
+    @include hover-effect(glow);
+    @include hover-effect(lift);
+    @include hover-effect(scale);
+
+    @include respond-to(mobile) {
+      width: 100%;
+      padding: 1rem;
+    }
+    @include hover-effect;
+  }
   &__title {
     text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 3rem;
+    margin-top: 2vw;
+    position: relative;
+    z-index: 2;
+    @include fluid-text(40, 24);
+    font-weight: 900;
+    color: $white;
   }
 
   &__list {
@@ -46,6 +67,24 @@ $transition: all 0.3s ease;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     margin-bottom: 4rem;
+
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out; // Анимация высоты
+    max-height: auto;
+    &.collapsed {
+      max-height: 0; // Высота в свернутом состоянии
+      margin-bottom: 0;
+    }
+
+    @include respond-to(desktop) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @include respond-to(tablet) {
+      grid-template-columns: 1fr 1fr;
+    }
+    @include respond-to(mobile) {
+      grid-template-columns: 1fr;
+    }
   }
 
   &__item {
@@ -53,7 +92,8 @@ $transition: all 0.3s ease;
     border-radius: $border-radius;
     padding: 1.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    @include hover-effect;
+    @include hover-effect(scale);
+    @include hover-effect(lift);
 
     &-header {
       margin-bottom: 1rem;
@@ -125,25 +165,49 @@ $transition: all 0.3s ease;
   }
 }
 
-// Form Styles
 .reviews__form {
-  max-width: 600px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
-  background: white;
+  background: $white;
   padding: 2rem;
   border-radius: $border-radius;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
   &-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
+    text-align: center;
+    margin-top: 2vw;
+    position: relative;
+    z-index: 2;
+    @include fluid-text(40, 24);
+    font-weight: 900;
+    color: $black;
   }
 }
 
 .form {
   &__field {
     margin-bottom: 1.5rem;
+    .drop-zone {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .drop-zone--over {
+      border-color: #4caf50;
+      background-color: rgba(76, 175, 80, 0.1);
+    }
+
+    .form__preview {
+      max-width: 30vh;
+      display: flex;
+      max-height: 30vh;
+
+      .form__preview-remove {
+      }
+    }
   }
 
   &__input,
@@ -155,10 +219,8 @@ $transition: all 0.3s ease;
     font-size: 1rem;
     transition: $transition;
 
-    &:focus {
-      border-color: $color-primary;
-      outline: none;
-    }
+    @include fluid-text(24, 16);
+    @include focus-effect(pulse);
   }
 
   &__textarea {
@@ -173,6 +235,8 @@ $transition: all 0.3s ease;
     i {
       cursor: pointer;
       font-size: 1.5rem;
+      @include fluid-text(60, 16);
+
       color: #ddd;
       transition: $transition;
 
@@ -182,6 +246,15 @@ $transition: all 0.3s ease;
 
       &:hover {
         transform: scale(1.2);
+      }
+    }
+    @include respond-to(mobile) {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      gap: 3vw;
+      i {
+        font-size: 10vw;
       }
     }
   }
@@ -198,34 +271,47 @@ $transition: all 0.3s ease;
     cursor: pointer;
     transition: $transition;
 
-    &:hover {
-      background: darken($color-gray, 5%);
+    text-align: center;
+    width: 100%;
+
+    text-align: center;
+    margin-top: 2vw;
+    position: relative;
+    z-index: 2;
+    @include fluid-text(26, 18);
+    font-weight: 900;
+    color: $black;
+    @include hover-effect(glow);
+    @include hover-effect(lift);
+    @include hover-effect(scale);
+
+    @include respond-to(mobile) {
     }
   }
 
   &__submit {
     width: 100%;
     padding: 1rem;
-    background: $color-primary;
+    background: $green;
     color: white;
     border: none;
     border-radius: $border-radius;
-    font-size: 1rem;
+
     font-weight: 500;
     cursor: pointer;
     transition: $transition;
 
-    &:hover {
-      background: $color-primary-dark;
-    }
+    text-align: center;
+    margin-top: 2vw;
+    position: relative;
+    z-index: 2;
+    @include fluid-text(26, 18);
+    font-weight: 900;
+    color: $black;
+    @include hover-effect(glow);
+    @include hover-effect(lift);
+    @include hover-effect(scale);
   }
 }
 
 // Media Queries
-@media (max-width: 768px) {
-  .reviews {
-    &__list {
-      grid-template-columns: 1fr;
-    }
-  }
-}

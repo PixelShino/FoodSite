@@ -23,11 +23,11 @@ $icon-size: 3.5vw;
     $icon-size: 7.5vw;
   }
   &__bg {
-    @include BTN;
-    height: auto;
-    background: #fffafa57;
-    padding: 0;
-    margin: 0;
+    // @include BTN;
+    // height: auto;
+    // background: #fffafa57;
+    // padding: 0;
+    // margin: 0;
   }
 }
 
@@ -37,10 +37,11 @@ $icon-size: 3.5vw;
   max-width: 100%;
   width: auto; // Adjust width automatically
   height: auto; // Adjust height automatically
-  font-size: $text-size;
+
   // padding: 10px; // Add padding for better spacing
-  margin: 4.5vh 0 4.5vh 0;
+  margin: 10vh 0 10vh 0;
   transform: rotate(-90deg);
+
   // transform-origin: top left; // Rotate from top-left corner
 
   span {
@@ -48,6 +49,7 @@ $icon-size: 3.5vw;
     white-space: nowrap;
     font-weight: 700;
     @include fluid-text(20, 10);
+    @include fluid-text(28, 18);
   }
 }
 
