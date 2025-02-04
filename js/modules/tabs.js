@@ -29,6 +29,7 @@ function tabs(
   let currentRatioValue;
   let latestOrderData = null;
   let cooldownInterval = null;
+  let orderAlertShown = false;
 
   if (!tabs.length || !tabsContent.length || !tabsParent || !cardsParent) {
     console.error('Не удалось найти необходимые элементы для табов');
@@ -273,14 +274,31 @@ function tabs(
       orderButton.textContent = `Ожидайте: ${minutes} минут${minutes !== 1 ? 'ы' : ''} ${seconds} секунд${seconds !== 1 ? 'ы' : ''}`;
     }
   }
+  // Separate handler function for order button click
+  function handleOrderButton() {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      // If alert has not been shown recently, show it and set a flag to throttle subsequent alerts.
+      if (!orderAlertShown) {
+        alert('Перед заказом, пожалуйста зарегестрируйтесь');
+        orderAlertShown = true;
+        // Reset the flag after 1 second to allow future alerts if needed.
+        setTimeout(() => {
+          orderAlertShown = false;
+        }, 1000);
+      }
+      return;
+    }
+    // If user is authorized, send the order data.
+    sendOrderData(tabIndex, currentDayValue, currentRatioValue);
+  }
 
-  // Функция для обработки клика на кнопку заказа
+  // Updated setupOrderButton function that uses the new handleOrderButton.
   function setupOrderButton() {
-    // const orderButton = document.querySelector('.tabcontainer__bot-action');
-
     if (orderButton) {
-      orderButton.removeEventListener('click', sendOrderData); // Убираем старый обработчик
-      orderButton.addEventListener('click', sendOrderData); // Добавляем новый
+      // Remove previous click listener if any, then add our handler
+      orderButton.removeEventListener('click', handleOrderButton);
+      orderButton.addEventListener('click', handleOrderButton);
     }
   }
 
@@ -343,6 +361,17 @@ function tabs(
       размер_скидки: `${discountPercentage}%`,
       итоговая_стоимость: discountedPrice.toFixed(2),
     };
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const { name, login, email, phone } = JSON.parse(userData);
+      latestOrderData = {
+        ...latestOrderData,
+        name: name,
+        login: login,
+        email: email,
+        phone: phone,
+      };
+    }
 
     setupOrderButton(); // Настраиваем кнопку с актуальными данными
   }

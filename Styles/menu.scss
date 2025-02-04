@@ -23,7 +23,11 @@
   }
   .expand {
     text-align: center;
-    width: 50%;
+
+    @include fluid-text(26, 18);
+    font-weight: 700;
+
+    width: 90%;
     margin: 1vw;
     position: relative;
     z-index: 2;
@@ -53,11 +57,15 @@
 
     overflow: hidden;
     transition: max-height 0.5s ease-in-out; // Анимация высоты
-    max-height: auto;
+    max-height: 5000px;
 
     &.collapsed {
-      max-height: 0; // Высота в свернутом состоянии
+      max-height: 0;
+      padding: 0; // Высота в свернутом состоянии
     }
+    transition:
+      max-height 0.5s ease,
+      padding 0.5s ease;
 
     .container {
       display: flex;

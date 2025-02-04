@@ -51,6 +51,7 @@
     margin: 0;
     padding: 0;
     background-color: $black;
+    padding: 1rem;
 
     @include respond-to(mobile) {
       display: flex;

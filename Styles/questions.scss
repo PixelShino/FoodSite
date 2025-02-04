@@ -1,0 +1,74 @@
+@import 'mixin';
+@import 'mediaMixin';
+.questions {
+  //   padding: ;
+  //   background-color: #f8f8f8;
+  //   padding: 0 0 4rem 0;
+
+  &__title {
+    text-align: center;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    position: relative;
+    z-index: 2;
+    @include fluid-text(40, 24);
+    font-weight: 900;
+    color: $black;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+  }
+
+  &__item {
+    @include BTN;
+    background-color: $white;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    border-bottom: 5px $orange solid;
+  }
+
+  &__item-subtitle {
+    padding: 20px;
+    @include fluid-text(24, 14);
+    font-weight: 600;
+    color: $black;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease;
+
+    &::after {
+      content: '+';
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 32px;
+      transition: transform 0.3s ease;
+      //   color: $green;
+    }
+
+    &:hover {
+      @include hover-effect(lift);
+    }
+  }
+
+  &__item-content {
+    padding: 1rem;
+    // max-height: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.3s ease,
+      padding 0.3s ease;
+
+    @include fluid-text(20, 14);
+    &.collapsed {
+      max-height: 0; // Высота в свернутом состоянии
+      margin-bottom: 0;
+      padding: 0;
+    }
+  }
+}

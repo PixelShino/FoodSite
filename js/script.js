@@ -20,6 +20,7 @@ import reviews from './modules/reviews';
 import callMeBack from './modules/callMeBack';
 import request from './modules/request.js';
 import location from './modules/location';
+import auth from './modules/auth';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('script js  work');
@@ -54,7 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
   burger();
   collapsed();
   collapsed('.reviews__list', '.reviews .expand');
+  collapsed('.questions .questions__item-content', '.questionsExpand', 0);
   insertContent();
+  insertContent(0, '.cityMoveElement', '.cityToMoveElement', 425);
   replaceImg(
     '.calculating__choose_big',
     'calculating__choose-item',
@@ -69,4 +72,5 @@ document.addEventListener('DOMContentLoaded', () => {
   callMeBack();
   // request();
   location();
+  auth();
 });

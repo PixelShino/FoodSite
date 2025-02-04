@@ -1,6 +1,438 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./js/modules/auth.js":
+/*!****************************!*\
+  !*** ./js/modules/auth.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ auth)
+/* harmony export */ });
+// Файл: js/modules/auth.js
+// Описание: Модуль для отображения модального окна с формами авторизации и регистрации.
+// Данные пользователя сохраняются в localStorage и отправляются на сервер по адресу http://localhost:3000/users.
+// При успешной авторизации (особенно для admin) обновляется текст кнопки авторизации и добавляется пункт "Личный кабинет" в навигацию.
+
+
+function auth() {
+  // Создаем контейнер модального окна для аутентификации/регистрации
+  const modal = document.createElement('div');
+  modal.classList.add('modal');
+
+  // Создаем диалог модального окна
+  const modalDialog = document.createElement('div');
+  modalDialog.classList.add('modal__dialog');
+
+  // Создаем контейнер содержимого модального окна
+  const modalContent = document.createElement('div');
+  modalContent.classList.add('modal__content');
+
+  // Кнопка закрытия модального окна
+  const modalClose = document.createElement('div');
+  modalClose.classList.add('modal__close');
+  modalClose.setAttribute('data-close', '');
+  modalClose.textContent = '×';
+  modalContent.appendChild(modalClose);
+
+  // Заголовок модального окна
+  const modalTitle = document.createElement('div');
+  modalTitle.classList.add('modal__title');
+  modalTitle.textContent = 'Аутентификация / Регистрация';
+  modalContent.appendChild(modalTitle);
+
+  // Создаем контейнер для переключения между формами
+  const tabContainer = document.createElement('div');
+  tabContainer.classList.add('modal__tabs');
+
+  // Кнопка для входа
+  const loginTab = document.createElement('button');
+  loginTab.textContent = 'Вход';
+  loginTab.classList.add('modal__tab', 'active');
+
+  // Кнопка для регистрации
+  const registerTab = document.createElement('button');
+  registerTab.textContent = 'Регистрация';
+  registerTab.classList.add('modal__tab');
+
+  tabContainer.appendChild(loginTab);
+  tabContainer.appendChild(registerTab);
+  modalContent.appendChild(tabContainer);
+
+  // Контейнеры для форм
+  const formsContainer = document.createElement('div');
+  formsContainer.classList.add('modal__forms');
+
+  // Форма входа
+  const loginForm = document.createElement('form');
+  loginForm.classList.add('modal__form');
+  loginForm.setAttribute('id', 'loginForm');
+  loginForm.innerHTML = `
+          <input type="text" name="login" placeholder="Логин" class="modal__input" required />
+          <input type="password" name="password" placeholder="Пароль" class="modal__input" required />
+          <button type="submit" class="btn btn_dark btn_min">Войти</button>
+        `;
+
+  // Форма регистрации
+  const registerForm = document.createElement('form');
+  registerForm.classList.add('modal__form');
+  registerForm.setAttribute('id', 'registerForm');
+  registerForm.style.display = 'none';
+  registerForm.innerHTML = `
+          <input type="text" name="name" placeholder="Имя" class="modal__input" required />
+          <input type="email" name="email" placeholder="Email" class="modal__input" required />
+          <input type="text" name="login" placeholder="Логин" class="modal__input" required />
+          <input type="password" name="password" placeholder="Пароль" class="modal__input" required />
+          <input type="tel" name="phone" placeholder="Телефон" class="modal__input" required />
+          <button type="submit" class="btn btn_dark btn_min">Зарегистрироваться</button>
+        `;
+
+  formsContainer.appendChild(loginForm);
+  formsContainer.appendChild(registerForm);
+  modalContent.appendChild(formsContainer);
+
+  // Собираем структуру модального окна
+  modalDialog.appendChild(modalContent);
+  modal.appendChild(modalDialog);
+  document.body.appendChild(modal);
+
+  // Функции для открытия и закрытия модального окна аутентификации/регистрации
+  function openModal() {
+    if (modal.classList.contains('show')) return;
+    modal.classList.add('show');
+  }
+
+  function closeModal() {
+    modal.classList.remove('show');
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Переключение между вкладками
+  loginTab.addEventListener('click', () => {
+    loginTab.classList.add('active');
+    registerTab.classList.remove('active');
+    loginForm.style.display = 'block';
+    registerForm.style.display = 'none';
+  });
+
+  registerTab.addEventListener('click', () => {
+    registerTab.classList.add('active');
+    loginTab.classList.remove('active');
+    registerForm.style.display = 'block';
+    loginForm.style.display = 'none';
+  });
+
+  // Функция для отображения модального окна с заказами пользователя
+  async function showUserOrders(user) {
+    try {
+      const response = await fetch('http://localhost:3000/order');
+      const orders = await response.json();
+      // Фильтруем заказы, где логин совпадает с логином пользователя
+      const userOrders = orders.filter((order) => order.login == user.login);
+      console.log(userOrders);
+      displayOrdersModal(userOrders, user);
+    } catch (error) {
+      console.error('Ошибка получения заказов:', error);
+      alert('Не удалось получить заказы пользователя.');
+    }
+  }
+
+  // Функция для создания и отображения модального окна с заказами
+  function displayOrdersModal(orders, user) {
+    // Создаем модальное окно для отображения заказов
+    const ordersModal = document.createElement('div');
+    ordersModal.classList.add('modal');
+    ordersModal.style.zIndex = '1000'; // Поверх остальных
+    const ordersDialog = document.createElement('div');
+    ordersDialog.classList.add('modal__dialog');
+    const ordersContent = document.createElement('div');
+    ordersContent.classList.add('modal__content');
+
+    // Кнопка закрытия модального окна заказов
+    const ordersClose = document.createElement('div');
+    ordersClose.classList.add('modal__close');
+    ordersClose.setAttribute('data-close', '');
+    ordersClose.textContent = '×';
+    ordersContent.appendChild(ordersClose);
+
+    // Заголовок окна заказов
+    const ordersTitle = document.createElement('div');
+    ordersTitle.classList.add('modal__title');
+    ordersTitle.textContent = 'Ваши заказы';
+    ordersContent.appendChild(ordersTitle);
+
+    // Контейнер для списка заказов
+    const ordersList = document.createElement('div');
+    ordersList.classList.add('orders-list');
+
+    if (orders.length === 0) {
+      ordersList.textContent = 'Заказы не найдены.';
+    } else {
+      const ul = document.createElement('ul');
+      orders.forEach((order) => {
+        const li = document.createElement('li');
+        li.textContent = `Тариф: ${order['тариф']} | Дней: ${order['количество_дней']} | Итоговая цена: ${order['итоговая_стоимость']} руб.`;
+        ul.appendChild(li);
+      });
+      ordersList.appendChild(ul);
+    }
+    ordersContent.appendChild(ordersList);
+
+    ordersDialog.appendChild(ordersContent);
+    ordersModal.appendChild(ordersDialog);
+    document.body.appendChild(ordersModal);
+
+    function closeOrdersModal() {
+      ordersModal.remove();
+    }
+    ordersClose.addEventListener('click', closeOrdersModal);
+    ordersModal.addEventListener('click', (e) => {
+      if (e.target === ordersModal) {
+        closeOrdersModal();
+      }
+    });
+    // Показываем окно заказов
+    ordersModal.classList.add('show');
+  }
+
+  // Новая функция для открытия админ панели
+  async function openAdminPanel() {
+    try {
+      // Определяем перечисление API эндпоинтов для выборки данных
+      const endpoints = [
+        { key: 'menu', url: 'http://localhost:3000/menu' },
+        { key: 'requests', url: 'http://localhost:3000/requests' },
+        { key: 'reviews', url: 'http://localhost:3000/reviews' },
+        { key: 'callMeBack', url: 'http://localhost:3000/callMeBack' },
+        { key: 'order', url: 'http://localhost:3000/order' },
+        { key: 'users', url: 'http://localhost:3000/users' },
+      ];
+
+      // Параллельно выполняем запросы
+      const responses = await Promise.all(endpoints.map((ep) => fetch(ep.url)));
+      const dataList = await Promise.all(responses.map((res) => res.json()));
+
+      // Сопоставляем ключи с данными
+      const data = {};
+      endpoints.forEach((ep, index) => {
+        data[ep.key] = dataList[index];
+      });
+
+      // Отображаем админ панель с полученными данными
+      displayAdminPanel(data);
+    } catch (error) {
+      console.error('Ошибка получения данных для админ панели:', error);
+      alert('Не удалось получить данные для админ панели.');
+    }
+  }
+
+  // Функция для создания и отображения админ панели с данными
+  function displayAdminPanel(data) {
+    // Создаем модальное окно для админ панели
+    const adminModal = document.createElement('div');
+    adminModal.classList.add('modal');
+    adminModal.style.zIndex = '1000';
+    const adminDialog = document.createElement('div');
+    adminDialog.classList.add('modal__dialog');
+    // Применяем стиль для админ панели: полная ширина и высота
+    adminDialog.style.width = '100%';
+    adminDialog.style.height = '100%';
+    const adminContent = document.createElement('div');
+    adminContent.classList.add('modal__content');
+    // Убираем ограничения стилей: max-height и margin-top
+    adminContent.style.maxHeight = 'none';
+    adminContent.style.marginTop = '0';
+
+    // Кнопка закрытия админ панели
+    const adminClose = document.createElement('div');
+    adminClose.classList.add('modal__close');
+    adminClose.setAttribute('data-close', '');
+    adminClose.textContent = '×';
+    adminContent.appendChild(adminClose);
+
+    // Заголовок админ панели
+    const adminTitle = document.createElement('div');
+    adminTitle.classList.add('modal__title');
+    adminTitle.textContent = 'АДМИН ПАНЕЛЬ - Все Записи';
+    adminContent.appendChild(adminTitle);
+
+    // Создаем секции для каждого набора данных
+    Object.keys(data).forEach((key) => {
+      const section = document.createElement('section');
+      const sectionTitle = document.createElement('h3');
+      sectionTitle.textContent = key.toUpperCase();
+      section.appendChild(sectionTitle);
+
+      const pre = document.createElement('pre');
+      pre.textContent = JSON.stringify(data[key], null, 2);
+      section.appendChild(pre);
+
+      adminContent.appendChild(section);
+    });
+
+    adminDialog.appendChild(adminContent);
+    adminModal.appendChild(adminDialog);
+    document.body.appendChild(adminModal);
+
+    function closeAdminModal() {
+      adminModal.remove();
+    }
+
+    adminClose.addEventListener('click', closeAdminModal);
+    adminModal.addEventListener('click', (e) => {
+      if (e.target === adminModal) {
+        closeAdminModal();
+      }
+    });
+
+    adminModal.classList.add('show');
+  }
+
+  // Функция обновления состояния UI после авторизации
+  function updateUIForAuth(user) {
+    const authBtn = document.querySelector('#authBtn');
+    if (authBtn) {
+      authBtn.textContent = 'Выйти';
+    }
+    // Если элемент personal-account еще не создан, создаем и вставляем его сразу после authBtn
+    if (authBtn && !document.querySelector('.personal-account')) {
+      const accountElement = document.createElement('div');
+      accountElement.classList.add('personal-account');
+      // Если роль пользователя admin, то текст - 'ADMIN PANEL', иначе - 'Личный кабинет'
+      accountElement.textContent =
+        user && user.role === 'admin' ? 'ADMIN PANEL' : 'Личный кабинет';
+
+      // Назначаем поведение клика:
+      // Для admin открываем админ панель, для обычного пользователя загружаем его заказы
+      if (user && user.role === 'admin') {
+        accountElement.addEventListener('click', openAdminPanel);
+      } else {
+        accountElement.addEventListener('click', () => {
+          showUserOrders(user);
+        });
+      }
+      authBtn.parentNode.insertBefore(accountElement, authBtn.nextSibling);
+    }
+  }
+
+  // Функция для сброса состояния (выход)
+  function logout() {
+    localStorage.removeItem('user');
+    const authBtn = document.querySelector('#authBtn');
+    if (authBtn) {
+      authBtn.textContent = 'Войти';
+    }
+    const headerNav = document.querySelector(
+      'body > header > div.header__bot-block > nav',
+    );
+    // Удаляем элемент personal-account, если он существует
+    const personalAccount = document.querySelector('.personal-account');
+    if (personalAccount) {
+      personalAccount.remove();
+    }
+  }
+
+  // Обработчик для формы входа
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(loginForm);
+    const login = formData.get('login').trim();
+    const password = formData.get('password').trim();
+
+    try {
+      // Получаем список пользователей с сервера
+      const response = await fetch('http://localhost:3000/users');
+      const users = await response.json();
+
+      // Ищем пользователя с совпадающими данными
+      const user = users.find(
+        (u) => u.login === login && u.password === password,
+      );
+
+      if (user) {
+        // Сохраняем данные пользователя в localStorage
+        localStorage.setItem('user', JSON.stringify(user));
+        updateUIForAuth(user);
+        closeModal();
+      } else {
+        alert('Неверные данные для входа');
+      }
+    } catch (error) {
+      console.error('Ошибка при авторизации:', error);
+    }
+  });
+
+  // Обработчик для формы регистрации
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(registerForm);
+    const userData = {
+      name: formData.get('name').trim(),
+      email: formData.get('email').trim(),
+      login: formData.get('login').trim(),
+      password: formData.get('password').trim(),
+      phone: formData.get('phone').trim(),
+      role: 'user', // по умолчанию обычный пользователь
+    };
+
+    try {
+      // Отправляем данные на сервер (POST запрос)
+      const response = await fetch('http://localhost:3000/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const newUser = await response.json();
+        // Сохраняем нового пользователя в localStorage
+        localStorage.setItem('user', JSON.stringify(newUser));
+        updateUIForAuth(newUser);
+        closeModal();
+      } else {
+        alert('Ошибка регистрации. Попробуйте еще раз.');
+      }
+    } catch (error) {
+      console.error('Ошибка при регистрации:', error);
+    }
+  });
+
+  // Назначаем обработчик для кнопки авторизации/выхода
+  const authBtn = document.querySelector('#authBtn');
+  if (authBtn) {
+    authBtn.addEventListener('click', () => {
+      const user = localStorage.getItem('user');
+      if (user) {
+        // Если пользователь уже авторизован - выполнить выход
+        logout();
+      } else {
+        // Если не авторизован - открыть модальное окно аутентификации
+        openModal();
+      }
+    });
+  }
+
+  // Если пользователь уже был авторизован ранее, обновляем интерфейс
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    updateUIForAuth(JSON.parse(storedUser));
+  }
+}
+
+
+/***/ }),
+
 /***/ "./js/modules/bodyNoScroll.js":
 /*!************************************!*\
   !*** ./js/modules/bodyNoScroll.js ***!
@@ -12,11 +444,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/*
+ * Функция bodyNoScroll
+ * Назначение: переключает класс 'no-scroll' для элемента <body>.
+ * Это позволяет блокировать или разрешать прокрутку страницы.
+ *
+ * Параметры:
+ *   item   - селектор контента, управляющего состоянием (по умолчанию '.burger__content').
+ *   active - селектор активного состояния (по умолчанию '.active').
+ */
 function bodyNoScroll(item = '.burger__content', active = '.active') {
-  const body = document.querySelector('body');
+  const body = document.querySelector('body'); // Получаем элемент <body>
+
+  // Если указаны значения для item и active, переключаем класс 'no-scroll'
   if (item && active) {
     body.classList.toggle('no-scroll');
-    console.log('bodyNoScroll work');
+    console.log('bodyNoScroll work'); // Выводим сообщение для отладки
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (bodyNoScroll);
@@ -40,40 +483,61 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/**
+ * Функция toggleActive отвечает за переключение активного состояния
+ * для элементов бургер-меню.
+ *
+ * Параметры:
+ *  @param {string} parent - Селектор родительского элемента (по умолчанию ".header__burger").
+ *  @param {string} item - Селектор дочерних элементов, для которых производится проверка (по умолчанию ".header__burger-item").
+ *  @param {string} toggleItemSelector - Селектор элемента, у которого переключается класс "active" (по умолчанию ".burger__content").
+ */
 function toggleActive(
   parent = '.header__burger',
-  item = '.header__burger-item',
+  item = '.header__burger-line',
   toggleItemSelector = '.burger__content',
 ) {
+  // Получаем родительский элемент по заданному селектору
   const parentElement = document.querySelector(parent);
-  const items = document.querySelectorAll(item);
-  const toggleItem = document.querySelector(toggleItemSelector);
-  const body = document.querySelector('body');
-
   if (!parentElement) {
-    console.error(`Parent element with selector "${parent}" not found.`);
+    console.error(`Не найден родительский элемент по селектору "${parent}"`);
     return;
-  } else if (!items) {
-    console.error(`Items with selector "${item}" not found.`);
+  }
+
+  // Получаем все элементы, соответствующие селектору item
+  const items = document.querySelectorAll(item);
+  if (!items.length) {
+    console.error(`Не найдены элементы по селектору "${item}"`);
     return;
-  } else if (!toggleItem) {
+  }
+
+  // Получаем элемент, у которого будем переключать класс "active"
+  const toggleItem = document.querySelector(toggleItemSelector);
+  if (!toggleItem) {
     console.error(
-      `Toggle element with selector "${toggleItemSelector}" not found.`,
+      `Не найден элемент для переключения по селектору "${toggleItemSelector}"`,
     );
     return;
-  } else {
-    function toggle() {
-      (0,_bodyNoScroll_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
-      console.log('burger clicked');
-      console.log(toggleItem);
-      toggleItem.classList.toggle('active');
-
-      console.log('else work');
-    }
-
-    parentElement.addEventListener('click', toggle);
   }
+
+  /**
+   * Функция toggle выполняет следующие действия:
+   * 1. Вызывает переключение прокрутки страницы через bodyNoScroll.
+   * 2. Логгирует информацию в консоль.
+   * 3. Переключает класс "active" у toggleItem.
+   */
+  function toggle() {
+    (0,_bodyNoScroll_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
+    console.log('burger clicked');
+    console.log(toggleItem);
+    toggleItem.classList.toggle('active');
+    console.log('Поменяли класс active у элемента');
+  }
+
+  // Привязываем обработчик события клика к родительскому элементу
+  parentElement.addEventListener('click', toggle);
 }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (toggleActive);
 
 
@@ -91,255 +555,265 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _replaceImg_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./replaceImg.js */ "./js/modules/replaceImg.js");
-// Import your replaceImg module
+// Импортируем модуль для обновления изображений при выборе параметров
 
+
+/**
+ * Функция calc инициализирует калькулятор показателей тела (BMI, тариф) по введённым данным.
+ * Выполняет настройку значений по умолчанию, обработку кликов по статическим элементам и ввод динамических значений.
+ */
 function calc() {
-  //Calc
-  function calc() {
-    let sex, height, weight, age, ratio;
-    const result = document.querySelector('.calculating__result span');
-    const index = document.querySelector('.calculating__result.bmi span');
-    const indexInfo = document.querySelector(
-      '.calculating__total.bmi.info span',
-    );
-    const tariffInfo = document.querySelector(
-      '.calculating__total.bmi.tariff span',
-    );
-    const tariffImg = document.querySelector('.tariff--img');
+  // Объявляем переменные для хранения выбранных параметров и введённых данных
+  let sex, height, weight, age, ratio;
 
-    if (localStorage.getItem('sex')) {
-      sex = localStorage.getItem('sex');
-    } else {
-      sex = 'female';
-      localStorage.setItem('sex', 'female');
-    }
+  // Элементы для вывода результата и информации об индексе
+  const result = document.querySelector('.calculating__result span');
+  const index = document.querySelector('.calculating__result.bmi span');
+  const indexInfo = document.querySelector('.calculating__total.bmi.info span');
+  const tariffInfo = document.querySelector(
+    '.calculating__total.bmi.tariff span',
+  );
+  const tariffImg = document.querySelector('.tariff--img'); // не используется, но оставлено для возможного использования
 
-    if (localStorage.getItem('ratio')) {
-      ratio = localStorage.getItem('ratio');
-    } else {
-      ratio = 1.375;
-      localStorage.setItem('ratio', 1.375);
-    }
-
-    function initLocalSettings(selector, activeClass) {
-      const elements = document.querySelectorAll(selector);
-
-      elements.forEach((elem) => {
-        elem.classList.remove(activeClass);
-        if (elem.getAttribute('id') === localStorage.getItem('sex')) {
-          elem.classList.add(activeClass);
-        }
-        if (elem.getAttribute('data-ratio') === localStorage.getItem('ratio')) {
-          elem.classList.add(activeClass);
-        }
-      });
-    }
-
-    initLocalSettings('#gender div', 'calculating__choose-item_active');
-    initLocalSettings(
-      '.calculating__choose_big div',
-      'calculating__choose-item_active',
-    );
-
-    function calcTotal() {
-      if (!sex || !height || !weight || !age || !ratio) {
-        result.textContent = '____';
-        return;
-      }
-
-      if (sex === 'female') {
-        result.textContent = Math.round(
-          (447.6 + 9.2 * weight + 3.1 * height - 4.3 * age) * ratio,
-        );
-      } else {
-        result.textContent = Math.round(
-          (88.36 + 13.4 * weight + 4.8 * height - 5.7 * age) * ratio,
-        );
-      }
-      if (
-        isNaN(result.textContent) ||
-        !/^-?\d+(\.\d+)?$/.test(result.textContent)
-      ) {
-        result.textContent = '____';
-      }
-    }
-
-    //TODO: вывести информацию о подходящем плане питания
-    function calcIndex() {
-      console.log('Height:', height, 'Weight:', weight);
-      let indexValueContainer = document.querySelector(
-        '.calculating__total.bmi.info',
-      );
-      let tariffInfoContainer = document.querySelector(
-        '.calculating__total.bmi.tariff',
-      );
-      let tariffSubtitle = document.querySelector(
-        '.calculating__total.bmi.tariff.calculating__subtitle',
-      );
-      const imageUrls = {
-        underweight: '../img/food/slider_food1.png',
-        normal: '../img/food/slider__food2.png',
-        overweight: '../img/food/slider__food3.png',
-        obesity: '../img/food/slider__food4.png',
-      };
-      // #tab-0 {
-      //   background-image: url(../img/food/slider_food1.png);
-      // }
-      // #tab-1 {
-      //   background-image: url(../img/food/slider__food2.png);
-      // }
-      // #tab-2 {
-      //   background-image: url(../img/food/slider__food3.png);
-      // }
-
-      if (!height || !weight) {
-        index.textContent = '____';
-        console.log('index = ____');
-        console.log(indexValueContainer);
-        indexValueContainer.style.display = 'none';
-        tariffInfoContainer.style.display = 'none';
-        // tariffImg.style.display = 'none';
-        return;
-      } else {
-        console.log('index find');
-        indexValueContainer.style.display = 'flex';
-        tariffInfoContainer.style.display = 'flex';
-        // tariffImg.style.display = 'grid';
-        let indexValue = +((10000 * weight) / (height * height)).toFixed(1);
-        index.textContent = indexValue;
-        console.log((10000 * weight) / (height * height));
-
-        if (indexValue <= 16) {
-          indexInfo.textContent = 'Выраженный дефицит массы тела';
-          tariffInfo.textContent = 'Набор веса';
-          // tariffImg.src = imageUrls.underweight;
-          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
-        } else if (indexValue >= 16 && indexValue <= 18.4) {
-          indexInfo.textContent = 'Недостаточная (дефицит) масса тела';
-          tariffInfo.textContent = 'Набор веса';
-          // tariffImg.src = imageUrls.underweight;
-          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
-        } else if (indexValue >= 18.5 && indexValue <= 24.9) {
-          indexInfo.textContent = 'Норма';
-          tariffInfo.textContent = 'Баланс';
-          // tariffImg.src = imageUrls.normal;
-          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
-        } else if (indexValue >= 25 && indexValue <= 29.9) {
-          indexInfo.textContent = 'Избыточная масса тела';
-          tariffInfo.textContent = 'Похудение';
-          // tariffImg.src = imageUrls.overweight;
-          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
-        } else if (indexValue >= 30 && indexValue <= 34.9) {
-          indexInfo.textContent = 'Ожирение первой степени';
-          tariffInfo.textContent = 'Похудение';
-          // tariffImg.src = imageUrls.overweight;
-          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
-        } else if (indexValue >= 35 && indexValue <= 39.9) {
-          indexInfo.textContent = 'Ожирение второй степени';
-          tariffInfo.textContent = 'Похудение';
-          // tariffImg.src = imageUrls.overweight;
-          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
-        } else if (indexValue >= 40) {
-          indexInfo.textContent = 'Ожирение третьей степени (морбидное)';
-          tariffInfo.textContent = 'Похудение';
-          // tariffImg.src = imageUrls.overweight;
-          tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
-        }
-      }
-    }
-
-    calcTotal();
-    calcIndex();
-
-    function getStaticInformation(parentSelector, activeClass) {
-      const elements = document.querySelectorAll(`${parentSelector} div`);
-
-      document
-        .querySelector(parentSelector)
-        .addEventListener('click', (event) => {
-          const elementWithRatio = event.target.closest('[data-ratio]');
-
-          if (elementWithRatio) {
-            const ratioValue = elementWithRatio.getAttribute('data-ratio');
-            ratio = parseFloat(ratioValue);
-
-            if (!isNaN(ratio)) {
-              localStorage.setItem('ratio', ratioValue);
-            }
-          } else if (
-            event.target.id === 'female' ||
-            event.target.id === 'male'
-          ) {
-            sex = event.target.getAttribute('id');
-            localStorage.setItem('sex', event.target.getAttribute('id'));
-          }
-
-          elements.forEach((elem) => {
-            elem.classList.remove(activeClass);
-          });
-
-          if (
-            event.target.matches(
-              '.calculating__choose-item, .calculating__choose-item *',
-            )
-          ) {
-            const targetElement =
-              event.target.closest('.calculating__choose-item') || event.target;
-
-            targetElement.classList.add(activeClass);
-            (0,_replaceImg_js__WEBPACK_IMPORTED_MODULE_0__["default"])(parentSelector, 'calculating__choose-item', activeClass);
-
-            console.error('ELEMENT HAS CLASS calculating__choose-item');
-          } else {
-            console.error(
-              'ELEMENT DOES NOT HAVE CLASS calculating__choose-item',
-            );
-          }
-
-          calcTotal();
-          calcIndex();
-        });
-    }
-
-    getStaticInformation('#gender', 'calculating__choose-item_active');
-    getStaticInformation(
-      '.calculating__choose_big',
-      'calculating__choose-item_active',
-    );
-
-    function getDynamicInformation(selector) {
-      const input = document.querySelector(selector);
-      input.addEventListener('input', () => {
-        if (input.value.match(/\D/g)) {
-          input.classList.add('invalid');
-        } else {
-          input.classList.remove('invalid');
-        }
-        switch (input.getAttribute('id')) {
-          case 'height':
-            height = +input.value;
-            break;
-          case 'weight':
-            weight = +input.value;
-            break;
-          case 'age':
-            age = +input.value;
-            break;
-        }
-        calcTotal();
-        calcIndex();
-      });
-    }
-    console.log(index);
-    getDynamicInformation('#height');
-    getDynamicInformation('#weight');
-    getDynamicInformation('#age');
+  // Инициализация значений по умолчанию для пола и коэффициента активности из localStorage
+  if (localStorage.getItem('sex')) {
+    sex = localStorage.getItem('sex');
+  } else {
+    sex = 'female';
+    localStorage.setItem('sex', 'female');
   }
 
-  calc();
+  if (localStorage.getItem('ratio')) {
+    ratio = parseFloat(localStorage.getItem('ratio'));
+  } else {
+    ratio = 1.375;
+    localStorage.setItem('ratio', '1.375');
+  }
+
+  /**
+   * Функция initLocalSettings устанавливает активный класс для элементов выбора (пол, коэффициент),
+   * основываясь на значениях, сохраненных в localStorage.
+   * @param {string} selector - CSS-селектор для выбора элементов.
+   * @param {string} activeClass - CSS-класс для активного состояния.
+   */
+  function initLocalSettings(selector, activeClass) {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach((elem) => {
+      elem.classList.remove(activeClass);
+      if (elem.getAttribute('id') === localStorage.getItem('sex')) {
+        elem.classList.add(activeClass);
+      }
+      if (elem.getAttribute('data-ratio') === localStorage.getItem('ratio')) {
+        elem.classList.add(activeClass);
+      }
+    });
+  }
+
+  // Инициализируем активные состояния для выбора пола и коэффициента активности
+  initLocalSettings('#gender div', 'calculating__choose-item_active');
+  initLocalSettings(
+    '.calculating__choose_big div',
+    'calculating__choose-item_active',
+  );
+
+  /**
+   * Функция calcTotal рассчитывает общий результат (калории или другой показатель)
+   * в зависимости от выбранного пола, уровня активности и введённых данных.
+   */
+  function calcTotal() {
+    // Если не все данные введены, выводим заглушку
+    if (!sex || !height || !weight || !age || !ratio) {
+      result.textContent = '____';
+      return;
+    }
+
+    // Вычисляем результат по разным формулам для женского и мужского пола
+    if (sex === 'female') {
+      result.textContent = Math.round(
+        (447.6 + 9.2 * weight + 3.1 * height - 4.3 * age) * ratio,
+      );
+    } else {
+      result.textContent = Math.round(
+        (88.36 + 13.4 * weight + 4.8 * height - 5.7 * age) * ratio,
+      );
+    }
+
+    // Если результат не является числом, очищаем вывод
+    if (
+      isNaN(result.textContent) ||
+      !/^-?\d+(\.\d+)?$/.test(result.textContent)
+    ) {
+      result.textContent = '____';
+    }
+  }
+
+  /**
+   * Функция calcIndex вычисляет индекс массы тела (BMI) и отображает информацию об интерпретации результата.
+   */
+  function calcIndex() {
+    // Элементы контейнеров для вывода дополнительной информации
+    const indexValueContainer = document.querySelector(
+      '.calculating__total.bmi.info',
+    );
+    const tariffInfoContainer = document.querySelector(
+      '.calculating__total.bmi.tariff',
+    );
+
+    // Объект с URL-ами изображений для разных диапазонов BMI
+    const imageUrls = {
+      underweight: '../img/food/slider_food1.png',
+      normal: '../img/food/slider__food2.png',
+      overweight: '../img/food/slider__food3.png',
+      obesity: '../img/food/slider__food4.png',
+    };
+
+    // Если рост или вес не заданы, скрываем информацию и выводим заглушку
+    if (!height || !weight) {
+      index.textContent = '____';
+      indexValueContainer.style.display = 'none';
+      tariffInfoContainer.style.display = 'none';
+      return;
+    } else {
+      // Отображаем блоки с информацией
+      indexValueContainer.style.display = 'flex';
+      tariffInfoContainer.style.display = 'flex';
+
+      // Расчет BMI с округлением до одного знака после запятой
+      const indexValue = +((10000 * weight) / (height * height)).toFixed(1);
+      index.textContent = indexValue;
+
+      // Определяем текстовое описание и тариф в зависимости от значения BMI
+      if (indexValue <= 16) {
+        indexInfo.textContent = 'Выраженный дефицит массы тела';
+        tariffInfo.textContent = 'Набор веса';
+        tariffInfoContainer.style.backgroundImage = `url(${imageUrls.underweight})`;
+      } else if (indexValue > 16 && indexValue <= 18.4) {
+        indexInfo.textContent = 'Недостаточная (дефицит) масса тела';
+        tariffInfo.textContent = 'Набор веса';
+        tariffInfoContainer.style.backgroundImage = `url(${imageUrls.underweight})`;
+      } else if (indexValue >= 18.5 && indexValue <= 24.9) {
+        indexInfo.textContent = 'Норма';
+        tariffInfo.textContent = 'Баланс';
+        tariffInfoContainer.style.backgroundImage = `url(${imageUrls.normal})`;
+      } else if (indexValue >= 25 && indexValue <= 29.9) {
+        indexInfo.textContent = 'Избыточная масса тела';
+        tariffInfo.textContent = 'Похудение';
+        tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
+      } else if (indexValue >= 30 && indexValue <= 34.9) {
+        indexInfo.textContent = 'Ожирение первой степени';
+        tariffInfo.textContent = 'Похудение';
+        tariffInfoContainer.style.backgroundImage = `url(${imageUrls.overweight})`;
+      } else if (indexValue >= 35 && indexValue <= 39.9) {
+        indexInfo.textContent = 'Ожирение второй степени';
+        tariffInfo.textContent = 'Похудение';
+        tariffInfoContainer.style.backgroundImage = `url(${imageUrls.obesity})`;
+      } else if (indexValue >= 40) {
+        indexInfo.textContent = 'Ожирение третьей степени (морбидное)';
+        tariffInfo.textContent = 'Похудение';
+        tariffInfoContainer.style.backgroundImage = `url(${imageUrls.obesity})`;
+      }
+    }
+  }
+
+  // Вызываем функции расчёта после инициализации
+  calcTotal();
+  calcIndex();
+
+  /**
+   * Функция getStaticInformation обрабатывает клики по статическим элементам выбора (пол, коэффициент).
+   * При клике обновляются соответствующие переменные, сохраняются в localStorage и пересчитываются показатели.
+   * @param {string} parentSelector - CSS-селектор родительского контейнера.
+   * @param {string} activeClass - CSS-класс для активного состояния.
+   */
+  function getStaticInformation(parentSelector, activeClass) {
+    const elements = document.querySelectorAll(`${parentSelector} div`);
+    const parent = document.querySelector(parentSelector);
+
+    parent.addEventListener('click', (event) => {
+      const elementWithRatio = event.target.closest('[data-ratio]');
+      if (elementWithRatio) {
+        // Обработка выбора коэффициента активности
+        const ratioValue = elementWithRatio.getAttribute('data-ratio');
+        ratio = parseFloat(ratioValue);
+        if (!isNaN(ratio)) {
+          localStorage.setItem('ratio', ratioValue);
+        }
+      } else if (event.target.id === 'female' || event.target.id === 'male') {
+        // Обработка выбора пола
+        sex = event.target.getAttribute('id');
+        localStorage.setItem('sex', sex);
+      }
+      // Удаляем активный класс у всех элементов
+      elements.forEach((elem) => {
+        elem.classList.remove(activeClass);
+      });
+      // Если клик был по нужному элементу, добавляем активный класс и обновляем изображения
+      if (
+        event.target.matches(
+          '.calculating__choose-item, .calculating__choose-item *',
+        )
+      ) {
+        const targetElement =
+          event.target.closest('.calculating__choose-item') || event.target;
+        targetElement.classList.add(activeClass);
+        (0,_replaceImg_js__WEBPACK_IMPORTED_MODULE_0__["default"])(parentSelector, 'calculating__choose-item', activeClass);
+      }
+      // Пересчитываем показатели после обновления выбора
+      calcTotal();
+      calcIndex();
+    });
+  }
+
+  // Привязываем обработчики кликов для элементов выбора пола и коэффициента
+  getStaticInformation('#gender', 'calculating__choose-item_active');
+  getStaticInformation(
+    '.calculating__choose_big',
+    'calculating__choose-item_active',
+  );
+
+  /**
+   * Функция getDynamicInformation обрабатывает ввод динамических данных (рост, вес, возраст),
+   * добавляет подсветку при ошибке ввода и пересчитывает показатели.
+   * @param {string} selector - CSS-селектор поля ввода.
+   */
+  function getDynamicInformation(selector) {
+    const input = document.querySelector(selector);
+    input.addEventListener('input', () => {
+      // Если введены нечисловые символы, добавляем класс invalid для визуальной подсветки ошибки
+      if (input.value.match(/\D/g)) {
+        input.classList.add('invalid');
+      } else {
+        input.classList.remove('invalid');
+      }
+      // Назначаем введенное значение соответствующей переменной
+      switch (input.getAttribute('id')) {
+        case 'height':
+          height = +input.value;
+          break;
+        case 'weight':
+          weight = +input.value;
+          break;
+        case 'age':
+          age = +input.value;
+          break;
+      }
+      // Пересчитываем показатели при каждом изменении значения
+      calcTotal();
+      calcIndex();
+    });
+  }
+
+  // Привязываем обработчики ввода для полей: рост, вес, возраст
+  getDynamicInformation('#height');
+  getDynamicInformation('#weight');
+  getDynamicInformation('#age');
 }
+
+// Запускаем калькулятор после загрузки DOM
+document.addEventListener('DOMContentLoaded', calc);
+
+// Экспорт функции calc можно добавить, если требуется её использование в других модулях
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (calc);
-console.log('webpack test');
 
 
 /***/ }),
@@ -355,32 +829,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/**
+ * Функция для инициализации обработки формы обратного звонка.
+ * Находит необходимые элементы, устанавливает обработчики событий
+ * и выполняет валидацию, сбор данных, получение геолокации и отправку данных на сервер.
+ */
 function callMeBack() {
-  // Находим элементы формы
+  // Получение элементов формы
   const nameInput = document.querySelector('.order__input.order__input--name');
   const numberInput = document.querySelector(
     '.order__input.order__input--number',
   );
   const callBtn = document.querySelector('.order__btn');
 
-  // Регулярное выражение для валидации телефона
+  // Регулярное выражение для валидации телефонного номера
   const phoneRegex = /^\+?\d{1,3}?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
 
-  // Функция для валидации полей
+  /**
+   * Валидация заполнения формы.
+   * @returns {boolean} isValid - true, если поля заполнены корректно.
+   */
   function validateForm() {
     let isValid = true;
 
-    // Очистка предыдущих ошибок
+    // Очистка предыдущих сообщений об ошибке
     nameInput.classList.remove('invalid');
     numberInput.classList.remove('invalid');
 
-    // Проверка имени
+    // Проверка на пустое значение поля имени
     if (!nameInput.value.trim()) {
       nameInput.classList.add('invalid');
       isValid = false;
     }
 
-    // Проверка телефона
+    // Проверка телефонного номера по регулярному выражению
     if (!phoneRegex.test(numberInput.value.trim())) {
       numberInput.classList.add('invalid');
       isValid = false;
@@ -389,13 +871,19 @@ function callMeBack() {
     return isValid;
   }
 
-  // Получение времени
+  /**
+   * Получение текущего времени в формате ISO.
+   * @returns {string} Текущее время в формате ISO.
+   */
   function getCurrentTime() {
     const now = new Date();
-    return now.toISOString(); // Возвращает время в формате ISO
+    return now.toISOString();
   }
 
-  // Получение геолокации
+  /**
+   * Получение координат пользователя через Geolocation API.
+   * @returns {Promise<Object>} Промис, который разрешается с объектом { latitude, longitude }.
+   */
   function getUserLocation() {
     return new Promise((resolve, reject) => {
       if (!navigator.geolocation) {
@@ -416,9 +904,13 @@ function callMeBack() {
     });
   }
 
-  // Преобразование координат в адрес с помощью OpenCage API
+  /**
+   * Преобразование координат (latitude, longitude) в город и страну с использованием OpenCage API.
+   * @param {Object} coords - Объект с широтой и долготой.
+   * @returns {Promise<Object>} Промис, который разрешается с объектом { city, country }.
+   */
   async function getCityAndCountry({ latitude, longitude }) {
-    const apiKey = 'e6956a4aa92240e2ad6c176774e3c2d7'; //  ключ OpenCage
+    const apiKey = 'e6956a4aa92240e2ad6c176774e3c2d7'; // API ключ для OpenCage
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
 
     try {
@@ -427,6 +919,7 @@ function callMeBack() {
         throw new Error('Failed to fetch location data');
       }
       const data = await response.json();
+      // Извлекаем город и страну из первого результата или устанавливаем null
       const { city, country } = data.results[0]?.components || {
         city: null,
         country: null,
@@ -438,33 +931,68 @@ function callMeBack() {
     }
   }
 
-  // Обработчик отправки формы
+  /**
+   * Отображение индикатора загрузки.
+   * @returns {HTMLElement} Элемент индикатора загрузки.
+   */
+  function showLoadingSpinner() {
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner';
+    document.body.appendChild(spinner);
+    return spinner;
+  }
+
+  /**
+   * Удаление индикатора загрузки после отправки данных.
+   * @param {HTMLElement} statusMessage - Элемент индикатора загрузки.
+   */
+  function cleanupAfterSubmission(statusMessage) {
+    if (statusMessage && statusMessage.parentNode) {
+      statusMessage.parentNode.removeChild(statusMessage);
+    }
+  }
+
+  /**
+   * Отображение сообщения пользователю после отправки формы.
+   * @param {string} message - Сообщение для отображения.
+   */
+  function showThanksModal(message) {
+    // В дальнейшем можно заменить стандартный alert на кастомное модальное окно.
+    alert(message);
+  }
+
+  /**
+   * Основная обработка отправки формы.
+   * Здесь происходит валидация, сбор данных формы, получение времени,
+   * геолокации, преобразование координат в адрес и отправка данных на сервер.
+   * @param {Event} e - Событие отправки.
+   */
   async function handleFormSubmit(e) {
     e.preventDefault();
 
-    // Валидация формы
+    // Валидация формы; если не прошла, прекращаем выполнение функции
     if (!validateForm()) return;
 
-    // Показываем заглушку загрузки
+    // Отображаем индикатор загрузки
     const statusMessage = showLoadingSpinner();
 
     try {
-      // Получаем текущее время
+      // Получение текущего времени
       const currentTime = getCurrentTime();
 
-      // Получаем геолокацию пользователя
+      // Получение геолокации пользователя с обработкой возможного отказа
       let location = null;
       try {
         location = await getUserLocation();
       } catch (locationError) {
         console.warn(locationError.message);
-        location = { latitude: null, longitude: null }; // Если геолокация недоступна
+        location = { latitude: null, longitude: null };
       }
 
-      // Получаем город и страну
+      // Получение города и страны на основе координат
       const { city, country } = await getCityAndCountry(location);
 
-      // Подготовка данных для отправки
+      // Формирование данных для отправки на сервер
       const formData = {
         name: nameInput.value.trim(),
         phone: numberInput.value.trim(),
@@ -477,7 +1005,7 @@ function callMeBack() {
         },
       };
 
-      // Отправка данных на сервер
+      // Отправка данных на сервер методом POST
       const response = await fetch('http://localhost:3000/callMeBack', {
         method: 'POST',
         headers: {
@@ -486,19 +1014,19 @@ function callMeBack() {
         body: JSON.stringify(formData),
       });
 
-      // Проверка статуса ответа
+      // Проверка статуса ответа от сервера
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // Логирование полного ответа
+      // Чтение ответа сервера
       const text = await response.text();
       console.log('Server response:', text);
 
-      // Парсинг JSON
+      // Парсинг ответа в JSON-формат
       const data = JSON.parse(text);
 
-      // Проверка формата ответа
+      // Валидация структуры ответа от сервера
       if (!data || typeof data.success !== 'boolean') {
         throw new Error('Invalid server response format');
       }
@@ -507,38 +1035,24 @@ function callMeBack() {
         throw new Error('Failed to send request');
       }
 
-      // Успешная отправка
+      // Если все прошло успешно, выводим сообщение для пользователя
       showThanksModal('Спасибо! Мы скоро свяжемся с вами.');
     } catch (error) {
+      // Обработка ошибок при отправке данных
       console.error('Form submission error:', error.message);
       showThanksModal('Что-то пошло не так...');
     } finally {
-      // Убираем заглушку загрузки
+      // Удаление индикатора загрузки в любом случае
       cleanupAfterSubmission(statusMessage);
     }
   }
 
-  // Привязываем обработчик к кнопке
+  // Привязываем событие клика к обработчику отправки формы
   callBtn.addEventListener('click', handleFormSubmit);
-
-  // Вспомогательные функции
-  function showLoadingSpinner() {
-    const spinner = document.createElement('div');
-    spinner.className = 'spinner';
-    document.body.appendChild(spinner);
-    return spinner;
-  }
-
-  function cleanupAfterSubmission(statusMessage) {
-    if (statusMessage && statusMessage.parentNode) {
-      statusMessage.parentNode.removeChild(statusMessage);
-    }
-  }
-
-  function showThanksModal(message) {
-    alert(message); // Можно заменить на более сложную модальную форму
-  }
 }
+
+// Инициализация модуля после загрузки DOM
+document.addEventListener('DOMContentLoaded', callMeBack);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (callMeBack);
 
@@ -556,11 +1070,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _tabs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tabs */ "./js/modules/tabs.js");
-
+/*
+  Данный модуль отвечает за создание карточек меню и реализацию функционала переключения табов.
+  Используется для получения данных с сервера, создания карточек (MenuCard) и обработки событий
+  переключения табов по нажатию на соответствующие кнопки.
+*/
 
 function cards() {
+  // Класс MenuCard предназначен для создания карточек меню
   class MenuCard {
+    /**
+     * Конструктор класса MenuCard.
+     * @param {string} imgSrc - Путь к изображению.
+     * @param {string} alt - Альтернативный текст изображения.
+     * @param {string} title - Заголовок карточки.
+     * @param {string} description - Описание карточки.
+     * @param {number} price - Цена в исходной валюте.
+     * @param {string} parentSelector - Селектор родительского элемента для вставки карточки.
+     * @param {number|string} tab - Идентификатор таба для переключения.
+     * @param  {...string} classes - Дополнительные классы для карточки.
+     */
     constructor(
       imgSrc,
       alt,
@@ -571,33 +1100,43 @@ function cards() {
       tab,
       ...classes
     ) {
+      // Получаем родительский элемент по селектору
       this.parent = document.querySelector(parentSelector);
       this.imgSrc = imgSrc;
       this.alt = alt;
       this.title = title;
       this.description = description;
       this.price = price;
-      this.transfer = 50;
-      this.changeToUAH();
+      this.transfer = 50; // Коэффициент для конвертации цены
+      this.changeTo(); // Конвертируем цену
       this.classes = classes;
       this.tab = tab;
     }
 
-    changeToUAH() {
+    // Метод для преобразования цены
+    changeTo() {
       this.price = this.price * this.transfer;
     }
 
+    /**
+     * Метод для отрисовки карточки в DOM.
+     * Создает элемент, добавляет необходимые классы и наполняет его HTML содержимым.
+     */
     render() {
       const element = document.createElement('div');
+
+      // Если дополнительные классы не указаны, присваиваем класс по умолчанию
       if (this.classes.length === 0) {
-        this.element = 'menu__item';
-        element.classList.add(this.element);
+        // Можно использовать локальную переменную вместо this.element, так как она не используется вне метода
+        element.classList.add('menu__item');
       } else {
+        // Если классы переданы, добавляем их ко всем элементу
         this.classes.forEach((className) => element.classList.add(className));
       }
 
+      // Формируем внутреннее содержимое карточки
       element.innerHTML = `
-        <img src=${this.imgSrc} alt=${this.alt} />
+        <img src="${this.imgSrc}" alt="${this.alt}" />
         <h3 class="menu__item-subtitle">${this.title}</h3>
         <div class="menu__item-descr">${this.description}</div>
         <div class="menu__item-divider"></div>
@@ -605,62 +1144,96 @@ function cards() {
           <div class="menu__item-cost">Цена:</div>
           <div class="menu__item-total"><span>${this.price}</span> руб/день</div>
         </div>
-        <a href="#preview"><div class="menu__item-select" data-tab="tab-${this.tab}">Перейти</div></a>
+        <a href="#preview">
+          <div class="menu__item-select" data-tab="tab-${this.tab}">Перейти</div>
+        </a>
       `;
 
+      // Добавляем карточку в указанный родительский элемент
       this.parent.append(element);
     }
   }
 
+  /**
+   * Асинхронная функция для получения ресурсов с сервера.
+   * @param {string} url - Ссылка для запроса.
+   * @returns {Promise<any>} - Возвращаем JSON данные.
+   */
   const getResource = async (url) => {
     const res = await fetch(url);
-    if (!res.ok)
-      throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+    if (!res.ok) {
+      // Генерируем ошибку если запрос завершился неудачно
+      throw new Error(
+        `Не удалось получить данные с ${url}, статус: ${res.status}`,
+      );
+    }
     return await res.json();
   };
 
-  getResource('http://localhost:3000/menu').then((data) => {
-    console.log(data);
-    data.forEach(({ img, altimg, title, descr, price, tab }) => {
-      new MenuCard(
-        img,
-        altimg,
-        title,
-        descr,
-        price,
-        '.menu .container',
-        tab,
-      ).render();
-    });
+  // Получаем данные меню с сервера и создаем карточки
+  getResource('http://localhost:3000/menu')
+    .then((data) => {
+      console.log(data);
 
-    function menuTabSwitch() {
-      const selectBtn = document.querySelectorAll('.menu__item-select');
-      const tabsParent = document.querySelector('.tabheader__items');
+      // Для каждого элемента данных создаем карточку и отрисовываем её
+      data.forEach(({ img, altimg, title, descr, price, tab }) => {
+        new MenuCard(
+          img,
+          altimg,
+          title,
+          descr,
+          price,
+          '.menu .container',
+          tab,
+        ).render();
+      });
 
-      function handleTabSwitch(btn) {
-        const dataTab = btn.dataset.tab;
-        console.log(dataTab);
-        tabsParent.dispatchEvent(
-          new CustomEvent('tabswitch', { detail: { dataTab } }),
-        );
+      // Функция для организации переключения табов
+      function menuTabSwitch() {
+        // Получаем все кнопки для переключения и родительский контейнер табов
+        const selectBtn = document.querySelectorAll('.menu__item-select');
+        const tabsParent = document.querySelector('.tabheader__items');
+
+        /**
+         * Обработчик переключения табов.
+         * Генерирует событие 'tabswitch' с данными выбранного таба.
+         * @param {HTMLElement} btn - Элемент кнопки, по которому кликнули.
+         */
+        function handleTabSwitch(btn) {
+          const dataTab = btn.dataset.tab;
+          console.log(dataTab);
+          // Генерация кастомного события для переключения табов
+          tabsParent.dispatchEvent(
+            new CustomEvent('tabswitch', { detail: { dataTab } }),
+          );
+        }
+
+        // Назначаем обработчик для каждой кнопки выбора
+        selectBtn.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            handleTabSwitch(btn);
+          });
+        });
       }
 
-      selectBtn.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          handleTabSwitch(btn);
-        });
-      });
-    }
-    menuTabSwitch();
-    (0,_tabs__WEBPACK_IMPORTED_MODULE_0__["default"])(
-      '.tabheader__item',
-      '.tabcontent',
-      '.tabheader__items',
-      '.tabcontent__bot-cards',
-      '.tabdays__choise-btn',
-    );
-  });
+      // Вызываем функцию для настройки переключения табов
+      menuTabSwitch();
+
+      // Вызываем функцию переключения табов.
+      // Замечание: функция tabs должна быть определена в другом модуле и импортирована в проект.
+      tabs(
+        '.tabheader__item',
+        '.tabcontent',
+        '.tabheader__items',
+        '.tabcontent__bot-cards',
+        '.tabdays__choise-btn',
+      );
+    })
+    .catch((error) => {
+      console.error('Ошибка получения данных меню:', error);
+    });
 }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (cards);
 
 
@@ -670,28 +1243,92 @@ function cards() {
 /*!*********************************!*\
   !*** ./js/modules/collapsed.js ***!
   \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function collapsed(Section = '.menu__field', toggleBtn = '.menu .expand') {
-  const menuField = document.querySelector(Section);
-  const toggleButton = document.querySelector(toggleBtn);
+/* module decorator */ module = __webpack_require__.hmd(module);
+/**
+ * Enable collapse/expand functionality for multiple menu fields.
+ *
+ * This function selects multiple elements matching the given selectors
+ * for menu fields and their corresponding toggle buttons. It sets the initial
+ * state (collapsed) for each menu field and attaches an event listener to
+ * toggle the collapse class and update the button text.
+ *
+ * @param {string} sectionSelector  - CSS selector for menu field elements (default: '.menu__field')
+ * @param {string} toggleSelector   - CSS selector for toggle button elements (default: '.menu .expand')
+ * @param {number} rename           - Flag to indicate if button text should be updated (default: 1)
+ */
+function collapsed(
+  sectionSelector = '.menu__field',
+  toggleSelector = '.menu .expand',
+  rename = 1,
+) {
+  // Получаем коллекцию DOM-элементов для полей меню
+  const menuFields = document.querySelectorAll(sectionSelector);
+  // Получаем коллекцию DOM-элементов для кнопок переключения
+  const toggleButtons = document.querySelectorAll(toggleSelector);
 
-  // Initial state: collapsed
-  menuField.classList.add('collapsed');
-  toggleButton.textContent = 'Развернуть';
+  // Проверка наличия необходимых элементов
+  if (menuFields.length === 0) {
+    console.error(`Элементы с селектором "${sectionSelector}" не найдены.`);
+    return;
+  }
+  if (toggleButtons.length === 0) {
+    console.error(`Элементы с селектором "${toggleSelector}" не найдены.`);
+    return;
+  }
+  if (menuFields.length !== toggleButtons.length) {
+    console.warn(
+      `Несоответствие: количество полей меню (${menuFields.length}) не совпадает с количеством кнопок (${toggleButtons.length}). Будет обработано минимальное количество совпадающих элементов.`,
+    );
+  }
 
-  toggleButton.addEventListener('click', () => {
-    menuField.classList.toggle('collapsed');
-    toggleButton.textContent = menuField.classList.contains('collapsed')
-      ? 'Развернуть'
-      : 'Свернуть';
-  });
+  // Определяем количество пар для обработки
+  const count = Math.min(menuFields.length, toggleButtons.length);
+
+  // Устанавливаем первоначальное состояние для каждой пары элементов
+  for (let i = 0; i < count; i++) {
+    const menuField = menuFields[i];
+    const toggleButton = toggleButtons[i];
+
+    // Устанавливаем первоначальное состояние: меню свернуто
+    menuField.classList.add('collapsed');
+    // Устанавливаем текст кнопки, если требуется переименование
+    if (rename) {
+      toggleButton.textContent = 'Развернуть';
+    }
+
+    // Добавляем обработчик события клика на кнопку
+    toggleButton.addEventListener('click', () => {
+      // Переключаем класс 'collapsed' для изменения состояния меню
+      menuField.classList.toggle('collapsed');
+      // Изменяем текст кнопки в зависимости от текущего состояния меню
+      if (rename) {
+        toggleButton.textContent = menuField.classList.contains('collapsed')
+          ? 'Развернуть'
+          : 'Свернуть';
+      }
+    });
+  }
 }
+
+// Экспортируем функцию для использования в других модулях, если требуется
+if ( true && typeof module.exports !== 'undefined') {
+  module.exports = collapsed;
+} else {
+  window.collapsed = collapsed;
+}
+
+// Пример инициализации, если модуль загружается напрямую
+// Для использования, раскомментируйте следующую строку:
+// collapsed();
+
+// Экспортируем функцию для использования в других частях приложения
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (collapsed);
 
 
@@ -708,31 +1345,48 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ fixedPromo)
 /* harmony export */ });
+/**
+ * Функция для настройки поведения фиксированной промо-блокировки,
+ * которая меняет классы элемента в зависимости от положения прокрутки.
+ */
 function fixedPromo() {
-  document.addEventListener('scroll', function () {
+  /**
+   * Обработчик события прокрутки страницы.
+   * Проверяет позицию прокрутки и обновляет классы рекламного блока.
+   */
+  function handleScroll() {
+    // Получаем рекламный блок и родительский контейнер
     const promoElement = document.querySelector('.tabcontainer__bot-promo');
-    const parent = document.querySelector('.tabcontainer'); // FIM
-    const nextContainer = document.querySelector('.calculating__field');
+    const parent = document.querySelector('.tabcontainer');
 
-    // Проверяем, найден ли элемент
+    // Проверяем наличие обязательных элементов
     if (!promoElement) {
       console.error('Элемент с классом .tabcontainer__bot-promo не найден');
-      return; // Завершаем выполнение функции, если элемент не найден
+      return; // Прерываем выполнение, если рекламный блок не найден
+    }
+    if (!parent) {
+      console.error('Элемент с классом .tabcontainer не найден');
+      return; // Прерываем выполнение, если родительский контейнер не найден
     }
 
+    // Вычисляем вертикальную позицию родительского контейнера относительно начала документа
     const promoElementPosition =
       parent.getBoundingClientRect().top + window.scrollY;
-    const nextContainerPosition =
-      nextContainer.getBoundingClientRect().top + window.scrollY; // Позиция элемента на странице
-    const scrollPosition = window.scrollY; // Текущая позиция прокрутки
+    // Текущая позиция прокрутки страницы
+    const scrollPosition = window.scrollY;
 
-    // Если прокрутка страницы больше, чем позиция элемента
+    // Если страница прокручена ниже или равна началу рекламного блока:
+    // Убираем класс фиксированного нижнего позиционирования,
+    // иначе добавляем его для возврата к абсолютному позиционированию.
     if (scrollPosition >= promoElementPosition) {
       promoElement.classList.remove('tabcontainer__bot-promo--fixedBot');
     } else {
-      promoElement.classList.add('tabcontainer__bot-promo--fixedBot'); // Возвращаем обратно в абсолют
+      promoElement.classList.add('tabcontainer__bot-promo--fixedBot');
     }
 
+    // Если прокрутка значительно превышает начальную позицию рекламного блока
+    // (расчетный порог: высота элемента, умноженная на 15),
+    // переключаем фиксированное верхнее позиционирование.
     if (
       scrollPosition >
       promoElementPosition + promoElement.offsetHeight * 15
@@ -742,7 +1396,10 @@ function fixedPromo() {
     } else {
       promoElement.classList.remove('tabcontainer__bot-promo--fixedTop');
     }
-  });
+  }
+
+  // Добавляем обработчик события скролла к документу.
+  document.addEventListener('scroll', handleScroll);
 }
 
 
@@ -861,18 +1518,291 @@ function forms() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ auth)
 /* harmony export */ });
-function location() {
-  const wrapper = document.querySelector('#city');
-  const parent = document.querySelector('.header__link');
-  const icon = document.querySelector('#city .header__link .fi .fi-br-marker');
-  const locationText = document.querySelector(
-    '#city .header__link #location-text',
-  );
-  console.log(locationText);
+/**
+ * Модуль для отображения модального окна выбора города России.
+ *
+ * После выбора города, значение сохраняется в Local Storage,
+ * а также обновляется отображение выбранного города на странице.
+ *
+ * Структура модального окна соответствует готовым стилям:
+ * - Основной контейнер: класс "modal"
+ * - При открытии модалки добавляется класс "show"
+ * - Внутри модалки: "modal__dialog"
+ * - Внутри диалога: "modal__content"
+ * - Элемент для закрытия: <div data-close="" class="modal__close">×</div>
+ * - Заголовок модального окна: <div class="modal__title">Выберите город</div>
+ *
+ * Использование:
+ * Импортируйте модуль и вызовите функцию initCityModal().
+ *
+ * Пример:
+ * import initCityModal from './location.js';
+ * initCityModal();
+ */ // Файл: js/modules/auth.js
+// Описание: Модуль для управления модальным окном авторизации/регистрации.
+// Исправлена проблема двойного открытия модалки за счет предотвращения повторной инициализации и контроля автооткрытия.
+
+function auth() {
+  // Если модальное окно уже существует, прекращаем инициализацию
+  if (document.querySelector('.modal')) return;
+
+  let autoOpenTimeout = null;
+
+  // Создаем контейнер модального окна
+  const modal = document.createElement('div');
+  modal.classList.add('modal');
+
+  // Создаем диалог модального окна
+  const modalDialog = document.createElement('div');
+  modalDialog.classList.add('modal__dialog');
+
+  // Создаем контейнер содержимого модального окна
+  const modalContent = document.createElement('div');
+  modalContent.classList.add('modal__content');
+
+  // Кнопка закрытия модального окна
+  const modalClose = document.createElement('div');
+  modalClose.classList.add('modal__close');
+  modalClose.setAttribute('data-close', '');
+  modalClose.textContent = '×';
+  modalContent.appendChild(modalClose);
+
+  // Заголовок модального окна
+  const modalTitle = document.createElement('div');
+  modalTitle.classList.add('modal__title');
+  modalTitle.textContent = 'Аутентификация / Регистрация';
+  modalContent.appendChild(modalTitle);
+
+  // Создаем контейнер для переключения между формами
+  const tabContainer = document.createElement('div');
+  tabContainer.classList.add('modal__tabs');
+
+  // Кнопка для входа
+  const loginTab = document.createElement('button');
+  loginTab.textContent = 'Вход';
+  loginTab.classList.add('modal__tab', 'active');
+
+  // Кнопка для регистрации
+  const registerTab = document.createElement('button');
+  registerTab.textContent = 'Регистрация';
+  registerTab.classList.add('modal__tab');
+
+  tabContainer.appendChild(loginTab);
+  tabContainer.appendChild(registerTab);
+  modalContent.appendChild(tabContainer);
+
+  // Контейнеры для форм
+  const formsContainer = document.createElement('div');
+  formsContainer.classList.add('modal__forms');
+
+  // Форма входа
+  const loginForm = document.createElement('form');
+  loginForm.classList.add('modal__form');
+  loginForm.setAttribute('id', 'loginForm');
+  loginForm.innerHTML = `
+        <input type="text" name="login" placeholder="Логин" class="modal__input" required />
+        <input type="password" name="password" placeholder="Пароль" class="modal__input" required />
+        <button type="submit">Войти</button>
+      `;
+
+  // Форма регистрации
+  const registerForm = document.createElement('form');
+  registerForm.classList.add('modal__form');
+  registerForm.setAttribute('id', 'registerForm');
+  registerForm.style.display = 'none';
+  registerForm.innerHTML = `
+        <input type="text" name="name" placeholder="Имя" class="modal__input" required />
+        <input type="email" name="email" placeholder="Email" class="modal__input" required />
+        <input type="text" name="login" placeholder="Логин" class="modal__input" required />
+        <input type="password" name="password" placeholder="Пароль" class="modal__input" required />
+        <input type="tel" name="phone" placeholder="Телефон" class="modal__input" required />
+        <button type="submit">Зарегистрироваться</button>
+      `;
+
+  formsContainer.appendChild(loginForm);
+  formsContainer.appendChild(registerForm);
+  modalContent.appendChild(formsContainer);
+
+  // Собираем структуру модального окна
+  modalDialog.appendChild(modalContent);
+  modal.appendChild(modalDialog);
+  document.body.appendChild(modal);
+
+  // Функции для открытия и закрытия модального окна
+  function openModal() {
+    // Если модалка уже открыта, не делаем ничего.
+    if (modal.classList.contains('show')) return;
+    modal.classList.add('show');
+    if (autoOpenTimeout) {
+      clearTimeout(autoOpenTimeout);
+      autoOpenTimeout = null;
+    }
+  }
+
+  function closeModal() {
+    modal.classList.remove('show');
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Переключение между вкладками
+  loginTab.addEventListener('click', () => {
+    loginTab.classList.add('active');
+    registerTab.classList.remove('active');
+    loginForm.style.display = 'block';
+    registerForm.style.display = 'none';
+  });
+
+  registerTab.addEventListener('click', () => {
+    registerTab.classList.add('active');
+    loginTab.classList.remove('active');
+    registerForm.style.display = 'block';
+    loginForm.style.display = 'none';
+  });
+
+  // Функция обновления состояния UI после авторизации
+  function updateUIForAuth(user) {
+    const authButtons = document.querySelectorAll('#authBtn');
+    authButtons.forEach((btn) => {
+      btn.textContent = 'Выйти';
+    });
+
+    // Обновляем путь к нужному элементу навигации
+    const headerNav = document.querySelector(
+      'body > header > div.header__bot-block > nav',
+    );
+    if (headerNav && !headerNav.querySelector('.personal-account')) {
+      const li = document.createElement('li');
+      li.classList.add('personal-account');
+      li.textContent = 'Личный кабинет';
+      li.addEventListener('click', openModal);
+      headerNav.appendChild(li);
+    }
+  }
+
+  // Функция для сброса состояния (выход)
+  function logout() {
+    localStorage.removeItem('user');
+    const authButtons = document.querySelectorAll('#authBtn');
+    authButtons.forEach((btn) => {
+      btn.textContent = 'Войти';
+    });
+    const headerNav = document.querySelector(
+      'body > header > div.header__bot-block > nav',
+    );
+    const personalAccount =
+      headerNav && headerNav.querySelector('.personal-account');
+    if (personalAccount) {
+      headerNav.removeChild(personalAccount);
+    }
+  }
+
+  // Обработчик для формы входа
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(loginForm);
+    const login = formData.get('login').trim();
+    const password = formData.get('password').trim();
+
+    try {
+      // Получаем список пользователей с сервера
+      const response = await fetch('http://localhost:3000/users');
+      const users = await response.json();
+
+      // Ищем пользователя с совпадающими данными
+      const user = users.find(
+        (u) => u.login === login && u.password === password,
+      );
+
+      if (user) {
+        // Сохраняем данные пользователя в localStorage
+        localStorage.setItem('user', JSON.stringify(user));
+        updateUIForAuth(user);
+        closeModal();
+      } else {
+        alert('Неверные данные для входа');
+      }
+    } catch (error) {
+      console.error('Ошибка при авторизации:', error);
+    }
+  });
+
+  // Обработчик для формы регистрации
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(registerForm);
+    const userData = {
+      name: formData.get('name').trim(),
+      email: formData.get('email').trim(),
+      login: formData.get('login').trim(),
+      password: formData.get('password').trim(),
+      phone: formData.get('phone').trim(),
+      role: 'user', // по умолчанию обычный пользователь
+    };
+
+    try {
+      // Отправляем данные на сервер (POST запрос)
+      const response = await fetch('http://localhost:3000/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const newUser = await response.json();
+        // Сохраняем нового пользователя в localStorage
+        localStorage.setItem('user', JSON.stringify(newUser));
+        updateUIForAuth(newUser);
+        closeModal();
+      } else {
+        alert('Ошибка регистрации. Попробуйте еще раз.');
+      }
+    } catch (error) {
+      console.error('Ошибка при регистрации:', error);
+    }
+  });
+
+  // Назначаем обработчик для кнопок авторизации/выхода
+  const authButtons = document.querySelectorAll('#authBtn');
+  authButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const user = localStorage.getItem('user');
+      if (user) {
+        // Если пользователь уже авторизован - выполнить выход
+        logout();
+      } else {
+        // Если не авторизован - открыть модальное окно
+        openModal();
+      }
+    });
+  });
+
+  // Если пользователь уже был авторизован ранее, обновляем интерфейс
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    updateUIForAuth(JSON.parse(storedUser));
+  } else {
+    // Автоматическое открытие окна через 15 сек.
+    autoOpenTimeout = setTimeout(() => {
+      if (!modal.classList.contains('show')) {
+        openModal();
+      }
+    }, 15000);
+  }
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (location);
+
+document.addEventListener('DOMContentLoaded', () => {
+  auth();
+});
 
 
 /***/ }),
@@ -888,97 +1818,132 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// js/modules/tabsSlider.js           tabsSlider
-//TODO: нужно сделать плавнее , так же продумать на разных экранах,
+/*
+ * Функция menuCardSlider отвечает за создание горизонтального слайдера для карточек.
+ * При этом реализована инерционная прокрутка и обработка событий мыши и касаний для мобильных устройств.
+ */
 function menuCardSlider(cardContainerOpt) {
+  // Определяем элемент контейнера карточек. Если передан аргумент, используем его, иначе ищем элемент с классом.
   let cardContainer =
     cardContainerOpt || document.querySelector('.tabcontent__bot-cards');
 
+  // Если контейнер не найден, прекращаем выполнение.
   if (!cardContainer) return;
 
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-  let velocity = 0; // Store the velocity for inertial scrolling
+  // Переменные для работы с мышью
+  let isDown = false; // Флаг удержания кнопки мыши
+  let startX; // Начальная позиция по X при нажатии мыши
+  let scrollLeft; // Начальная позиция скролла контейнера
+  let velocity = 0; // Переменная для хранения скорости при инерционной прокрутке
 
+  // Обработчик нажатия мыши
   const handleMouseDown = (e) => {
     isDown = true;
-    startX = e.pageX - cardContainer.offsetLeft;
-    scrollLeft = cardContainer.scrollLeft;
-    velocity = 0; //reset velocity on new scroll
-    cardContainer.style.cursor = 'grabbing';
+    startX = e.pageX - cardContainer.offsetLeft; // Запоминаем относительную позицию курсора
+    scrollLeft = cardContainer.scrollLeft; // Сохраняем начальное положение прокрутки
+    velocity = 0; // Сброс скорости при новом начале перетаскивания
+    cardContainer.style.cursor = 'grabbing'; // Изменяем курсор для визуальной обратной связи
   };
 
+  // Обработчик движения мыши
   const handleMouseMove = (e) => {
     if (!isDown) return;
-    e.preventDefault();
+    e.preventDefault(); // Отменяем стандартное поведение для предотвращения выделения текста
     const x = e.pageX - cardContainer.offsetLeft;
-    const walk = (x - startX) * 2;
-    velocity = walk; // set velocity to current scroll delta
-    cardContainer.scrollLeft = scrollLeft - walk;
+    const walk = (x - startX) * 2; // Вычисляем пройденное расстояние с коэффициентом для усиления эффекта
+    velocity = walk; // Обновляем скорость перетаскивания
+    cardContainer.scrollLeft = scrollLeft - walk; // Обновление скролла контейнера на основании пройденного расстояния
   };
 
+  // Обработчик завершения работы с мышью (отпускание кнопки или уход курсора за окно)
   const handleMouseUpOrLeave = () => {
     isDown = false;
-    cardContainer.style.cursor = 'grab';
-    beginScrollDeceleration(); // Start decelerating after mouseup
+    cardContainer.style.cursor = 'grab'; // Возвращаем курсор к исходному виду
+    beginScrollDeceleration(); // Запускаем инерционную прокрутку после отпуска мыши
   };
 
+  // Функция инерционной прокрутки для мыши
   const beginScrollDeceleration = () => {
-    if (Math.abs(velocity) < 0.5) return; // Stop if velocity is too small
-
-    velocity *= 0.95; // Deceleration factor - adjust as needed
-    cardContainer.scrollLeft -= velocity;
-
-    requestAnimationFrame(beginScrollDeceleration); // Loop for smooth deceleration
+    if (Math.abs(velocity) < 0.5) return; // Если скорость мала, прекращаем анимацию
+    velocity *= 0.95; // Замедляем скорость (коэффициент замедления)
+    cardContainer.scrollLeft -= velocity; // Продолжаем сдвигать контейнер
+    requestAnimationFrame(beginScrollDeceleration); // Рекурсивно вызываем функцию для плавной анимации
   };
 
+  // Добавляем события мыши к контейнеру и окну
   cardContainer.addEventListener('mousedown', handleMouseDown);
   window.addEventListener('mousemove', handleMouseMove);
   window.addEventListener('mouseup', handleMouseUpOrLeave);
   window.addEventListener('mouseleave', handleMouseUpOrLeave);
-  cardContainer.style.cursor = 'grab'; // Initial cursor state
+  cardContainer.style.cursor = 'grab'; // Изначальный стиль курсора
 
-  // Touch Events
-  let isTouching = false;
-  let touchStartX;
-  let touchScrollLeft;
-  let touchVelocity = 0;
+  // Переменные для обработки событий касания (touch)
+  let isTouching = false; // Флаг активации касания
+  let touchStartX; // Начальная координата X для касания
+  let touchStartY; // Начальная координата Y для касания
+  let touchScrollLeft; // Начальное положение прокрутки для касания
+  let touchVelocity = 0; // Скорость движения при касании
+  let isScrolling; // Флаг для определения, идет вертикальная прокрутка (true) или горизонтальная (false)
 
+  // Обработчик начала касания
   const handleTouchStart = (e) => {
     isTouching = true;
-    touchStartX = e.touches[0].pageX - cardContainer.offsetLeft;
-    touchScrollLeft = cardContainer.scrollLeft;
-    touchVelocity = 0;
+    isScrolling = undefined; // Сброс определения направления движения
+    touchStartX = e.touches[0].pageX - cardContainer.offsetLeft; // Сохраняем относительную координату X
+    touchStartY = e.touches[0].pageY; // Сохраняем координату Y
+    touchScrollLeft = cardContainer.scrollLeft; // Запоминаем начальный скролл
+    touchVelocity = 0; // Сброс скорости
   };
 
+  // Обработчик движения при касании
   const handleTouchMove = (e) => {
     if (!isTouching) return;
+    const currentX = e.touches[0].pageX - cardContainer.offsetLeft;
+    const currentY = e.touches[0].pageY;
+    const deltaX = currentX - touchStartX;
+    const deltaY = currentY - touchStartY;
+
+    // Определяем направление движения при первом событии touchmove,
+    // сравнивая смещения по вертикали и горизонтали
+    if (typeof isScrolling === 'undefined') {
+      isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
+    }
+
+    // Если определено, что пользователь свайпает вертикально,
+    // не перехватываем событие, чтобы дать возможность прокрутить страницу.
+    if (isScrolling) {
+      return;
+    }
+
+    // Если движение горизонтальное, предотвращаем стандартное поведение и обрабатываем свайп.
     e.preventDefault();
-    const x = e.touches[0].pageX - cardContainer.offsetLeft;
-    const walk = (x - touchStartX) * 2;
-    touchVelocity = walk;
-    cardContainer.scrollLeft = touchScrollLeft - walk;
+    const walk = deltaX * 2; // Расчет расстояния с усилителем
+    touchVelocity = walk; // Обновляем скорость касания
+    cardContainer.scrollLeft = touchScrollLeft - walk; // Обновляем положение скролла
   };
 
+  // Обработчик завершения касания
   const handleTouchEnd = () => {
     isTouching = false;
-    beginTouchDeceleration();
+    beginTouchDeceleration(); // Запускаем инерционную прокрутку для касания
   };
 
+  // Функция инерционной прокрутки для касания
   const beginTouchDeceleration = () => {
-    if (Math.abs(touchVelocity) < 0.5) return;
-
-    touchVelocity *= 0.95;
-    cardContainer.scrollLeft -= touchVelocity;
-
-    requestAnimationFrame(beginTouchDeceleration);
+    if (Math.abs(touchVelocity) < 0.5) return; // Если скорость мала, прекращаем анимацию
+    touchVelocity *= 0.95; // Замедляем скорость
+    cardContainer.scrollLeft -= touchVelocity; // Обновляем позицию скролла
+    requestAnimationFrame(beginTouchDeceleration); // Рекурсивный вызов для плавной анимации
   };
 
+  // Добавляем события касания к контейнеру с указанием passive: false, чтобы можно было вызвать e.preventDefault()
   cardContainer.addEventListener('touchstart', handleTouchStart);
-  cardContainer.addEventListener('touchmove', handleTouchMove);
+  cardContainer.addEventListener('touchmove', handleTouchMove, {
+    passive: false,
+  });
   cardContainer.addEventListener('touchend', handleTouchEnd);
 
+  // Возвращаем функцию для удаления всех обработчиков событий при необходимости очистки
   return () => {
     cardContainer.removeEventListener('mousedown', handleMouseDown);
     window.removeEventListener('mousemove', handleMouseMove);
@@ -990,6 +1955,7 @@ function menuCardSlider(cardContainerOpt) {
     cardContainer.removeEventListener('touchend', handleTouchEnd);
   };
 }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (menuCardSlider);
 
 
@@ -1095,36 +2061,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ insertContent)
 /* harmony export */ });
+/**
+ * Функция для перемещения контента между элементами в зависимости от разрешения окна.
+ *
+ * @param {number} slideIndex - Индекс слайда для формирования селекторов элементов.
+ * @param {string} elementBase - Базовый селектор для элемента-источника контента (по умолчанию '.offer__descr-right').
+ * @param {string} wrapperBase - Базовый селектор для целевого элемента заполнения контентом (по умолчанию '.offer__descr-left').
+ * @param {number} breakpoint - Точка останова (в пикселях), при которой происходит перенос контента (по умолчанию 768).
+ */
 function insertContent(
   slideIndex,
   elementBase = '.offer__descr-right',
   wrapperBase = '.offer__descr-left',
   breakpoint = 768,
 ) {
-  const element = `${elementBase}--${slideIndex}`;
-  const wrapper = `${wrapperBase}--${slideIndex}`;
+  // Формирование селекторов для поиска элементов по индексам
+  const elementSelector = `${elementBase}--${slideIndex}`;
+  const wrapperSelector = `${wrapperBase}--${slideIndex}`;
 
-  const originalParent = document.querySelector(element);
-  const targetParent = document.querySelector(wrapper);
+  // Поиск оригинального и целевого элементов в DOM
+  const originalParent = document.querySelector(elementSelector);
+  const targetParent = document.querySelector(wrapperSelector);
+
+  // Массив для хранения изначального содержимого оригинального элемента
   const originalContent = [];
 
-  // Store original content
+  // Сохраняем все дочерние узлы оригинального элемента для последующего восстановления
   if (originalParent) {
     originalContent.push(...originalParent.childNodes);
   }
 
+  /**
+   * Функция перемещения контента для мобильного разрешения.
+   * При ширине окна <= breakpoint переносит все дочерние элементы из оригинального блока в целевой.
+   * При увеличении окна восстанавливает исходное содержимое.
+   */
   function moveContentForMobile() {
-    const descrLeft = document.querySelector(wrapper);
-    const descrRight = document.querySelector(element);
+    // Обращаемся к DOM-элементам по сформированным селекторам
+    const descrLeft = document.querySelector(wrapperSelector);
+    const descrRight = document.querySelector(elementSelector);
 
+    // Если экран имеет ширину меньше или равную breakpoint, переносим контент из правого блока в левый
     if (window.matchMedia(`(max-width: ${breakpoint}px)`).matches) {
       if (descrRight && descrLeft) {
+        // Перенос всех дочерних элементов из descrRight в descrLeft
         while (descrRight.firstChild) {
           descrLeft.appendChild(descrRight.firstChild);
         }
       }
     } else {
-      // Move content back to the original element if the screen width is greater than the breakpoint
+      // При увеличении окна возвращаем исходное содержимое обратно в оригинальный блок
       if (descrRight && originalContent.length > 0) {
         originalContent.forEach((node) => {
           descrRight.appendChild(node);
@@ -1133,10 +2119,15 @@ function insertContent(
     }
   }
 
-  // Initial check
+  // Первоначальный вызов функции для корректной инициализации содержимого
   moveContentForMobile();
 
-  // Debounce function to limit the rate at which moveContentForMobile is called
+  /**
+   * Функция-обертка debounce для ограничения частоты вызова функции.
+   * @param {Function} func - Функция, которую требуется ограничить.
+   * @param {number} wait - Задержка в миллисекундах.
+   * @returns {Function} - Обёрнутая функция с механизмом debounce.
+   */
   function debounce(func, wait) {
     let timeout;
     return function (...args) {
@@ -1145,7 +2136,7 @@ function insertContent(
     };
   }
 
-  // Add debounced event listener for window resize
+  // Добавляем обработчик события изменения размера окна с использованием debounce
   window.addEventListener('resize', debounce(moveContentForMobile, 100));
 }
 
@@ -1778,6 +2769,7 @@ function tabs(
   let currentRatioValue;
   let latestOrderData = null;
   let cooldownInterval = null;
+  let orderAlertShown = false;
 
   if (!tabs.length || !tabsContent.length || !tabsParent || !cardsParent) {
     console.error('Не удалось найти необходимые элементы для табов');
@@ -2022,14 +3014,31 @@ function tabs(
       orderButton.textContent = `Ожидайте: ${minutes} минут${minutes !== 1 ? 'ы' : ''} ${seconds} секунд${seconds !== 1 ? 'ы' : ''}`;
     }
   }
+  // Separate handler function for order button click
+  function handleOrderButton() {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      // If alert has not been shown recently, show it and set a flag to throttle subsequent alerts.
+      if (!orderAlertShown) {
+        alert('Перед заказом, пожалуйста зарегестрируйтесь');
+        orderAlertShown = true;
+        // Reset the flag after 1 second to allow future alerts if needed.
+        setTimeout(() => {
+          orderAlertShown = false;
+        }, 1000);
+      }
+      return;
+    }
+    // If user is authorized, send the order data.
+    sendOrderData(tabIndex, currentDayValue, currentRatioValue);
+  }
 
-  // Функция для обработки клика на кнопку заказа
+  // Updated setupOrderButton function that uses the new handleOrderButton.
   function setupOrderButton() {
-    // const orderButton = document.querySelector('.tabcontainer__bot-action');
-
     if (orderButton) {
-      orderButton.removeEventListener('click', sendOrderData); // Убираем старый обработчик
-      orderButton.addEventListener('click', sendOrderData); // Добавляем новый
+      // Remove previous click listener if any, then add our handler
+      orderButton.removeEventListener('click', handleOrderButton);
+      orderButton.addEventListener('click', handleOrderButton);
     }
   }
 
@@ -2092,6 +3101,17 @@ function tabs(
       размер_скидки: `${discountPercentage}%`,
       итоговая_стоимость: discountedPrice.toFixed(2),
     };
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const { name, login, email, phone } = JSON.parse(userData);
+      latestOrderData = {
+        ...latestOrderData,
+        name: name,
+        login: login,
+        email: email,
+        phone: phone,
+      };
+    }
 
     setupOrderButton(); // Настраиваем кнопку с актуальными данными
   }
@@ -2379,13 +3399,16 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
+/******/ 			id: moduleId,
+/******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -2413,6 +3436,21 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/harmony module decorator */
+/******/ 	(() => {
+/******/ 		__webpack_require__.hmd = (module) => {
+/******/ 			module = Object.create(module);
+/******/ 			if (!module.children) module.children = [];
+/******/ 			Object.defineProperty(module, 'exports', {
+/******/ 				enumerable: true,
+/******/ 				set: () => {
+/******/ 					throw new Error('ES Modules may not assign module.exports or exports.*, Use ESM export syntax, instead: ' + module.id);
+/******/ 				}
+/******/ 			});
+/******/ 			return module;
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -2462,6 +3500,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_request_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modules/request.js */ "./js/modules/request.js");
 /* harmony import */ var _modules_request_js__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_modules_request_js__WEBPACK_IMPORTED_MODULE_18__);
 /* harmony import */ var _modules_location__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./modules/location */ "./js/modules/location.js");
+/* harmony import */ var _modules_auth__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./modules/auth */ "./js/modules/auth.js");
+
 
 
 
@@ -2518,7 +3558,9 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_modules_burger_js__WEBPACK_IMPORTED_MODULE_11__["default"])();
   (0,_modules_collapsed_js__WEBPACK_IMPORTED_MODULE_13__["default"])();
   (0,_modules_collapsed_js__WEBPACK_IMPORTED_MODULE_13__["default"])('.reviews__list', '.reviews .expand');
+  (0,_modules_collapsed_js__WEBPACK_IMPORTED_MODULE_13__["default"])('.questions .questions__item-content', '.questionsExpand', 0);
   (0,_modules_moveContent__WEBPACK_IMPORTED_MODULE_14__["default"])();
+  (0,_modules_moveContent__WEBPACK_IMPORTED_MODULE_14__["default"])(0, '.cityMoveElement', '.cityToMoveElement', 425);
   (0,_modules_replaceImg__WEBPACK_IMPORTED_MODULE_15__["default"])(
     '.calculating__choose_big',
     'calculating__choose-item',
@@ -2533,6 +3575,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_modules_callMeBack__WEBPACK_IMPORTED_MODULE_17__["default"])();
   // request();
   (0,_modules_location__WEBPACK_IMPORTED_MODULE_19__["default"])();
+  (0,_modules_auth__WEBPACK_IMPORTED_MODULE_20__["default"])();
 });
 
 })();

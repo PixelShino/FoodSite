@@ -30,41 +30,43 @@
       </div>
       <div class="header__bot-block">
         <nav class="header__links">
-          <a href="#" class="header__link">
+          <a href="#preview" class="header__link">
             <i class="fi fi-br-grocery-bag"></i>Меню и тарифы</a
           >
-          <a href="#" class="header__link"
+          <a href="#reviews" class="header__link"
             ><i class="fi fi-br-feedback-alt"></i>Отзывы</a
           >
-          <a href="#" class="header__link"
+          <a href="#sequence" class="header__link"
             ><i class="fi fi-br-comments-question"></i>Как работает</a
           >
-          <a href="#" class="header__link"
+          <a href="#about" class="header__link"
             ><i class="fi fi-br-building"></i>О компании</a
           >
-          <a href="#" class="header__link">
+          <a href="#questions" class="header__link">
             <i class="fi fi-br-question"></i>Вопросы</a
           >
           <!-- <button data-modal class="header__link">Связаться с нами</button> -->
-          <a href="#" class="header__link"
+          <a href="#" class="header__link" id="authBtn"
             ><i class="fi fi-br-sign-in-alt"></i>Авторизация</a
           >
-          <div id="city">
-            <a href="#" class="header__link"
-              ><i class="fi fi-br-marker"></i
-              ><span id="location-text">Москва</span></a
-            >
-          </div>
+          <span class="cityMoveElement--0">
+            <div id="city">
+              <a href="#" class="header__link"
+                ><i class="fi fi-br-marker"></i
+                ><span id="location-text">Москва</span></a
+              >
+            </div>
+          </span>
         </nav>
       </div>
       <div class="burger__content">
         <nav class="burger__links">
           <a href="#" class="burger__link">Меню и тарифы</a>
           <a href="#" class="burger__link">Отзывы</a>
-          <a href="#" class="burger__link">Как работает</a>
-          <a href="#" class="burger__link">О компании</a>
-          <a href="#" class="burger__link">Вопросы</a>
-          <a href="#" class="burger__link">Авторизация</a>
+          <a href="#sequence" class="burger__link">Как работает</a>
+          <a href="#about" class="burger__link">О компании</a>
+          <a href="#questions" class="burger__link">Вопросы</a>
+          <a href="#" class="burger__link" id="authBtn">Авторизация</a>
         </nav>
       </div>
     </header>
@@ -1916,10 +1918,11 @@
         </div>
       </div>
 
-      <div class="divider"></div>
+      <div class="divider" id="sequence"></div>
 
       <section class="sequence">
         <div class="container">
+          <div class="sequence__title">Как работает ?</div>
           <div class="sequence__bg"></div>
           <div class="sequence__wrapper">
             <article class="sequence__item">
@@ -2015,7 +2018,7 @@
 
       <div class="divider"></div>
 
-      <div class="promotion">
+      <section class="promotion">
         <div class="bgc_y"></div>
         <div class="container">
           <div class="promotion__text">
@@ -2050,9 +2053,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="divider"></div>
+      <div class="divider" id="reviews"></div>
 
       <section class="reviews">
         <div class="container">
@@ -2327,6 +2330,177 @@
           </div>
         </div>
       </section>
+
+      <div class="divider" id="questions"></div>
+
+      <section class="questions">
+        <div class="container">
+          <h2 class="questions__title">Частые вопросы</h2>
+          <div class="questions__wrapper">
+            <div class="questions__item">
+              <div class="questions__item-subtitle questionsExpand">
+                Какие тарифы питания у вас предлагаются?
+              </div>
+              <div class="questions__item-content">
+                Мы разработали три основных тарифа: Набор веса, Баланс и
+                Похудение. Каждый тариф адаптирован под индивидуальные
+                потребности клиентов и поможет достичь поставленных целей.
+              </div>
+            </div>
+            <div class="questions__item">
+              <div class="questions__item-subtitle questionsExpand">
+                Как осуществляется доставка заказанных блюд?
+              </div>
+              <div class="questions__item-content">
+                Доставка осуществляется согласно выбранному тарифу и графику. Вы
+                можете рассчитывать на своевременное получение заказа – как
+                правило, в день, предшествующий запланированной доставке.
+              </div>
+            </div>
+            <div class="questions__item">
+              <div class="questions__item-subtitle questionsExpand">
+                Могу ли я изменить заказ после его оформления?
+              </div>
+              <div class="questions__item-content">
+                Да, любые изменения можно внести за 48 часов до следующей
+                доставки. Свяжитесь с нашей службой поддержки, и мы оперативно
+                скорректируем ваш заказ.
+              </div>
+            </div>
+            <div class="questions__item">
+              <div class="questions__item-subtitle questionsExpand">
+                Что делать, если качество блюд не соответствует ожиданиям?
+              </div>
+              <div class="questions__item-content">
+                Мы всегда готовы рассмотреть любые претензии. Если вы
+                столкнулись с проблемами, пожалуйста, свяжитесь с нами – мы
+                предложим альтернативное решение, замену блюда или возврат
+                средств.
+              </div>
+            </div>
+            <div class="questions__item">
+              <div class="questions__item-subtitle questionsExpand">
+                Какие способы оплаты вы принимаете?
+              </div>
+              <div class="questions__item-content">
+                Мы принимаем различные способы оплаты, включая Visa, MasterCard
+                и системы, поддерживающие платежи по стандарту MIR.
+                Дополнительно возможна оплата через онлайн-банкинг.
+              </div>
+            </div>
+            <div class="questions__item">
+              <div class="questions__item-subtitle questionsExpand">
+                Можно ли заказать пробный день для оценки качества блюд?
+              </div>
+              <div class="questions__item-content">
+                Да, мы предлагаем пробный день, чтобы вы могли оценить наш
+                сервис и качество блюд без обязательств по долгосрочному
+                контракту.
+              </div>
+            </div>
+            <div class="questions__item">
+              <div class="questions__item-subtitle questionsExpand">
+                Как правильно рассчитать свою суточную потребность в калориях?
+              </div>
+              <div class="questions__item-content">
+                Вы можете воспользоваться нашим онлайн-калькулятором калорий,
+                введя данные о росте, весе, возрасте и уровне физической
+                активности. Это поможет подобрать оптимальный тариф питания.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider" id="about"></div>
+
+      <section class="about">
+        <div class="container">
+          <h2 class="about__title">О нашей компании</h2>
+          <div class="about__wrapper">
+            <div class="about__item">
+              <h3 class="about__item-title">
+                Качественное питание
+                <i class="fi fi-br-restaurant about__item-icon"></i>
+              </h3>
+              <p class="about__item-description">
+                Мы готовим блюда из свежих и натуральных продуктов, чтобы
+                обеспечить вас здоровым и вкусным питанием каждый день.
+              </p>
+            </div>
+            <div class="about__item">
+              <h3 class="about__item-title">
+                Индивидуальный подход
+                <i class="fi fi-br-scale about__item-icon"></i>
+              </h3>
+              <p class="about__item-description">
+                Наши планы питания разработаны с учетом ваших целей: набор веса,
+                похудение или поддержание баланса.
+              </p>
+            </div>
+            <div class="about__item">
+              <h3 class="about__item-title">
+                Удобная доставка
+                <i class="fi fi-br-truck-side about__item-icon"></i>
+              </h3>
+              <p class="about__item-description">
+                Мы доставляем свежеприготовленные блюда прямо к вашей двери в
+                удобное для вас время.
+              </p>
+            </div>
+            <div class="about__item">
+              <h3 class="about__item-title">
+                Профессиональные повара
+                <i class="fi fi-br-lead-management about__item-icon"></i>
+              </h3>
+              <p class="about__item-description">
+                Наши шеф-повара обладают большим опытом и страстью к кулинарии,
+                создавая неповторимые блюда на каждый день.
+              </p>
+            </div>
+            <div class="about__item">
+              <h3 class="about__item-title">
+                Современные технологии
+                <i class="fi fi-br-microchip about__item-icon"></i>
+              </h3>
+              <p class="about__item-description">
+                Мы используем передовые технологии для оптимизации процессов
+                приготовления и доставки, чтобы всегда быть на высоте.
+              </p>
+            </div>
+            <div class="about__item">
+              <h3 class="about__item-title">
+                Экологичность
+                <i class="fi fi-br-leaf about__item-icon"></i>
+              </h3>
+              <p class="about__item-description">
+                Мы заботимся о природе и используем экологически чистые
+                материалы, снижая негативное влияние на окружающую среду.
+              </p>
+            </div>
+            <div class="about__item">
+              <h3 class="about__item-title">
+                Гарантия качества
+                <i class="fi fi-br-shield-check about__item-icon"></i>
+              </h3>
+              <p class="about__item-description">
+                Наша компания строго следит за стандартами качества, чтобы вы
+                всегда получали только лучшее.
+              </p>
+            </div>
+            <div class="about__item">
+              <h3 class="about__item-title">
+                Клиентский сервис
+                <i class="fi fi-br-headset about__item-icon"></i>
+              </h3>
+              <p class="about__item-description">
+                Наша команда поддержки всегда готова помочь вам с любыми
+                вопросами, обеспечивая высокий уровень сервиса.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
@@ -2349,10 +2523,10 @@
             <div class="subtitle">Компания</div>
             <a href="#" class="footer__link">Меню и тарифы</a>
             <a href="#" class="footer__link"> Отзывы</a>
-            <a href="#" class="footer__link">Как работает</a>
-            <a href="#" class="footer__link">О компании</a>
+            <a href="#sequence" class="footer__link">Как работает</a>
+            <a href="#about" class="footer__link">О компании</a>
             <a href="#" class="footer__link">Вопросы</a>
-            <a href="#" class="footer__link">Авторизация</a>
+            <a href="#" class="footer__link" id="authBtn">Авторизация</a>
           </div>
 
           <div class="footer__mid-tariff">
@@ -2440,11 +2614,13 @@
         <button data-modal="" class="bottom__menu-btns-btn">
           Связаться с нами
         </button>
-        <button class="bottom__menu-btns-btn">
-          <a href="#" class="header__link"
-            ><i class="fi fi-br-marker"></i>
-            <span id="location-text">Москва</span>
-          </a>
+        <button class="bottom__menu-btns-btn cityToMoveElement--0">
+          <!-- <div id="city">
+            <a href="#" class="header__link"
+              ><i class="fi fi-br-marker"></i
+              ><span id="location-text">Москва</span></a
+            >
+          </div> -->
         </button>
       </div>
     </div>

@@ -133,10 +133,17 @@
         // justify-tracks: flex-end;
         // justify-content: flex-end;
       }
+      .personal-account {
+        @include fluid-text(24, 16);
+      }
       // @include container;
-      #city {
-        display: flex;
+      .cityMoveElement--0 {
         margin-left: auto;
+      }
+      #city,
+      .personal-account {
+        display: flex;
+
         color: $orange;
         @include hover-effect();
         @include hover-effect(border);
