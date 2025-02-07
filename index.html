@@ -12,7 +12,7 @@
     />
   </head>
   <body>
-    <header class="header">
+    <header class="header" id="header">
       <div class="header__top-block">
         <div class="header__logo">
           <!-- <img src="./img/icon/logo-removebg-preview.png" alt="Логотип" /> -->
@@ -46,9 +46,11 @@
             <i class="fi fi-br-question"></i>Вопросы</a
           >
           <!-- <button data-modal class="header__link">Связаться с нами</button> -->
-          <a href="#" class="header__link" id="authBtn"
-            ><i class="fi fi-br-sign-in-alt"></i>Авторизация</a
-          >
+          <div class="authBtnHeader--0">
+            <a href="#" class="header__link" id="authBtn"
+              ><i class="fi fi-br-sign-in-alt"></i>Авторизация</a
+            >
+          </div>
           <span class="cityMoveElement--0">
             <div id="city">
               <a href="#" class="header__link"
@@ -61,12 +63,12 @@
       </div>
       <div class="burger__content">
         <nav class="burger__links">
-          <a href="#" class="burger__link">Меню и тарифы</a>
-          <a href="#" class="burger__link">Отзывы</a>
+          <a href="#preview" class="burger__link">Меню и тарифы</a>
+          <a href="#reviews" class="burger__link">Отзывы</a>
           <a href="#sequence" class="burger__link">Как работает</a>
           <a href="#about" class="burger__link">О компании</a>
           <a href="#questions" class="burger__link">Вопросы</a>
-          <a href="#" class="burger__link" id="authBtn">Авторизация</a>
+          <a href="#header" class="burger__link authBtnBurger--0"></a>
         </nav>
       </div>
     </header>
@@ -206,8 +208,8 @@
           <div class="container"></div>
         </div>
       </div>
-      <div class="divider"></div>
-      <div class="preview" id="preview">
+      <div class="divider" id="preview"></div>
+      <div class="preview">
         <div class="bgc_blue"></div>
         <div class="container">
           <div class="tabcontainer">

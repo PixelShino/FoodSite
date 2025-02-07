@@ -1,5 +1,11 @@
 import { openModal, closeModal } from './modal.js';
 
+/**
+ * Функция для работы с отзывами.
+ * Управляет рейтингом, загрузкой фото, валидацией формы и отправкой данных отзыва.
+ *
+ * @returns {object} Объект с методом cleanup для удаления обработчиков событий.
+ */
 function reviews() {
   const elements = {
     ratingContainer: document.getElementById('ratingStars'),
@@ -10,29 +16,43 @@ function reviews() {
   };
 
   if (!elements.ratingContainer || !elements.fileInput || !elements.form) {
-    console.warn('Required elements not found');
+    console.warn('Не найдены необходимые элементы');
     return;
   }
 
   let selectedRating = 0;
   const MAX_REVIEW_LENGTH = 500;
 
+  // Инициализация обработчиков событий
   initializeEventListeners();
 
+  /**
+   * Инициализирует обработчики событий для элементов формы отзыва.
+   */
   function initializeEventListeners() {
+    // Обработчик клика по звездам рейтинга
     elements.ratingContainer.addEventListener('click', handleRatingClick);
+    // Обработчик наведения мыши на звезды рейтинга
     elements.ratingContainer.addEventListener('mouseover', handleRatingHover);
+    // Обработчик ухода мыши с контейнера рейтинга: возвращает звезды в состояние выбранного рейтинга
     elements.ratingContainer.addEventListener('mouseleave', () =>
       updateStars(selectedRating),
     );
 
+    // Обработчик изменения файла в поле загрузки фото
     elements.fileInput.addEventListener('change', (e) =>
       handleFile(e.target.files[0]),
     );
 
+    // Обработчик отправки формы
     elements.form.addEventListener('submit', handleFormSubmit);
   }
 
+  /**
+   * Обработчик клика по звездам рейтинга.
+   *
+   * @param {MouseEvent} e - Событие клика.
+   */
   function handleRatingClick(e) {
     if (e.target.matches('i')) {
       selectedRating = parseInt(e.target.dataset.rating);
@@ -40,12 +60,22 @@ function reviews() {
     }
   }
 
+  /**
+   * Обработчик наведения мыши на звезды рейтинга.
+   *
+   * @param {MouseEvent} e - Событие наведения.
+   */
   function handleRatingHover(e) {
     if (e.target.matches('i')) {
       updateStars(parseInt(e.target.dataset.rating));
     }
   }
 
+  /**
+   * Обновляет отображение звезд рейтинга.
+   *
+   * @param {number} rating - Текущий рейтинг.
+   */
   function updateStars(rating) {
     const stars = elements.ratingContainer.querySelectorAll('i');
     stars.forEach((star, index) => {
@@ -53,26 +83,37 @@ function reviews() {
     });
   }
 
+  /**
+   * Инициализирует зону перетаскивания для загрузки изображения.
+   */
   function initializeDropZone() {
     const dropZone = document.createElement('div');
     dropZone.className = 'drop-zone';
     dropZone.innerHTML = '<p>Перетащите изображение сюда или выберите файл</p>';
     elements.fileInput.parentElement.appendChild(dropZone);
 
-    // Drop zone events
+    // Обработчик события dragover для зоны перетаскивания
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault();
       dropZone.classList.add('drop-zone--over');
     });
 
+    // Обработчик события dragleave для зоны перетаскивания
     dropZone.addEventListener('dragleave', () => {
       dropZone.classList.remove('drop-zone--over');
     });
 
+    // Обработчик события drop для зоны перетаскивания
     dropZone.addEventListener('drop', handleDrop);
   }
+  // Инициализация зоны перетаскивания
   initializeDropZone();
 
+  /**
+   * Обрабатывает событие drop (перетаскивание файла) в зоне загрузки.
+   *
+   * @param {DragEvent} e - Событие перетаскивания.
+   */
   function handleDrop(e) {
     e.preventDefault();
     e.currentTarget.classList.remove('drop-zone--over');
@@ -87,16 +128,34 @@ function reviews() {
     }
   }
 
+  /**
+   * Проверяет, является ли переданный файл допустимым изображением.
+   *
+   * @param {File} file - Файл для проверки.
+   * @returns {boolean} Истина, если файл является изображением.
+   */
   function isValidImageFile(file) {
     return file && file.type.startsWith('image/');
   }
 
+  /**
+   * Обновляет значение input для файла с использованием DataTransfer.
+   *
+   * @param {File} file - Файл для установки.
+   */
   function updateFileInput(file) {
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
     elements.fileInput.files = dataTransfer.files;
   }
 
+  /**
+   * Создает предпросмотр изображения.
+   *
+   * @param {HTMLElement} container - Контейнер для предпросмотра.
+   * @param {string} imageUrl - URL изображения для предпросмотра.
+   * @returns {HTMLElement} Элемент предпросмотра.
+   */
   function createImagePreview(container, imageUrl) {
     const fragment = document.createDocumentFragment();
     const preview = document.createElement('div');
@@ -104,7 +163,7 @@ function reviews() {
 
     const img = document.createElement('img');
     img.src = imageUrl;
-    img.alt = 'Preview';
+    img.alt = 'Предпросмотр';
 
     const removeButton = document.createElement('button');
     removeButton.type = 'button';
@@ -115,9 +174,11 @@ function reviews() {
     preview.appendChild(removeButton);
     fragment.appendChild(preview);
 
+    // Если уже существует предпросмотр, удаляем его
     const existingPreview = container.querySelector('.form__preview');
     if (existingPreview) existingPreview.remove();
 
+    // Обработчик удаления предпросмотра
     removeButton.addEventListener('click', () => {
       preview.remove();
       elements.fileInput.value = '';
@@ -127,6 +188,11 @@ function reviews() {
     return preview;
   }
 
+  /**
+   * Обрабатывает выбранный файл, создавая предпросмотр изображения.
+   *
+   * @param {File} file - Выбранный файл.
+   */
   function handleFile(file) {
     if (!isValidImageFile(file)) return;
 
@@ -137,31 +203,11 @@ function reviews() {
     reader.readAsDataURL(file);
   }
 
-  // async function uploadImageToImgur(file) {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('image', file);
-  //     formData.append('type', 'file');
-
-  //     const response = await fetch('https://api.imgur.com/3/image', {
-  //       method: 'POST', // Changed from GET to POST
-  //       headers: {
-  //         Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`, // Use environment variable
-  //       },
-  //       body: formData,
-  //     });
-
-  //     const data = await response.json();
-  //     if (data.success) {
-  //       return data.data.link;
-  //     }
-  //     throw new Error('Image upload failed');
-  //   } catch (error) {
-  //     console.error('Imgur upload error:', error);
-  //     throw error;
-  //   }
-  // }
-
+  /**
+   * Обрабатывает отправку формы отзыва.
+   *
+   * @param {Event} e - Событие отправки формы.
+   */
   async function handleFormSubmit(e) {
     e.preventDefault();
 
@@ -171,7 +217,6 @@ function reviews() {
 
     try {
       const reviewData = {
-        // Declare reviewData object here
         name: elements.nameInput.value,
         text: elements.reviewText.value,
         rating: selectedRating,
@@ -182,42 +227,32 @@ function reviews() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(reviewData), // Use the correctly declared object
+        body: JSON.stringify(reviewData),
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP ошибка! статус: ${response.status}`);
       }
 
       const data = await response.json();
       if (!data.success) {
-        throw new Error('Failed to send review');
+        throw new Error('Не удалось отправить отзыв');
       }
 
       showThanksModal('Спасибо! Ваш отзыв отправлен');
     } catch (error) {
-      console.error('Form submission error:', error);
+      console.error('Ошибка отправки формы:', error);
       showThanksModal('Что-то пошло не так...');
     } finally {
       cleanupAfterSubmission(statusMessage);
     }
   }
-  function isValidImageFile(file) {
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif'];
 
-    if (!file) return false;
-    if (!ALLOWED_TYPES.includes(file.type)) {
-      alert('Please upload only JPEG, PNG or GIF images');
-      return false;
-    }
-    if (file.size > MAX_FILE_SIZE) {
-      alert('File size should not exceed 5MB');
-      return false;
-    }
-    return true;
-  }
-
+  /**
+   * Проверяет корректность заполнения формы.
+   *
+   * @returns {boolean} Истина, если форма заполнена корректно.
+   */
   function validateForm() {
     const { nameInput, reviewText, fileInput } = elements;
 
@@ -238,6 +273,11 @@ function reviews() {
     return true;
   }
 
+  /**
+   * Показывает индикатор загрузки.
+   *
+   * @returns {HTMLElement} Элемент индикатора загрузки.
+   */
   function showLoadingSpinner() {
     const statusMessage = document.createElement('img');
     statusMessage.src = 'img/form/spinner.svg';
@@ -246,6 +286,11 @@ function reviews() {
     return statusMessage;
   }
 
+  /**
+   * Создает объект с данными формы.
+   *
+   * @returns {object} Объект с данными формы.
+   */
   function createFormData() {
     return {
       name: elements.nameInput.value,
@@ -255,6 +300,11 @@ function reviews() {
     };
   }
 
+  /**
+   * Очищает форму и сбрасывает состояние после отправки.
+   *
+   * @param {HTMLElement} statusMessage - Элемент индикатора загрузки.
+   */
   function cleanupAfterSubmission(statusMessage) {
     statusMessage.remove();
     elements.form.reset();
@@ -264,9 +314,16 @@ function reviews() {
     if (preview) preview.remove();
   }
 
+  /**
+   * Отправляет данные методом POST.
+   *
+   * @param {string} url - URL для отправки данных.
+   * @param {object} data - Данные для отправки.
+   * @returns {Promise<object>} Ответ сервера в формате JSON.
+   */
   async function postData(url, data) {
     const response = await fetch(url, {
-      method: 'POST', // Changed from GET to POST
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -275,6 +332,11 @@ function reviews() {
     return await response.json();
   }
 
+  /**
+   * Показывает модальное окно с сообщением благодарности.
+   *
+   * @param {string} message - Сообщение для отображения в модальном окне.
+   */
   function showThanksModal(message) {
     const prevModalDialog = document.querySelector('.modal__dialog');
     prevModalDialog.classList.add('hide');
@@ -301,6 +363,10 @@ function reviews() {
       closeModal();
     }, 4000);
   }
+
+  /**
+   * Функция для удаления обработчиков событий.
+   */
   const cleanup = () => {
     elements.ratingContainer.removeEventListener('click', handleRatingClick);
     elements.ratingContainer.removeEventListener(

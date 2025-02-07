@@ -1,5 +1,12 @@
 import menuCardSlider from './menuCardSlider';
-
+/**
+ * Функция для инициализации табов.
+ * @param {string} tabsItem - CSS селектор для элементов табов.
+ * @param {string} tabsContentItem - CSS селектор для содержимого табов.
+ * @param {string} tabsParentItem - CSS селектор для родительского элемента табов.
+ * @param {string} cardsParentItem - CSS селектор для родительского элемента карточек.
+ * @param {string} btnDaysItem - CSS селектор для кнопок выбора дней.
+ */
 function tabs(
   tabsItem,
   tabsContentItem,
@@ -7,6 +14,7 @@ function tabs(
   cardsParentItem,
   btnDaysItem,
 ) {
+  // Получаем необходимые элементы из DOM
   const tabs = document.querySelectorAll(tabsItem);
   const tabsContent = document.querySelectorAll(tabsContentItem);
   const tabsParent = document.querySelector(tabsParentItem);
@@ -36,6 +44,9 @@ function tabs(
     return;
   }
 
+  /**
+   * Скрыть содержимое всех табов и сбросить активное состояние элементов.
+   */
   function hideTabsContent() {
     tabsContent.forEach((element) => {
       element.classList.add('hide');
@@ -46,15 +57,21 @@ function tabs(
     });
   }
 
+  /**
+   * Показать содержимое таба по индексу.
+   * @param {number} [index=0] - Индекс таба, который нужно отобразить.
+   */
   function showTabContent(index = 0) {
     tabsContent[index].classList.add('show', 'fade');
     tabsContent[index].classList.remove('hide');
     tabs[index].classList.add('tabheader__item_active');
 
+    // Инициализируем слайдер для карточек, если элемент найден
     if (tabsContent[index].querySelector(cardsParentItem)) {
       menuCardSlider(tabsContent[index].querySelector(cardsParentItem));
     }
 
+    // Если в контенте таба присутствует выбор калорий, выполняем сброс и пересчёт
     const tabcaloriesChoise = tabsContent[index].querySelector(
       '.tabcalories__choise',
     );
@@ -68,9 +85,11 @@ function tabs(
     }
   }
 
+  // Начальная инициализация табов
   hideTabsContent();
   showTabContent();
 
+  // Слушатель кастомного события для переключения таба
   tabsParent.addEventListener('tabswitch', (event) => {
     const { dataTab } = event.detail;
     const tabNumber = parseInt(dataTab.replace(/[^0-9]/g, ''), 10);
@@ -80,6 +99,9 @@ function tabs(
     // calcKcal(choiseKcal, tabNumber);
   });
 
+  /**
+   * Устанавливает обработчик клика для переключения табов.
+   */
   function switchTab() {
     tabsParent.addEventListener('click', (event) => {
       const targetElement = event.target.closest(tabsItem);
@@ -95,6 +117,9 @@ function tabs(
     });
   }
 
+  /**
+   * Сброс активного состояния кнопок выбора дней к начальному.
+   */
   function resetDays() {
     if (btnDays.length > 0) {
       btnDays.forEach((item) => {
@@ -111,6 +136,9 @@ function tabs(
     }
   }
 
+  /**
+   * Сброс активного состояния кнопок выбора калорий к начальному.
+   */
   function resetKcal() {
     if (btnKcal.length > 0) {
       btnKcal.forEach((item) => {
@@ -122,8 +150,18 @@ function tabs(
     }
   }
 
+  /**
+   * Функция для расчёта дней и обновления цены при выборе дня.
+   * @param {Element} tabcaloriesChoise - Элемент выбора калорий.
+   * @param {number} tabIndex - Индекс выбранного таба.
+   * @param {number} ratio - Текущее соотношение калорий.
+   */
   function calcDays(tabcaloriesChoise, tabIndex, ratio) {
     choiseDays.removeEventListener('click', handleChoiseDaysClick);
+    /**
+     * Обработчик клика по кнопкам выбора дней.
+     * @param {MouseEvent} e - Событие клика.
+     */
     function handleChoiseDaysClick(e) {
       const target = e.target.closest('.tabdays__choise-btn');
       if (target) {
@@ -144,6 +182,11 @@ function tabs(
     choiseDays.addEventListener('click', handleChoiseDaysClick);
   }
 
+  /**
+   * Функция для вычисления скидки в зависимости от количества дней.
+   * @param {number} days - Количество дней.
+   * @returns {number} - Скидка в виде десятичной дроби.
+   */
   function calculateDiscount(days) {
     if (days >= 28) {
       menuPrice;
@@ -165,17 +208,25 @@ function tabs(
     }
   }
 
-  // ... (other code)
-
+  /**
+   * Функция для расчёта калорий и обновления цены при выборе калорий.
+   * @param {Element} parentSelector - Родительский элемент с выбором калорий.
+   * @param {number} tabIndex - Индекс выбранного таба.
+   * @param {number} dayValue - Значение выбранного дня.
+   */
   function calcKcal(parentSelector, tabIndex, dayValue) {
-    // Remove the event listener to prevent multiple handlers
+    // Удаляем предыдущий обработчик для избежания повторных привязок
     parentSelector.removeEventListener('click', handleKcalClick);
 
+    /**
+     * Обработчик клика по кнопкам выбора калорий.
+     * @param {MouseEvent} e - Событие клика.
+     */
     function handleKcalClick(e) {
       const target = e.target.closest('.tabcalories__choise-btn');
 
       if (target) {
-        // Reset active classes for ALL calorie buttons within the CURRENT tab
+        // Сброс активного состояния для всех кнопок выбора калорий внутри текущего таба
         parentSelector
           .querySelectorAll('.tabcalories__choise-btn')
           .forEach((item) => {
@@ -186,13 +237,13 @@ function tabs(
         menuKcal.textContent = `${target.textContent} калорий`;
         currentRatioValue = target.dataset.ratio;
         calcTotalPrice(tabIndex, dayValue, currentRatioValue);
-        resetDays(); // Reset days when calories change
+        resetDays(); // Сброс выбора дней при изменении калорий
       }
     }
 
     parentSelector.addEventListener('click', handleKcalClick);
 
-    // Initial setup: Set the first button as active and update values
+    // Первоначальная настройка: активируем первую кнопку и обновляем значения
     const firstKcalButton = parentSelector.querySelector(
       '.tabcalories__choise-btn',
     );
@@ -200,16 +251,22 @@ function tabs(
       firstKcalButton.classList.add('tabcalories__choise-btn--active');
       currentRatioValue = firstKcalButton.dataset.ratio;
       menuKcal.textContent = `${firstKcalButton.textContent} калорий`;
-      calcTotalPrice(tabIndex, dayValue, currentRatioValue); // Calculate initial price
+      calcTotalPrice(tabIndex, dayValue, currentRatioValue); // Начальный расчёт цены
     }
   }
 
-  let lastSendTime = 0; // Stores the timestamp of the last successful send
+  let lastSendTime = 0; // Хранит время последней успешной отправки
 
+  /**
+   * Функция для отправки данных заказа на сервер.
+   * @param {number} tabIndex - Индекс выбранного таба.
+   * @param {number} dayValue - Значение выбранного дня.
+   * @param {number} ratio - Соотношение калорий.
+   */
   function sendOrderData(tabIndex, dayValue, ratio) {
     const currentTime = Date.now();
 
-    // Check if 10 seconds have passed since the last send
+    // Проверка, прошло ли 10 секунд с момента последней отправки
     if (currentTime - lastSendTime < 10000) {
       const remainingTime = 10000 - (currentTime - lastSendTime);
       const minutes = Math.floor(remainingTime / 60000);
@@ -222,20 +279,20 @@ function tabs(
       return;
     }
 
-    // Reset button text
+    // Сброс текста кнопки
     if (orderButton) {
       orderButton.textContent = 'Оформить заказ';
       clearInterval(cooldownInterval);
     }
 
-    // Check if 10 seconds have passed since the last send
+    // Повторная проверка времени отправки
     if (currentTime - lastSendTime < 10000) {
       alert.log('Отправка данных слишком часто. Подождите 10 секунд.');
       return;
     }
 
     console.log('Отправка данных:', latestOrderData);
-    if (!latestOrderData) return; // Если данных нет, не отправляем
+    if (!latestOrderData) return; // Если нет данных, отправка не производится
 
     fetch('http://localhost:3000/order', {
       method: 'POST',
@@ -247,14 +304,19 @@ function tabs(
       .then((response) => response.json())
       .then((data) => {
         console.log('Ответ сервера:', data);
-        lastSendTime = Date.now(); // Update the last send time
+        lastSendTime = Date.now(); // Обновляем время последней отправки
       })
       .catch((error) => {
         console.error('Ошибка отправки:', error);
-        // Reset lastSendTime if send failed
+        // Если отправка не удалась, обновляем время отправки
         lastSendTime = Date.now();
       });
   }
+
+  /**
+   * Обновляет обратный отсчёт до возможности следующей отправки заказа.
+   * @param {number} remainingTime - Оставшееся время в миллисекундах.
+   */
   function updateCountdown(remainingTime) {
     const currentTime = Date.now();
     const timeLeft = remainingTime - (currentTime - lastSendTime);
@@ -274,34 +336,45 @@ function tabs(
       orderButton.textContent = `Ожидайте: ${minutes} минут${minutes !== 1 ? 'ы' : ''} ${seconds} секунд${seconds !== 1 ? 'ы' : ''}`;
     }
   }
-  // Separate handler function for order button click
+
+  /**
+   * Обработчик клика по кнопке заказа.
+   */
   function handleOrderButton() {
     const user = localStorage.getItem('user');
     if (!user) {
-      // If alert has not been shown recently, show it and set a flag to throttle subsequent alerts.
+      // Если предупреждение ещё не было показано, выводим его и устанавливаем флаг
       if (!orderAlertShown) {
         alert('Перед заказом, пожалуйста зарегестрируйтесь');
         orderAlertShown = true;
-        // Reset the flag after 1 second to allow future alerts if needed.
+        // Сбрасываем флаг через 1 секунду для возможности повторного предупреждения
         setTimeout(() => {
           orderAlertShown = false;
         }, 1000);
       }
       return;
     }
-    // If user is authorized, send the order data.
+    // Если пользователь авторизован, отправляем данные заказа.
     sendOrderData(tabIndex, currentDayValue, currentRatioValue);
   }
 
-  // Updated setupOrderButton function that uses the new handleOrderButton.
+  /**
+   * Устанавливает обработчик клика для кнопки заказа с актуальными данными.
+   */
   function setupOrderButton() {
     if (orderButton) {
-      // Remove previous click listener if any, then add our handler
+      // Удаляем предыдущий обработчик, если он есть, и добавляем новый
       orderButton.removeEventListener('click', handleOrderButton);
       orderButton.addEventListener('click', handleOrderButton);
     }
   }
 
+  /**
+   * Функция для расчета итоговой стоимости заказа с учетом выбранного тарифа, дней и скидок.
+   * @param {number} tabIndex - Индекс выбранного таба.
+   * @param {number} dayValue - Значение выбранного дня.
+   * @param {number} ratio - Соотношение калорий.
+   */
   function calcTotalPrice(tabIndex, dayValue, ratio) {
     console.log('Приходит в calcTotalPrice');
     console.log(`Таб индекс - ${tabIndex}`);
@@ -376,7 +449,7 @@ function tabs(
     setupOrderButton(); // Настраиваем кнопку с актуальными данными
   }
 
-  // calcTotalPrice(tabIndex, currentDayValue, currentRatioValue);
+  // Инициализируем интерфейс табов
   hideTabsContent();
   showTabContent();
   switchTab();

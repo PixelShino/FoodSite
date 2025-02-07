@@ -3,7 +3,12 @@
 // Данные пользователя сохраняются в localStorage и отправляются на сервер по адресу http://localhost:3000/users.
 // При успешной авторизации (особенно для admin) обновляется текст кнопки авторизации и добавляется пункт "Личный кабинет" в навигацию.
 'use strict';
+import toggleActive, { closeBurgerMenu } from './burger';
 
+/**
+ * Основная функция модуля аутентификации и регистрации.
+ * Экспортируется как функция по умолчанию.
+ */
 export default function auth() {
   // Создаем контейнер модального окна для аутентификации/регистрации
   const modal = document.createElement('div');
@@ -85,12 +90,17 @@ export default function auth() {
   modal.appendChild(modalDialog);
   document.body.appendChild(modal);
 
-  // Функции для открытия и закрытия модального окна аутентификации/регистрации
+  /**
+   * Функция открытия модального окна.
+   */
   function openModal() {
     if (modal.classList.contains('show')) return;
     modal.classList.add('show');
   }
 
+  /**
+   * Функция закрытия модального окна.
+   */
   function closeModal() {
     modal.classList.remove('show');
   }
@@ -102,7 +112,7 @@ export default function auth() {
     }
   });
 
-  // Переключение между вкладками
+  // Переключение между вкладками формы
   loginTab.addEventListener('click', () => {
     loginTab.classList.add('active');
     registerTab.classList.remove('active');
@@ -117,7 +127,10 @@ export default function auth() {
     loginForm.style.display = 'none';
   });
 
-  // Функция для отображения модального окна с заказами пользователя
+  /**
+   * Функция для отображения заказов пользователя.
+   * @param {Object} user - Объект пользователя, содержащий данные (например, login).
+   */
   async function showUserOrders(user) {
     try {
       const response = await fetch('http://localhost:3000/order');
@@ -132,7 +145,11 @@ export default function auth() {
     }
   }
 
-  // Функция для создания и отображения модального окна с заказами
+  /**
+   * Функция для создания и отображения модального окна с заказами пользователя.
+   * @param {Array} orders - Массив заказов пользователя.
+   * @param {Object} user - Объект пользователя.
+   */
   function displayOrdersModal(orders, user) {
     // Создаем модальное окно для отображения заказов
     const ordersModal = document.createElement('div');
@@ -177,6 +194,9 @@ export default function auth() {
     ordersModal.appendChild(ordersDialog);
     document.body.appendChild(ordersModal);
 
+    /**
+     * Функция закрытия модального окна заказов.
+     */
     function closeOrdersModal() {
       ordersModal.remove();
     }
@@ -190,7 +210,10 @@ export default function auth() {
     ordersModal.classList.add('show');
   }
 
-  // Новая функция для открытия админ панели
+  /**
+   * Функция для открытия админ панели.
+   * Выполняет параллельные запросы к API для получения данных.
+   */
   async function openAdminPanel() {
     try {
       // Определяем перечисление API эндпоинтов для выборки данных
@@ -221,7 +244,10 @@ export default function auth() {
     }
   }
 
-  // Функция для создания и отображения админ панели с данными
+  /**
+   * Функция для создания и отображения админ панели с полученными данными.
+   * @param {Object} data - Объект с данными, где ключи соответствуют типам данных.
+   */
   function displayAdminPanel(data) {
     // Создаем модальное окно для админ панели
     const adminModal = document.createElement('div');
@@ -269,6 +295,9 @@ export default function auth() {
     adminModal.appendChild(adminDialog);
     document.body.appendChild(adminModal);
 
+    /**
+     * Функция закрытия админ панели.
+     */
     function closeAdminModal() {
       adminModal.remove();
     }
@@ -283,7 +312,10 @@ export default function auth() {
     adminModal.classList.add('show');
   }
 
-  // Функция обновления состояния UI после авторизации
+  /**
+   * Функция для обновления пользовательского интерфейса после авторизации.
+   * @param {Object} user - Объект пользователя с данными авторизации.
+   */
   function updateUIForAuth(user) {
     const authBtn = document.querySelector('#authBtn');
     if (authBtn) {
@@ -310,7 +342,9 @@ export default function auth() {
     }
   }
 
-  // Функция для сброса состояния (выход)
+  /**
+   * Функция для выхода пользователя (сброс состояния авторизации).
+   */
   function logout() {
     localStorage.removeItem('user');
     const authBtn = document.querySelector('#authBtn');
@@ -399,6 +433,7 @@ export default function auth() {
   if (authBtn) {
     authBtn.addEventListener('click', () => {
       const user = localStorage.getItem('user');
+      closeBurgerMenu();
       if (user) {
         // Если пользователь уже авторизован - выполнить выход
         logout();

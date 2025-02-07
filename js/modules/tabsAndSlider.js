@@ -1,5 +1,16 @@
 // tabsAndSlider.js
 import insertContent from './moveContent';
+/**
+ * Функция SliderV2 - реализует слайдер с поддержкой навигации по клику, клавиатуре,
+ * touch-событиями и перетаскиванием мышью.
+ *
+ * @param {string} contentSelector - CSS селектор для элементов слайдов.
+ * @param {string} parentSelector - CSS селектор для родительского элемента слайдов.
+ * @param {string} sliderPrev - CSS селектор для кнопки переключения на предыдущий слайд.
+ * @param {string} sliderNext - CSS селектор для кнопки переключения на следующий слайд.
+ * @param {string} current - CSS селектор для элемента отображения текущего номера слайда.
+ * @param {string} total - CSS селектор для элемента отображения общего количества слайдов.
+ */
 function SliderV2(
   contentSelector,
   parentSelector,
@@ -8,7 +19,7 @@ function SliderV2(
   current,
   total,
 ) {
-  // DOM Elements
+  // Получение DOM элементов для слайдера
   const tabsContent = document.querySelectorAll(contentSelector);
   const tabsParent = document.querySelector(parentSelector);
   const prev = document.querySelector(sliderPrev);
@@ -16,12 +27,12 @@ function SliderV2(
   const currentCounter = document.querySelector(current);
   const totalCounter = document.querySelector(total);
 
-  // State
+  // Локальное состояние слайдера
   let slideIndex = 0;
   let touchStartX = 0;
   let touchEndX = 0;
 
-  // Guard clause for required elements
+  // Проверяем наличие всех необходимых элементов
   if (
     !tabsContent.length ||
     !tabsParent ||
@@ -34,6 +45,9 @@ function SliderV2(
     return;
   }
 
+  /**
+   * Скрывает все слайды.
+   */
   function hideContent() {
     tabsContent.forEach((item) => {
       item.classList.add('hide');
@@ -41,22 +55,40 @@ function SliderV2(
     });
   }
 
+  /**
+   * Показывает слайд по заданному индексу.
+   * @param {number} [index=0] - Индекс слайда для отображения.
+   */
   function showContent(index = 0) {
     tabsContent[index].classList.add('show');
     tabsContent[index].classList.remove('hide');
     updateCounter(index);
+    // Вызов функции вставки контента для текущего слайда
     insertContent(index);
   }
 
+  /**
+   * Обновляет счетчик текущего слайда и общего количества слайдов.
+   * @param {number} index - Индекс текущего слайда.
+   */
   function updateCounter(index) {
     currentCounter.textContent = getZero(index + 1);
     totalCounter.textContent = getZero(tabsContent.length);
   }
 
+  /**
+   * Добавляет ведущий ноль к числу, если оно меньше 10.
+   * @param {number} num - Число для форматирования.
+   * @returns {string|number} - Строка с ведущим нулем или число, если оно больше или равно 10.
+   */
   function getZero(num) {
     return num >= 0 && num < 10 ? `0${num}` : num;
   }
 
+  /**
+   * Изменяет слайд в зависимости от направления.
+   * @param {string} direction - Направление ('prev' для предыдущего, 'next' для следующего).
+   */
   function changeSlide(direction) {
     console.log(`Changing slide: ${direction}`);
     if (direction === 'prev') {
@@ -68,11 +100,14 @@ function SliderV2(
     hideContent();
     showContent(slideIndex);
 
-    // Call moveContent function after changing the slide
+    // Вызов функции для вставки контента после смены слайда
     insertContent(slideIndex);
   }
 
-  // Event Handlers
+  /**
+   * Обработчик нажатия клавиш для переключения слайдера.
+   * @param {KeyboardEvent} event - Событие нажатия клавиши.
+   */
   function handleKeyPress(event) {
     if (event.key === 'ArrowLeft') {
       changeSlide('prev');
@@ -81,15 +116,26 @@ function SliderV2(
     }
   }
 
+  /**
+   * Обработчик начала касания экрана.
+   * @param {TouchEvent} event - Событие касания.
+   */
   function handleTouchStart(event) {
     touchStartX = event.touches[0].clientX;
     touchEndX = touchStartX;
   }
 
+  /**
+   * Обработчик движения пальца по экрану.
+   * @param {TouchEvent} event - Событие перемещения касания.
+   */
   function handleTouchMove(event) {
     touchEndX = event.touches[0].clientX;
   }
 
+  /**
+   * Обработчик окончания касания, вычисляет направление свайпа.
+   */
   function handleTouchEnd() {
     const swipeDistance = touchEndX - touchStartX;
     const swipeThreshold = 50;
@@ -99,16 +145,24 @@ function SliderV2(
     }
   }
 
-  // Mouse drag handlers
+  // Переменные для обработки перетаскивания мышью
   let isDragging = false;
   let startX;
 
+  /**
+   * Обработчик нажатия кнопки мыши.
+   * @param {MouseEvent} event - Событие нажатия мыши.
+   */
   function handleMouseDown(event) {
     isDragging = true;
     startX = event.pageX;
     tabsParent.style.cursor = 'grabbing';
   }
 
+  /**
+   * Обработчик движения мыши при зажатой кнопке.
+   * @param {MouseEvent} event - Событие перемещения мыши.
+   */
   function handleMouseMove(event) {
     if (!isDragging) return;
 
@@ -122,12 +176,15 @@ function SliderV2(
     }
   }
 
+  /**
+   * Обработчик отпускания кнопки мыши.
+   */
   function handleMouseUp() {
     isDragging = false;
     tabsParent.style.cursor = 'grab';
   }
 
-  // Event Listeners
+  // Назначение обработчиков для кнопок и событий
   prev.addEventListener('click', () => changeSlide('prev'));
   next.addEventListener('click', () => changeSlide('next'));
   document.addEventListener('keydown', handleKeyPress);
@@ -140,14 +197,18 @@ function SliderV2(
   document.addEventListener('mousemove', handleMouseMove);
   document.addEventListener('mouseup', handleMouseUp);
 
-  // Set initial cursor style
+  // Установка начального стиля курсора
   tabsParent.style.cursor = 'grab';
 
-  // Initialize
+  // Инициализация слайдера: скрываем все слайды и показываем первый
   hideContent();
   showContent();
 
-  // Cleanup function
+  /**
+   * Функция для очистки (удаления) обработчиков событий.
+   * Возвращает функцию, вызывая которую, можно отменить регистрацию событий.
+   * @returns {Function} Функция очистки обработчиков событий.
+   */
   return function cleanup() {
     document.removeEventListener('keydown', handleKeyPress);
     tabsParent.removeEventListener('touchstart', handleTouchStart);

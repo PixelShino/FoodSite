@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./js/modules/auth.js":
@@ -7,17 +8,22 @@
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ auth)
 /* harmony export */ });
+/* harmony import */ var _burger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./burger */ "./js/modules/burger.js");
 // Файл: js/modules/auth.js
 // Описание: Модуль для отображения модального окна с формами авторизации и регистрации.
 // Данные пользователя сохраняются в localStorage и отправляются на сервер по адресу http://localhost:3000/users.
 // При успешной авторизации (особенно для admin) обновляется текст кнопки авторизации и добавляется пункт "Личный кабинет" в навигацию.
 
 
+
+/**
+ * Основная функция модуля аутентификации и регистрации.
+ * Экспортируется как функция по умолчанию.
+ */
 function auth() {
   // Создаем контейнер модального окна для аутентификации/регистрации
   const modal = document.createElement('div');
@@ -99,12 +105,17 @@ function auth() {
   modal.appendChild(modalDialog);
   document.body.appendChild(modal);
 
-  // Функции для открытия и закрытия модального окна аутентификации/регистрации
+  /**
+   * Функция открытия модального окна.
+   */
   function openModal() {
     if (modal.classList.contains('show')) return;
     modal.classList.add('show');
   }
 
+  /**
+   * Функция закрытия модального окна.
+   */
   function closeModal() {
     modal.classList.remove('show');
   }
@@ -116,7 +127,7 @@ function auth() {
     }
   });
 
-  // Переключение между вкладками
+  // Переключение между вкладками формы
   loginTab.addEventListener('click', () => {
     loginTab.classList.add('active');
     registerTab.classList.remove('active');
@@ -131,7 +142,10 @@ function auth() {
     loginForm.style.display = 'none';
   });
 
-  // Функция для отображения модального окна с заказами пользователя
+  /**
+   * Функция для отображения заказов пользователя.
+   * @param {Object} user - Объект пользователя, содержащий данные (например, login).
+   */
   async function showUserOrders(user) {
     try {
       const response = await fetch('http://localhost:3000/order');
@@ -146,7 +160,11 @@ function auth() {
     }
   }
 
-  // Функция для создания и отображения модального окна с заказами
+  /**
+   * Функция для создания и отображения модального окна с заказами пользователя.
+   * @param {Array} orders - Массив заказов пользователя.
+   * @param {Object} user - Объект пользователя.
+   */
   function displayOrdersModal(orders, user) {
     // Создаем модальное окно для отображения заказов
     const ordersModal = document.createElement('div');
@@ -191,6 +209,9 @@ function auth() {
     ordersModal.appendChild(ordersDialog);
     document.body.appendChild(ordersModal);
 
+    /**
+     * Функция закрытия модального окна заказов.
+     */
     function closeOrdersModal() {
       ordersModal.remove();
     }
@@ -204,7 +225,10 @@ function auth() {
     ordersModal.classList.add('show');
   }
 
-  // Новая функция для открытия админ панели
+  /**
+   * Функция для открытия админ панели.
+   * Выполняет параллельные запросы к API для получения данных.
+   */
   async function openAdminPanel() {
     try {
       // Определяем перечисление API эндпоинтов для выборки данных
@@ -235,7 +259,10 @@ function auth() {
     }
   }
 
-  // Функция для создания и отображения админ панели с данными
+  /**
+   * Функция для создания и отображения админ панели с полученными данными.
+   * @param {Object} data - Объект с данными, где ключи соответствуют типам данных.
+   */
   function displayAdminPanel(data) {
     // Создаем модальное окно для админ панели
     const adminModal = document.createElement('div');
@@ -283,6 +310,9 @@ function auth() {
     adminModal.appendChild(adminDialog);
     document.body.appendChild(adminModal);
 
+    /**
+     * Функция закрытия админ панели.
+     */
     function closeAdminModal() {
       adminModal.remove();
     }
@@ -297,7 +327,10 @@ function auth() {
     adminModal.classList.add('show');
   }
 
-  // Функция обновления состояния UI после авторизации
+  /**
+   * Функция для обновления пользовательского интерфейса после авторизации.
+   * @param {Object} user - Объект пользователя с данными авторизации.
+   */
   function updateUIForAuth(user) {
     const authBtn = document.querySelector('#authBtn');
     if (authBtn) {
@@ -324,7 +357,9 @@ function auth() {
     }
   }
 
-  // Функция для сброса состояния (выход)
+  /**
+   * Функция для выхода пользователя (сброс состояния авторизации).
+   */
   function logout() {
     localStorage.removeItem('user');
     const authBtn = document.querySelector('#authBtn');
@@ -413,6 +448,7 @@ function auth() {
   if (authBtn) {
     authBtn.addEventListener('click', () => {
       const user = localStorage.getItem('user');
+      (0,_burger__WEBPACK_IMPORTED_MODULE_0__.closeBurgerMenu)();
       if (user) {
         // Если пользователь уже авторизован - выполнить выход
         logout();
@@ -439,7 +475,6 @@ function auth() {
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -473,9 +508,9 @@ function bodyNoScroll(item = '.burger__content', active = '.active') {
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   closeBurgerMenu: () => (/* binding */ closeBurgerMenu),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _bodyNoScroll_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bodyNoScroll.js */ "./js/modules/bodyNoScroll.js");
@@ -484,12 +519,74 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
+ * Функция getHeaderHeightInPx возвращает высоту хедера в пикселях,
+ * корректно обработав значение CSS-переменной --header-height, которая может быть задана в vh или px.
+ *
+ * @returns {number} Высота хедера в пикселях.
+ */
+function getHeaderHeightInPx() {
+  let headerHeightValue = getComputedStyle(document.documentElement)
+    .getPropertyValue('--header-height')
+    .trim();
+
+  // Если значение задано в vh, конвертируем в пиксели
+  if (headerHeightValue.endsWith('vh')) {
+    const vhValue = parseFloat(headerHeightValue);
+    return (vhValue / 100) * window.innerHeight;
+  }
+
+  // Если значение задано в px, возвращаем числовое значение
+  if (headerHeightValue.endsWith('px')) {
+    return parseFloat(headerHeightValue);
+  }
+
+  // В остальных случаях возвращаем 0
+  return 0;
+}
+
+/**
+ * Функция scrollWithOffset осуществляет плавную прокрутку к целевому элементу
+ * с учётом отступа, равного высоте хедера (CSS-переменная --header-height).
+ *
+ * @param {string} targetSelector - Селектор целевого элемента (например, "#section1")
+ */
+function scrollWithOffset(targetSelector) {
+  const targetElement = document.querySelector(targetSelector);
+  if (!targetElement) return;
+
+  const headerHeight = getHeaderHeightInPx();
+  const elementTop =
+    targetElement.getBoundingClientRect().top + window.pageYOffset;
+  const offsetPosition = elementTop - headerHeight;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: 'smooth',
+  });
+}
+
+/**
+ * Функция closeBurgerMenu закрывает бургер-меню, удаляя класс "active"
+ * у элемента, соответствующего селектору toggleItemSelector, и вызывая bodyNoScroll.
+ *
+ * @param {string} toggleItemSelector - Селектор элемента, у которого переключается класс "active" (по умолчанию ".burger__content").
+ */
+function closeBurgerMenu(toggleItemSelector = '.burger__content') {
+  const toggleItem = document.querySelector(toggleItemSelector);
+  if (toggleItem && toggleItem.classList.contains('active')) {
+    toggleItem.classList.remove('active');
+    (0,_bodyNoScroll_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
+    console.log('Burger menu closed');
+  }
+}
+
+/**
  * Функция toggleActive отвечает за переключение активного состояния
  * для элементов бургер-меню.
  *
  * Параметры:
  *  @param {string} parent - Селектор родительского элемента (по умолчанию ".header__burger").
- *  @param {string} item - Селектор дочерних элементов, для которых производится проверка (по умолчанию ".header__burger-item").
+ *  @param {string} item - Селектор дочерних элементов, для которых производится проверка (по умолчанию ".header__burger-line").
  *  @param {string} toggleItemSelector - Селектор элемента, у которого переключается класс "active" (по умолчанию ".burger__content").
  */
 function toggleActive(
@@ -497,21 +594,21 @@ function toggleActive(
   item = '.header__burger-line',
   toggleItemSelector = '.burger__content',
 ) {
-  // Получаем родительский элемент по заданному селектору
+  // Получаем родительский элемент (бургер-иконку)
   const parentElement = document.querySelector(parent);
   if (!parentElement) {
     console.error(`Не найден родительский элемент по селектору "${parent}"`);
     return;
   }
 
-  // Получаем все элементы, соответствующие селектору item
+  // Получаем все дочерние элементы (например, линии бургер-иконки)
   const items = document.querySelectorAll(item);
   if (!items.length) {
     console.error(`Не найдены элементы по селектору "${item}"`);
     return;
   }
 
-  // Получаем элемент, у которого будем переключать класс "active"
+  // Получаем элемент, у которого будет переключаться класс "active" (само меню)
   const toggleItem = document.querySelector(toggleItemSelector);
   if (!toggleItem) {
     console.error(
@@ -521,8 +618,8 @@ function toggleActive(
   }
 
   /**
-   * Функция toggle выполняет следующие действия:
-   * 1. Вызывает переключение прокрутки страницы через bodyNoScroll.
+   * Функция toggle:
+   * 1. Переключает блокировку прокрутки через bodyNoScroll.
    * 2. Логгирует информацию в консоль.
    * 3. Переключает класс "active" у toggleItem.
    */
@@ -534,8 +631,26 @@ function toggleActive(
     console.log('Поменяли класс active у элемента');
   }
 
-  // Привязываем обработчик события клика к родительскому элементу
+  // Привязываем обработчик клика к родительскому элементу (бургер-иконке)
   parentElement.addEventListener('click', toggle);
+
+  // Обработчик для закрытия бургер-меню при клике на пункт меню
+  // Здесь предполагается, что пункты меню внутри toggleItem – это ссылки (<a>)
+  toggleItem.addEventListener('click', (event) => {
+    if (event.target.tagName === 'A') {
+      event.preventDefault();
+
+      // Извлекаем id целевого блока из атрибута href
+      const targetID = event.target.getAttribute('href');
+      if (targetID && targetID.startsWith('#')) {
+        scrollWithOffset(targetID);
+      }
+
+      // Закрываем бургер-меню через вызов функции closeBurgerMenu
+      closeBurgerMenu(toggleItemSelector);
+      console.log('Burger menu closed after clicking menu item');
+    }
+  });
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (toggleActive);
@@ -549,7 +664,6 @@ function toggleActive(
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -824,7 +938,6 @@ document.addEventListener('DOMContentLoaded', calc);
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1065,7 +1178,6 @@ document.addEventListener('DOMContentLoaded', callMeBack);
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1245,7 +1357,6 @@ function cards() {
   \*********************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1340,7 +1451,6 @@ if ( true && typeof module.exports !== 'undefined') {
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ fixedPromo)
@@ -1411,7 +1521,6 @@ function fixedPromo() {
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1515,10 +1624,9 @@ function forms() {
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ auth)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /**
  * Модуль для отображения модального окна выбора города России.
@@ -1543,266 +1651,91 @@ __webpack_require__.r(__webpack_exports__);
  */ // Файл: js/modules/auth.js
 // Описание: Модуль для управления модальным окном авторизации/регистрации.
 // Исправлена проблема двойного открытия модалки за счет предотвращения повторной инициализации и контроля автооткрытия.
+function initCityModal() {
+  // Элемент для отображения выбранного города (например, в header)
+  const locationText = document.querySelector('#location-text');
 
-function auth() {
-  // Если модальное окно уже существует, прекращаем инициализацию
-  if (document.querySelector('.modal')) return;
-
-  let autoOpenTimeout = null;
-
-  // Создаем контейнер модального окна
-  const modal = document.createElement('div');
-  modal.classList.add('modal');
-
-  // Создаем диалог модального окна
-  const modalDialog = document.createElement('div');
-  modalDialog.classList.add('modal__dialog');
-
-  // Создаем контейнер содержимого модального окна
-  const modalContent = document.createElement('div');
-  modalContent.classList.add('modal__content');
-
-  // Кнопка закрытия модального окна
-  const modalClose = document.createElement('div');
-  modalClose.classList.add('modal__close');
-  modalClose.setAttribute('data-close', '');
-  modalClose.textContent = '×';
-  modalContent.appendChild(modalClose);
-
-  // Заголовок модального окна
-  const modalTitle = document.createElement('div');
-  modalTitle.classList.add('modal__title');
-  modalTitle.textContent = 'Аутентификация / Регистрация';
-  modalContent.appendChild(modalTitle);
-
-  // Создаем контейнер для переключения между формами
-  const tabContainer = document.createElement('div');
-  tabContainer.classList.add('modal__tabs');
-
-  // Кнопка для входа
-  const loginTab = document.createElement('button');
-  loginTab.textContent = 'Вход';
-  loginTab.classList.add('modal__tab', 'active');
-
-  // Кнопка для регистрации
-  const registerTab = document.createElement('button');
-  registerTab.textContent = 'Регистрация';
-  registerTab.classList.add('modal__tab');
-
-  tabContainer.appendChild(loginTab);
-  tabContainer.appendChild(registerTab);
-  modalContent.appendChild(tabContainer);
-
-  // Контейнеры для форм
-  const formsContainer = document.createElement('div');
-  formsContainer.classList.add('modal__forms');
-
-  // Форма входа
-  const loginForm = document.createElement('form');
-  loginForm.classList.add('modal__form');
-  loginForm.setAttribute('id', 'loginForm');
-  loginForm.innerHTML = `
-        <input type="text" name="login" placeholder="Логин" class="modal__input" required />
-        <input type="password" name="password" placeholder="Пароль" class="modal__input" required />
-        <button type="submit">Войти</button>
-      `;
-
-  // Форма регистрации
-  const registerForm = document.createElement('form');
-  registerForm.classList.add('modal__form');
-  registerForm.setAttribute('id', 'registerForm');
-  registerForm.style.display = 'none';
-  registerForm.innerHTML = `
-        <input type="text" name="name" placeholder="Имя" class="modal__input" required />
-        <input type="email" name="email" placeholder="Email" class="modal__input" required />
-        <input type="text" name="login" placeholder="Логин" class="modal__input" required />
-        <input type="password" name="password" placeholder="Пароль" class="modal__input" required />
-        <input type="tel" name="phone" placeholder="Телефон" class="modal__input" required />
-        <button type="submit">Зарегистрироваться</button>
-      `;
-
-  formsContainer.appendChild(loginForm);
-  formsContainer.appendChild(registerForm);
-  modalContent.appendChild(formsContainer);
-
-  // Собираем структуру модального окна
-  modalDialog.appendChild(modalContent);
-  modal.appendChild(modalDialog);
-  document.body.appendChild(modal);
-
-  // Функции для открытия и закрытия модального окна
-  function openModal() {
-    // Если модалка уже открыта, не делаем ничего.
-    if (modal.classList.contains('show')) return;
-    modal.classList.add('show');
-    if (autoOpenTimeout) {
-      clearTimeout(autoOpenTimeout);
-      autoOpenTimeout = null;
-    }
+  // Если город уже выбран (сохранён в localStorage), обновляем его отображение
+  const savedCity = localStorage.getItem('selectedCity');
+  if (savedCity && locationText) {
+    locationText.textContent = savedCity;
   }
 
-  function closeModal() {
-    modal.classList.remove('show');
+  // Элемент, при клике на который открывается модальное окно выбора города.
+  // В данном примере предполагается, что у него id="city"
+  const cityButton = document.getElementById('city');
+  if (!cityButton) {
+    console.error('Элемент для выбора города (#city) не найден!');
+    return;
   }
 
-  modalClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
+  // Создаём модальное окно, если оно ещё не добавлено в документ.
+  // Добавляем дополнительный класс "city-modal" для удобной идентификации.
+  let modal = document.querySelector('.city-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.classList.add('modal', 'city-modal');
+    modal.innerHTML = `
+      <div class="modal__dialog">
+        <div class="modal__content">
+          <div data-close class="modal__close">×</div>
+          <div class="modal__title">Выберите город</div>
+          <ul class="city-list">
+            <li class="city-item">Москва</li>
+            <li class="city-item">Санкт-Петербург</li>
+            <li class="city-item">Новосибирск</li>
+            <li class="city-item">Екатеринбург</li>
+            <li class="city-item">Казань</li>
+            <li class="city-item">Нижний Новгород</li>
+            <li class="city-item">Челябинск</li>
+            <li class="city-item">Омск</li>
+            <li class="city-item">Самара</li>
+            <li class="city-item">Воронеж</li>
+            <li class="city-item">Ростов-на-Дону</li>
+          </ul>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+
+  // Функция для открытия модального окна
+  const openModal = () => modal.classList.add('show');
+
+  // Функция для закрытия модального окна
+  const closeModal = () => modal.classList.remove('show');
+
+  // При клике на кнопку выбора города открываем модальное окно
+  cityButton.addEventListener('click', openModal);
+
+  // Обработчик закрытия модального окна:
+  // - При клике на элемент с атрибутом data-close (иконка закрытия)
+  // - Или при клике вне области диалога (на сам контейнер модального окна)
+  modal.addEventListener('click', (event) => {
+    if (event.target.hasAttribute('data-close') || event.target === modal) {
       closeModal();
     }
   });
 
-  // Переключение между вкладками
-  loginTab.addEventListener('click', () => {
-    loginTab.classList.add('active');
-    registerTab.classList.remove('active');
-    loginForm.style.display = 'block';
-    registerForm.style.display = 'none';
-  });
-
-  registerTab.addEventListener('click', () => {
-    registerTab.classList.add('active');
-    loginTab.classList.remove('active');
-    registerForm.style.display = 'block';
-    loginForm.style.display = 'none';
-  });
-
-  // Функция обновления состояния UI после авторизации
-  function updateUIForAuth(user) {
-    const authButtons = document.querySelectorAll('#authBtn');
-    authButtons.forEach((btn) => {
-      btn.textContent = 'Выйти';
-    });
-
-    // Обновляем путь к нужному элементу навигации
-    const headerNav = document.querySelector(
-      'body > header > div.header__bot-block > nav',
-    );
-    if (headerNav && !headerNav.querySelector('.personal-account')) {
-      const li = document.createElement('li');
-      li.classList.add('personal-account');
-      li.textContent = 'Личный кабинет';
-      li.addEventListener('click', openModal);
-      headerNav.appendChild(li);
-    }
-  }
-
-  // Функция для сброса состояния (выход)
-  function logout() {
-    localStorage.removeItem('user');
-    const authButtons = document.querySelectorAll('#authBtn');
-    authButtons.forEach((btn) => {
-      btn.textContent = 'Войти';
-    });
-    const headerNav = document.querySelector(
-      'body > header > div.header__bot-block > nav',
-    );
-    const personalAccount =
-      headerNav && headerNav.querySelector('.personal-account');
-    if (personalAccount) {
-      headerNav.removeChild(personalAccount);
-    }
-  }
-
-  // Обработчик для формы входа
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(loginForm);
-    const login = formData.get('login').trim();
-    const password = formData.get('password').trim();
-
-    try {
-      // Получаем список пользователей с сервера
-      const response = await fetch('http://localhost:3000/users');
-      const users = await response.json();
-
-      // Ищем пользователя с совпадающими данными
-      const user = users.find(
-        (u) => u.login === login && u.password === password,
-      );
-
-      if (user) {
-        // Сохраняем данные пользователя в localStorage
-        localStorage.setItem('user', JSON.stringify(user));
-        updateUIForAuth(user);
-        closeModal();
-      } else {
-        alert('Неверные данные для входа');
+  // Назначаем обработчики клика для каждого элемента списка городов.
+  // При выборе города:
+  // 1. Сохраняем выбранный город в localStorage.
+  // 2. Обновляем отображение выбранного города в элементе locationText.
+  // 3. Закрываем модальное окно.
+  const cityItems = modal.querySelectorAll('.city-item');
+  cityItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      const selectedCity = item.textContent.trim();
+      localStorage.setItem('selectedCity', selectedCity);
+      if (locationText) {
+        locationText.textContent = selectedCity;
       }
-    } catch (error) {
-      console.error('Ошибка при авторизации:', error);
-    }
-  });
-
-  // Обработчик для формы регистрации
-  registerForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(registerForm);
-    const userData = {
-      name: formData.get('name').trim(),
-      email: formData.get('email').trim(),
-      login: formData.get('login').trim(),
-      password: formData.get('password').trim(),
-      phone: formData.get('phone').trim(),
-      role: 'user', // по умолчанию обычный пользователь
-    };
-
-    try {
-      // Отправляем данные на сервер (POST запрос)
-      const response = await fetch('http://localhost:3000/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (response.ok) {
-        const newUser = await response.json();
-        // Сохраняем нового пользователя в localStorage
-        localStorage.setItem('user', JSON.stringify(newUser));
-        updateUIForAuth(newUser);
-        closeModal();
-      } else {
-        alert('Ошибка регистрации. Попробуйте еще раз.');
-      }
-    } catch (error) {
-      console.error('Ошибка при регистрации:', error);
-    }
-  });
-
-  // Назначаем обработчик для кнопок авторизации/выхода
-  const authButtons = document.querySelectorAll('#authBtn');
-  authButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const user = localStorage.getItem('user');
-      if (user) {
-        // Если пользователь уже авторизован - выполнить выход
-        logout();
-      } else {
-        // Если не авторизован - открыть модальное окно
-        openModal();
-      }
+      closeModal();
     });
   });
-
-  // Если пользователь уже был авторизован ранее, обновляем интерфейс
-  const storedUser = localStorage.getItem('user');
-  if (storedUser) {
-    updateUIForAuth(JSON.parse(storedUser));
-  } else {
-    // Автоматическое открытие окна через 15 сек.
-    autoOpenTimeout = setTimeout(() => {
-      if (!modal.classList.contains('show')) {
-        openModal();
-      }
-    }, 15000);
-  }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  auth();
-});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (initCityModal);
 
 
 /***/ }),
@@ -1813,7 +1746,6 @@ document.addEventListener('DOMContentLoaded', () => {
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1967,7 +1899,6 @@ function menuCardSlider(cardContainerOpt) {
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   closeModal: () => (/* binding */ closeModal),
@@ -2056,7 +1987,6 @@ function modal(triggerSelector, modalSelector, closeSelector) {
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ insertContent)
@@ -2149,54 +2079,65 @@ function insertContent(
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // replaceImg.js
+
+/**
+ * Функция для замены изображения в элементе в зависимости от его активного состояния.
+ *
+ * @param {string} containerSelector - Селектор родительского контейнера.
+ * @param {string} itemClass - Класс элемента, содержащего изображение.
+ * @param {string} activeClass - Класс, обозначающий активное состояние элемента.
+ */
 function replaceImg(containerSelector, itemClass, activeClass) {
-  // Select the parent container
+  // Выбираем родительский контейнер по селектору
   const container = document.querySelector(containerSelector);
 
   if (!container) {
-    console.error(`Container with selector "${containerSelector}" not found.`);
+    console.error(`Контейнер с селектором "${containerSelector}" не найден.`);
     return;
   }
 
-  // Function to update images based on active state
+  /**
+   * Функция для обновления изображений в элементах внутри контейнера.
+   * Если элемент содержит класс activeClass, используется активное изображение,
+   * иначе подставляется стандартное изображение.
+   */
   function updateImages() {
+    // Выбираем все элементы с указанным классом внутри контейнера
     const items = container.querySelectorAll(`.${itemClass}`);
     items.forEach((item) => {
       const img = item.querySelector('img');
       if (img) {
+        // Получаем пути к изображениям из data-атрибутов
         const newSrc = item.dataset.img;
         const activeSrc = item.dataset.activeImg;
+        // Определяем, имеет ли элемент активное состояние
         const isActive = item.classList.contains(activeClass);
+        // Устанавливаем src изображения в зависимости от состояния элемента
         img.src = isActive ? activeSrc : newSrc;
       }
     });
   }
 
-  // Add event listener to the parent container
+  // Здесь можно добавить обработчик события на родительский контейнер, если требуется:
+  // Например, при клике обновлять изображения для элементов,
+  // убедившись, что клик произошёл по элементу с нужным классом:
+  //
+  // container.addEventListener('click', (event) => {
+  //   if (event.target.closest(`.${itemClass}`)) {
+  //     updateImages();
+  //   }
+  // });
 
-  // Ensure the clicked element matches the itemClass
-
-  // Update images for all items
+  // Обновляем изображения для всех элементов сразу
   updateImages();
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (replaceImg);
-
-
-/***/ }),
-
-/***/ "./js/modules/request.js":
-/*!*******************************!*\
-  !*** ./js/modules/request.js ***!
-  \*******************************/
-/***/ (() => {
-
 
 
 /***/ }),
@@ -2207,7 +2148,6 @@ function replaceImg(containerSelector, itemClass, activeClass) {
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -2215,6 +2155,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal.js */ "./js/modules/modal.js");
 
 
+/**
+ * Функция для работы с отзывами.
+ * Управляет рейтингом, загрузкой фото, валидацией формы и отправкой данных отзыва.
+ *
+ * @returns {object} Объект с методом cleanup для удаления обработчиков событий.
+ */
 function reviews() {
   const elements = {
     ratingContainer: document.getElementById('ratingStars'),
@@ -2225,29 +2171,43 @@ function reviews() {
   };
 
   if (!elements.ratingContainer || !elements.fileInput || !elements.form) {
-    console.warn('Required elements not found');
+    console.warn('Не найдены необходимые элементы');
     return;
   }
 
   let selectedRating = 0;
   const MAX_REVIEW_LENGTH = 500;
 
+  // Инициализация обработчиков событий
   initializeEventListeners();
 
+  /**
+   * Инициализирует обработчики событий для элементов формы отзыва.
+   */
   function initializeEventListeners() {
+    // Обработчик клика по звездам рейтинга
     elements.ratingContainer.addEventListener('click', handleRatingClick);
+    // Обработчик наведения мыши на звезды рейтинга
     elements.ratingContainer.addEventListener('mouseover', handleRatingHover);
+    // Обработчик ухода мыши с контейнера рейтинга: возвращает звезды в состояние выбранного рейтинга
     elements.ratingContainer.addEventListener('mouseleave', () =>
       updateStars(selectedRating),
     );
 
+    // Обработчик изменения файла в поле загрузки фото
     elements.fileInput.addEventListener('change', (e) =>
       handleFile(e.target.files[0]),
     );
 
+    // Обработчик отправки формы
     elements.form.addEventListener('submit', handleFormSubmit);
   }
 
+  /**
+   * Обработчик клика по звездам рейтинга.
+   *
+   * @param {MouseEvent} e - Событие клика.
+   */
   function handleRatingClick(e) {
     if (e.target.matches('i')) {
       selectedRating = parseInt(e.target.dataset.rating);
@@ -2255,12 +2215,22 @@ function reviews() {
     }
   }
 
+  /**
+   * Обработчик наведения мыши на звезды рейтинга.
+   *
+   * @param {MouseEvent} e - Событие наведения.
+   */
   function handleRatingHover(e) {
     if (e.target.matches('i')) {
       updateStars(parseInt(e.target.dataset.rating));
     }
   }
 
+  /**
+   * Обновляет отображение звезд рейтинга.
+   *
+   * @param {number} rating - Текущий рейтинг.
+   */
   function updateStars(rating) {
     const stars = elements.ratingContainer.querySelectorAll('i');
     stars.forEach((star, index) => {
@@ -2268,26 +2238,37 @@ function reviews() {
     });
   }
 
+  /**
+   * Инициализирует зону перетаскивания для загрузки изображения.
+   */
   function initializeDropZone() {
     const dropZone = document.createElement('div');
     dropZone.className = 'drop-zone';
     dropZone.innerHTML = '<p>Перетащите изображение сюда или выберите файл</p>';
     elements.fileInput.parentElement.appendChild(dropZone);
 
-    // Drop zone events
+    // Обработчик события dragover для зоны перетаскивания
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault();
       dropZone.classList.add('drop-zone--over');
     });
 
+    // Обработчик события dragleave для зоны перетаскивания
     dropZone.addEventListener('dragleave', () => {
       dropZone.classList.remove('drop-zone--over');
     });
 
+    // Обработчик события drop для зоны перетаскивания
     dropZone.addEventListener('drop', handleDrop);
   }
+  // Инициализация зоны перетаскивания
   initializeDropZone();
 
+  /**
+   * Обрабатывает событие drop (перетаскивание файла) в зоне загрузки.
+   *
+   * @param {DragEvent} e - Событие перетаскивания.
+   */
   function handleDrop(e) {
     e.preventDefault();
     e.currentTarget.classList.remove('drop-zone--over');
@@ -2302,16 +2283,34 @@ function reviews() {
     }
   }
 
+  /**
+   * Проверяет, является ли переданный файл допустимым изображением.
+   *
+   * @param {File} file - Файл для проверки.
+   * @returns {boolean} Истина, если файл является изображением.
+   */
   function isValidImageFile(file) {
     return file && file.type.startsWith('image/');
   }
 
+  /**
+   * Обновляет значение input для файла с использованием DataTransfer.
+   *
+   * @param {File} file - Файл для установки.
+   */
   function updateFileInput(file) {
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
     elements.fileInput.files = dataTransfer.files;
   }
 
+  /**
+   * Создает предпросмотр изображения.
+   *
+   * @param {HTMLElement} container - Контейнер для предпросмотра.
+   * @param {string} imageUrl - URL изображения для предпросмотра.
+   * @returns {HTMLElement} Элемент предпросмотра.
+   */
   function createImagePreview(container, imageUrl) {
     const fragment = document.createDocumentFragment();
     const preview = document.createElement('div');
@@ -2319,7 +2318,7 @@ function reviews() {
 
     const img = document.createElement('img');
     img.src = imageUrl;
-    img.alt = 'Preview';
+    img.alt = 'Предпросмотр';
 
     const removeButton = document.createElement('button');
     removeButton.type = 'button';
@@ -2330,9 +2329,11 @@ function reviews() {
     preview.appendChild(removeButton);
     fragment.appendChild(preview);
 
+    // Если уже существует предпросмотр, удаляем его
     const existingPreview = container.querySelector('.form__preview');
     if (existingPreview) existingPreview.remove();
 
+    // Обработчик удаления предпросмотра
     removeButton.addEventListener('click', () => {
       preview.remove();
       elements.fileInput.value = '';
@@ -2342,6 +2343,11 @@ function reviews() {
     return preview;
   }
 
+  /**
+   * Обрабатывает выбранный файл, создавая предпросмотр изображения.
+   *
+   * @param {File} file - Выбранный файл.
+   */
   function handleFile(file) {
     if (!isValidImageFile(file)) return;
 
@@ -2352,31 +2358,11 @@ function reviews() {
     reader.readAsDataURL(file);
   }
 
-  // async function uploadImageToImgur(file) {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('image', file);
-  //     formData.append('type', 'file');
-
-  //     const response = await fetch('https://api.imgur.com/3/image', {
-  //       method: 'POST', // Changed from GET to POST
-  //       headers: {
-  //         Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`, // Use environment variable
-  //       },
-  //       body: formData,
-  //     });
-
-  //     const data = await response.json();
-  //     if (data.success) {
-  //       return data.data.link;
-  //     }
-  //     throw new Error('Image upload failed');
-  //   } catch (error) {
-  //     console.error('Imgur upload error:', error);
-  //     throw error;
-  //   }
-  // }
-
+  /**
+   * Обрабатывает отправку формы отзыва.
+   *
+   * @param {Event} e - Событие отправки формы.
+   */
   async function handleFormSubmit(e) {
     e.preventDefault();
 
@@ -2386,7 +2372,6 @@ function reviews() {
 
     try {
       const reviewData = {
-        // Declare reviewData object here
         name: elements.nameInput.value,
         text: elements.reviewText.value,
         rating: selectedRating,
@@ -2397,42 +2382,32 @@ function reviews() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(reviewData), // Use the correctly declared object
+        body: JSON.stringify(reviewData),
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP ошибка! статус: ${response.status}`);
       }
 
       const data = await response.json();
       if (!data.success) {
-        throw new Error('Failed to send review');
+        throw new Error('Не удалось отправить отзыв');
       }
 
       showThanksModal('Спасибо! Ваш отзыв отправлен');
     } catch (error) {
-      console.error('Form submission error:', error);
+      console.error('Ошибка отправки формы:', error);
       showThanksModal('Что-то пошло не так...');
     } finally {
       cleanupAfterSubmission(statusMessage);
     }
   }
-  function isValidImageFile(file) {
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif'];
 
-    if (!file) return false;
-    if (!ALLOWED_TYPES.includes(file.type)) {
-      alert('Please upload only JPEG, PNG or GIF images');
-      return false;
-    }
-    if (file.size > MAX_FILE_SIZE) {
-      alert('File size should not exceed 5MB');
-      return false;
-    }
-    return true;
-  }
-
+  /**
+   * Проверяет корректность заполнения формы.
+   *
+   * @returns {boolean} Истина, если форма заполнена корректно.
+   */
   function validateForm() {
     const { nameInput, reviewText, fileInput } = elements;
 
@@ -2453,6 +2428,11 @@ function reviews() {
     return true;
   }
 
+  /**
+   * Показывает индикатор загрузки.
+   *
+   * @returns {HTMLElement} Элемент индикатора загрузки.
+   */
   function showLoadingSpinner() {
     const statusMessage = document.createElement('img');
     statusMessage.src = 'img/form/spinner.svg';
@@ -2461,6 +2441,11 @@ function reviews() {
     return statusMessage;
   }
 
+  /**
+   * Создает объект с данными формы.
+   *
+   * @returns {object} Объект с данными формы.
+   */
   function createFormData() {
     return {
       name: elements.nameInput.value,
@@ -2470,6 +2455,11 @@ function reviews() {
     };
   }
 
+  /**
+   * Очищает форму и сбрасывает состояние после отправки.
+   *
+   * @param {HTMLElement} statusMessage - Элемент индикатора загрузки.
+   */
   function cleanupAfterSubmission(statusMessage) {
     statusMessage.remove();
     elements.form.reset();
@@ -2479,9 +2469,16 @@ function reviews() {
     if (preview) preview.remove();
   }
 
+  /**
+   * Отправляет данные методом POST.
+   *
+   * @param {string} url - URL для отправки данных.
+   * @param {object} data - Данные для отправки.
+   * @returns {Promise<object>} Ответ сервера в формате JSON.
+   */
   async function postData(url, data) {
     const response = await fetch(url, {
-      method: 'POST', // Changed from GET to POST
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -2490,6 +2487,11 @@ function reviews() {
     return await response.json();
   }
 
+  /**
+   * Показывает модальное окно с сообщением благодарности.
+   *
+   * @param {string} message - Сообщение для отображения в модальном окне.
+   */
   function showThanksModal(message) {
     const prevModalDialog = document.querySelector('.modal__dialog');
     prevModalDialog.classList.add('hide');
@@ -2516,6 +2518,10 @@ function reviews() {
       (0,_modal_js__WEBPACK_IMPORTED_MODULE_0__.closeModal)();
     }, 4000);
   }
+
+  /**
+   * Функция для удаления обработчиков событий.
+   */
   const cleanup = () => {
     elements.ratingContainer.removeEventListener('click', handleRatingClick);
     elements.ratingContainer.removeEventListener(
@@ -2545,7 +2551,6 @@ function reviews() {
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -2732,14 +2737,20 @@ function slider() {
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _menuCardSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./menuCardSlider */ "./js/modules/menuCardSlider.js");
 
-
+/**
+ * Функция для инициализации табов.
+ * @param {string} tabsItem - CSS селектор для элементов табов.
+ * @param {string} tabsContentItem - CSS селектор для содержимого табов.
+ * @param {string} tabsParentItem - CSS селектор для родительского элемента табов.
+ * @param {string} cardsParentItem - CSS селектор для родительского элемента карточек.
+ * @param {string} btnDaysItem - CSS селектор для кнопок выбора дней.
+ */
 function tabs(
   tabsItem,
   tabsContentItem,
@@ -2747,6 +2758,7 @@ function tabs(
   cardsParentItem,
   btnDaysItem,
 ) {
+  // Получаем необходимые элементы из DOM
   const tabs = document.querySelectorAll(tabsItem);
   const tabsContent = document.querySelectorAll(tabsContentItem);
   const tabsParent = document.querySelector(tabsParentItem);
@@ -2776,6 +2788,9 @@ function tabs(
     return;
   }
 
+  /**
+   * Скрыть содержимое всех табов и сбросить активное состояние элементов.
+   */
   function hideTabsContent() {
     tabsContent.forEach((element) => {
       element.classList.add('hide');
@@ -2786,15 +2801,21 @@ function tabs(
     });
   }
 
+  /**
+   * Показать содержимое таба по индексу.
+   * @param {number} [index=0] - Индекс таба, который нужно отобразить.
+   */
   function showTabContent(index = 0) {
     tabsContent[index].classList.add('show', 'fade');
     tabsContent[index].classList.remove('hide');
     tabs[index].classList.add('tabheader__item_active');
 
+    // Инициализируем слайдер для карточек, если элемент найден
     if (tabsContent[index].querySelector(cardsParentItem)) {
       (0,_menuCardSlider__WEBPACK_IMPORTED_MODULE_0__["default"])(tabsContent[index].querySelector(cardsParentItem));
     }
 
+    // Если в контенте таба присутствует выбор калорий, выполняем сброс и пересчёт
     const tabcaloriesChoise = tabsContent[index].querySelector(
       '.tabcalories__choise',
     );
@@ -2808,9 +2829,11 @@ function tabs(
     }
   }
 
+  // Начальная инициализация табов
   hideTabsContent();
   showTabContent();
 
+  // Слушатель кастомного события для переключения таба
   tabsParent.addEventListener('tabswitch', (event) => {
     const { dataTab } = event.detail;
     const tabNumber = parseInt(dataTab.replace(/[^0-9]/g, ''), 10);
@@ -2820,6 +2843,9 @@ function tabs(
     // calcKcal(choiseKcal, tabNumber);
   });
 
+  /**
+   * Устанавливает обработчик клика для переключения табов.
+   */
   function switchTab() {
     tabsParent.addEventListener('click', (event) => {
       const targetElement = event.target.closest(tabsItem);
@@ -2835,6 +2861,9 @@ function tabs(
     });
   }
 
+  /**
+   * Сброс активного состояния кнопок выбора дней к начальному.
+   */
   function resetDays() {
     if (btnDays.length > 0) {
       btnDays.forEach((item) => {
@@ -2851,6 +2880,9 @@ function tabs(
     }
   }
 
+  /**
+   * Сброс активного состояния кнопок выбора калорий к начальному.
+   */
   function resetKcal() {
     if (btnKcal.length > 0) {
       btnKcal.forEach((item) => {
@@ -2862,8 +2894,18 @@ function tabs(
     }
   }
 
+  /**
+   * Функция для расчёта дней и обновления цены при выборе дня.
+   * @param {Element} tabcaloriesChoise - Элемент выбора калорий.
+   * @param {number} tabIndex - Индекс выбранного таба.
+   * @param {number} ratio - Текущее соотношение калорий.
+   */
   function calcDays(tabcaloriesChoise, tabIndex, ratio) {
     choiseDays.removeEventListener('click', handleChoiseDaysClick);
+    /**
+     * Обработчик клика по кнопкам выбора дней.
+     * @param {MouseEvent} e - Событие клика.
+     */
     function handleChoiseDaysClick(e) {
       const target = e.target.closest('.tabdays__choise-btn');
       if (target) {
@@ -2884,6 +2926,11 @@ function tabs(
     choiseDays.addEventListener('click', handleChoiseDaysClick);
   }
 
+  /**
+   * Функция для вычисления скидки в зависимости от количества дней.
+   * @param {number} days - Количество дней.
+   * @returns {number} - Скидка в виде десятичной дроби.
+   */
   function calculateDiscount(days) {
     if (days >= 28) {
       menuPrice;
@@ -2905,17 +2952,25 @@ function tabs(
     }
   }
 
-  // ... (other code)
-
+  /**
+   * Функция для расчёта калорий и обновления цены при выборе калорий.
+   * @param {Element} parentSelector - Родительский элемент с выбором калорий.
+   * @param {number} tabIndex - Индекс выбранного таба.
+   * @param {number} dayValue - Значение выбранного дня.
+   */
   function calcKcal(parentSelector, tabIndex, dayValue) {
-    // Remove the event listener to prevent multiple handlers
+    // Удаляем предыдущий обработчик для избежания повторных привязок
     parentSelector.removeEventListener('click', handleKcalClick);
 
+    /**
+     * Обработчик клика по кнопкам выбора калорий.
+     * @param {MouseEvent} e - Событие клика.
+     */
     function handleKcalClick(e) {
       const target = e.target.closest('.tabcalories__choise-btn');
 
       if (target) {
-        // Reset active classes for ALL calorie buttons within the CURRENT tab
+        // Сброс активного состояния для всех кнопок выбора калорий внутри текущего таба
         parentSelector
           .querySelectorAll('.tabcalories__choise-btn')
           .forEach((item) => {
@@ -2926,13 +2981,13 @@ function tabs(
         menuKcal.textContent = `${target.textContent} калорий`;
         currentRatioValue = target.dataset.ratio;
         calcTotalPrice(tabIndex, dayValue, currentRatioValue);
-        resetDays(); // Reset days when calories change
+        resetDays(); // Сброс выбора дней при изменении калорий
       }
     }
 
     parentSelector.addEventListener('click', handleKcalClick);
 
-    // Initial setup: Set the first button as active and update values
+    // Первоначальная настройка: активируем первую кнопку и обновляем значения
     const firstKcalButton = parentSelector.querySelector(
       '.tabcalories__choise-btn',
     );
@@ -2940,16 +2995,22 @@ function tabs(
       firstKcalButton.classList.add('tabcalories__choise-btn--active');
       currentRatioValue = firstKcalButton.dataset.ratio;
       menuKcal.textContent = `${firstKcalButton.textContent} калорий`;
-      calcTotalPrice(tabIndex, dayValue, currentRatioValue); // Calculate initial price
+      calcTotalPrice(tabIndex, dayValue, currentRatioValue); // Начальный расчёт цены
     }
   }
 
-  let lastSendTime = 0; // Stores the timestamp of the last successful send
+  let lastSendTime = 0; // Хранит время последней успешной отправки
 
+  /**
+   * Функция для отправки данных заказа на сервер.
+   * @param {number} tabIndex - Индекс выбранного таба.
+   * @param {number} dayValue - Значение выбранного дня.
+   * @param {number} ratio - Соотношение калорий.
+   */
   function sendOrderData(tabIndex, dayValue, ratio) {
     const currentTime = Date.now();
 
-    // Check if 10 seconds have passed since the last send
+    // Проверка, прошло ли 10 секунд с момента последней отправки
     if (currentTime - lastSendTime < 10000) {
       const remainingTime = 10000 - (currentTime - lastSendTime);
       const minutes = Math.floor(remainingTime / 60000);
@@ -2962,20 +3023,20 @@ function tabs(
       return;
     }
 
-    // Reset button text
+    // Сброс текста кнопки
     if (orderButton) {
       orderButton.textContent = 'Оформить заказ';
       clearInterval(cooldownInterval);
     }
 
-    // Check if 10 seconds have passed since the last send
+    // Повторная проверка времени отправки
     if (currentTime - lastSendTime < 10000) {
       alert.log('Отправка данных слишком часто. Подождите 10 секунд.');
       return;
     }
 
     console.log('Отправка данных:', latestOrderData);
-    if (!latestOrderData) return; // Если данных нет, не отправляем
+    if (!latestOrderData) return; // Если нет данных, отправка не производится
 
     fetch('http://localhost:3000/order', {
       method: 'POST',
@@ -2987,14 +3048,19 @@ function tabs(
       .then((response) => response.json())
       .then((data) => {
         console.log('Ответ сервера:', data);
-        lastSendTime = Date.now(); // Update the last send time
+        lastSendTime = Date.now(); // Обновляем время последней отправки
       })
       .catch((error) => {
         console.error('Ошибка отправки:', error);
-        // Reset lastSendTime if send failed
+        // Если отправка не удалась, обновляем время отправки
         lastSendTime = Date.now();
       });
   }
+
+  /**
+   * Обновляет обратный отсчёт до возможности следующей отправки заказа.
+   * @param {number} remainingTime - Оставшееся время в миллисекундах.
+   */
   function updateCountdown(remainingTime) {
     const currentTime = Date.now();
     const timeLeft = remainingTime - (currentTime - lastSendTime);
@@ -3014,34 +3080,45 @@ function tabs(
       orderButton.textContent = `Ожидайте: ${minutes} минут${minutes !== 1 ? 'ы' : ''} ${seconds} секунд${seconds !== 1 ? 'ы' : ''}`;
     }
   }
-  // Separate handler function for order button click
+
+  /**
+   * Обработчик клика по кнопке заказа.
+   */
   function handleOrderButton() {
     const user = localStorage.getItem('user');
     if (!user) {
-      // If alert has not been shown recently, show it and set a flag to throttle subsequent alerts.
+      // Если предупреждение ещё не было показано, выводим его и устанавливаем флаг
       if (!orderAlertShown) {
         alert('Перед заказом, пожалуйста зарегестрируйтесь');
         orderAlertShown = true;
-        // Reset the flag after 1 second to allow future alerts if needed.
+        // Сбрасываем флаг через 1 секунду для возможности повторного предупреждения
         setTimeout(() => {
           orderAlertShown = false;
         }, 1000);
       }
       return;
     }
-    // If user is authorized, send the order data.
+    // Если пользователь авторизован, отправляем данные заказа.
     sendOrderData(tabIndex, currentDayValue, currentRatioValue);
   }
 
-  // Updated setupOrderButton function that uses the new handleOrderButton.
+  /**
+   * Устанавливает обработчик клика для кнопки заказа с актуальными данными.
+   */
   function setupOrderButton() {
     if (orderButton) {
-      // Remove previous click listener if any, then add our handler
+      // Удаляем предыдущий обработчик, если он есть, и добавляем новый
       orderButton.removeEventListener('click', handleOrderButton);
       orderButton.addEventListener('click', handleOrderButton);
     }
   }
 
+  /**
+   * Функция для расчета итоговой стоимости заказа с учетом выбранного тарифа, дней и скидок.
+   * @param {number} tabIndex - Индекс выбранного таба.
+   * @param {number} dayValue - Значение выбранного дня.
+   * @param {number} ratio - Соотношение калорий.
+   */
   function calcTotalPrice(tabIndex, dayValue, ratio) {
     console.log('Приходит в calcTotalPrice');
     console.log(`Таб индекс - ${tabIndex}`);
@@ -3116,7 +3193,7 @@ function tabs(
     setupOrderButton(); // Настраиваем кнопку с актуальными данными
   }
 
-  // calcTotalPrice(tabIndex, currentDayValue, currentRatioValue);
+  // Инициализируем интерфейс табов
   hideTabsContent();
   showTabContent();
   switchTab();
@@ -3133,7 +3210,6 @@ function tabs(
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -3141,6 +3217,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _moveContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./moveContent */ "./js/modules/moveContent.js");
 // tabsAndSlider.js
 
+/**
+ * Функция SliderV2 - реализует слайдер с поддержкой навигации по клику, клавиатуре,
+ * touch-событиями и перетаскиванием мышью.
+ *
+ * @param {string} contentSelector - CSS селектор для элементов слайдов.
+ * @param {string} parentSelector - CSS селектор для родительского элемента слайдов.
+ * @param {string} sliderPrev - CSS селектор для кнопки переключения на предыдущий слайд.
+ * @param {string} sliderNext - CSS селектор для кнопки переключения на следующий слайд.
+ * @param {string} current - CSS селектор для элемента отображения текущего номера слайда.
+ * @param {string} total - CSS селектор для элемента отображения общего количества слайдов.
+ */
 function SliderV2(
   contentSelector,
   parentSelector,
@@ -3149,7 +3236,7 @@ function SliderV2(
   current,
   total,
 ) {
-  // DOM Elements
+  // Получение DOM элементов для слайдера
   const tabsContent = document.querySelectorAll(contentSelector);
   const tabsParent = document.querySelector(parentSelector);
   const prev = document.querySelector(sliderPrev);
@@ -3157,12 +3244,12 @@ function SliderV2(
   const currentCounter = document.querySelector(current);
   const totalCounter = document.querySelector(total);
 
-  // State
+  // Локальное состояние слайдера
   let slideIndex = 0;
   let touchStartX = 0;
   let touchEndX = 0;
 
-  // Guard clause for required elements
+  // Проверяем наличие всех необходимых элементов
   if (
     !tabsContent.length ||
     !tabsParent ||
@@ -3175,6 +3262,9 @@ function SliderV2(
     return;
   }
 
+  /**
+   * Скрывает все слайды.
+   */
   function hideContent() {
     tabsContent.forEach((item) => {
       item.classList.add('hide');
@@ -3182,22 +3272,40 @@ function SliderV2(
     });
   }
 
+  /**
+   * Показывает слайд по заданному индексу.
+   * @param {number} [index=0] - Индекс слайда для отображения.
+   */
   function showContent(index = 0) {
     tabsContent[index].classList.add('show');
     tabsContent[index].classList.remove('hide');
     updateCounter(index);
+    // Вызов функции вставки контента для текущего слайда
     (0,_moveContent__WEBPACK_IMPORTED_MODULE_0__["default"])(index);
   }
 
+  /**
+   * Обновляет счетчик текущего слайда и общего количества слайдов.
+   * @param {number} index - Индекс текущего слайда.
+   */
   function updateCounter(index) {
     currentCounter.textContent = getZero(index + 1);
     totalCounter.textContent = getZero(tabsContent.length);
   }
 
+  /**
+   * Добавляет ведущий ноль к числу, если оно меньше 10.
+   * @param {number} num - Число для форматирования.
+   * @returns {string|number} - Строка с ведущим нулем или число, если оно больше или равно 10.
+   */
   function getZero(num) {
     return num >= 0 && num < 10 ? `0${num}` : num;
   }
 
+  /**
+   * Изменяет слайд в зависимости от направления.
+   * @param {string} direction - Направление ('prev' для предыдущего, 'next' для следующего).
+   */
   function changeSlide(direction) {
     console.log(`Changing slide: ${direction}`);
     if (direction === 'prev') {
@@ -3209,11 +3317,14 @@ function SliderV2(
     hideContent();
     showContent(slideIndex);
 
-    // Call moveContent function after changing the slide
+    // Вызов функции для вставки контента после смены слайда
     (0,_moveContent__WEBPACK_IMPORTED_MODULE_0__["default"])(slideIndex);
   }
 
-  // Event Handlers
+  /**
+   * Обработчик нажатия клавиш для переключения слайдера.
+   * @param {KeyboardEvent} event - Событие нажатия клавиши.
+   */
   function handleKeyPress(event) {
     if (event.key === 'ArrowLeft') {
       changeSlide('prev');
@@ -3222,15 +3333,26 @@ function SliderV2(
     }
   }
 
+  /**
+   * Обработчик начала касания экрана.
+   * @param {TouchEvent} event - Событие касания.
+   */
   function handleTouchStart(event) {
     touchStartX = event.touches[0].clientX;
     touchEndX = touchStartX;
   }
 
+  /**
+   * Обработчик движения пальца по экрану.
+   * @param {TouchEvent} event - Событие перемещения касания.
+   */
   function handleTouchMove(event) {
     touchEndX = event.touches[0].clientX;
   }
 
+  /**
+   * Обработчик окончания касания, вычисляет направление свайпа.
+   */
   function handleTouchEnd() {
     const swipeDistance = touchEndX - touchStartX;
     const swipeThreshold = 50;
@@ -3240,16 +3362,24 @@ function SliderV2(
     }
   }
 
-  // Mouse drag handlers
+  // Переменные для обработки перетаскивания мышью
   let isDragging = false;
   let startX;
 
+  /**
+   * Обработчик нажатия кнопки мыши.
+   * @param {MouseEvent} event - Событие нажатия мыши.
+   */
   function handleMouseDown(event) {
     isDragging = true;
     startX = event.pageX;
     tabsParent.style.cursor = 'grabbing';
   }
 
+  /**
+   * Обработчик движения мыши при зажатой кнопке.
+   * @param {MouseEvent} event - Событие перемещения мыши.
+   */
   function handleMouseMove(event) {
     if (!isDragging) return;
 
@@ -3263,12 +3393,15 @@ function SliderV2(
     }
   }
 
+  /**
+   * Обработчик отпускания кнопки мыши.
+   */
   function handleMouseUp() {
     isDragging = false;
     tabsParent.style.cursor = 'grab';
   }
 
-  // Event Listeners
+  // Назначение обработчиков для кнопок и событий
   prev.addEventListener('click', () => changeSlide('prev'));
   next.addEventListener('click', () => changeSlide('next'));
   document.addEventListener('keydown', handleKeyPress);
@@ -3281,14 +3414,18 @@ function SliderV2(
   document.addEventListener('mousemove', handleMouseMove);
   document.addEventListener('mouseup', handleMouseUp);
 
-  // Set initial cursor style
+  // Установка начального стиля курсора
   tabsParent.style.cursor = 'grab';
 
-  // Initialize
+  // Инициализация слайдера: скрываем все слайды и показываем первый
   hideContent();
   showContent();
 
-  // Cleanup function
+  /**
+   * Функция для очистки (удаления) обработчиков событий.
+   * Возвращает функцию, вызывая которую, можно отменить регистрацию событий.
+   * @returns {Function} Функция очистки обработчиков событий.
+   */
   return function cleanup() {
     document.removeEventListener('keydown', handleKeyPress);
     tabsParent.removeEventListener('touchstart', handleTouchStart);
@@ -3311,16 +3448,29 @@ function SliderV2(
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/**
+ * Модуль таймера. Инициирует отсчет времени до заданной даты.
+ * @function timer
+ */
 function timer() {
   // TIMER
 
   const deadline = '2026-01-01';
 
+  /**
+   * Вычисляет оставшееся время до заданного конечного времени.
+   * @param {string} endtime - Конечное время в формате, распознаваемом Date.parse.
+   * @returns {Object} Объект с оставшимся временем:
+   *                   total - общее количество миллисекунд,
+   *                   days - количество дней,
+   *                   hours - количество часов,
+   *                   minutes - количество минут,
+   *                   seconds - количество секунд.
+   */
   function getTimeRemaining(endtime) {
     const total = Date.parse(endtime) - Date.parse(new Date());
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
@@ -3336,6 +3486,11 @@ function timer() {
     };
   }
 
+  /**
+   * Устанавливает и обновляет счетчики таймера на странице.
+   * @param {string} selector - CSS селектор элемента таймера.
+   * @param {string} endtime - Конечное время для отсчета.
+   */
   function setClock(selector, endtime) {
     const timer = document.querySelector(selector);
     const days = timer.querySelector('#days');
@@ -3345,6 +3500,9 @@ function timer() {
     let timeInterval = setInterval(updateClock, 1000);
     updateClock();
 
+    /**
+     * Функция обновления счетчиков таймера.
+     */
     function updateClock() {
       const t = getTimeRemaining(endtime);
       days.innerHTML = getZero(t.days);
@@ -3357,6 +3515,11 @@ function timer() {
       }
     }
   }
+  /**
+   * Форматирует число, добавляя ведущий ноль, если число меньше 10.
+   * @param {number} number - Число для форматирования.
+   * @returns {string|number} Строка с числом, дополненным нулем, или число.
+   */
   function getZero(number) {
     if (number >= 0 && number < 10) {
       return `0${number}`;
@@ -3378,7 +3541,6 @@ function timer() {
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -3415,18 +3577,6 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -3472,9 +3622,8 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!**********************!*\
   !*** ./js/script.js ***!
   \**********************/
@@ -3497,10 +3646,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_replaceImg__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/replaceImg */ "./js/modules/replaceImg.js");
 /* harmony import */ var _modules_reviews__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/reviews */ "./js/modules/reviews.js");
 /* harmony import */ var _modules_callMeBack__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modules/callMeBack */ "./js/modules/callMeBack.js");
-/* harmony import */ var _modules_request_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modules/request.js */ "./js/modules/request.js");
-/* harmony import */ var _modules_request_js__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_modules_request_js__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _modules_location__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./modules/location */ "./js/modules/location.js");
-/* harmony import */ var _modules_auth__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./modules/auth */ "./js/modules/auth.js");
+/* harmony import */ var _modules_location__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modules/location */ "./js/modules/location.js");
+/* harmony import */ var _modules_auth__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./modules/auth */ "./js/modules/auth.js");
 
 
 
@@ -3561,6 +3708,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_modules_collapsed_js__WEBPACK_IMPORTED_MODULE_13__["default"])('.questions .questions__item-content', '.questionsExpand', 0);
   (0,_modules_moveContent__WEBPACK_IMPORTED_MODULE_14__["default"])();
   (0,_modules_moveContent__WEBPACK_IMPORTED_MODULE_14__["default"])(0, '.cityMoveElement', '.cityToMoveElement', 425);
+  (0,_modules_moveContent__WEBPACK_IMPORTED_MODULE_14__["default"])(0, '.authBtnHeader', '.authBtnBurger', 425);
   (0,_modules_replaceImg__WEBPACK_IMPORTED_MODULE_15__["default"])(
     '.calculating__choose_big',
     'calculating__choose-item',
@@ -3574,8 +3722,8 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_modules_reviews__WEBPACK_IMPORTED_MODULE_16__["default"])();
   (0,_modules_callMeBack__WEBPACK_IMPORTED_MODULE_17__["default"])();
   // request();
-  (0,_modules_location__WEBPACK_IMPORTED_MODULE_19__["default"])();
-  (0,_modules_auth__WEBPACK_IMPORTED_MODULE_20__["default"])();
+  (0,_modules_location__WEBPACK_IMPORTED_MODULE_18__["default"])();
+  (0,_modules_auth__WEBPACK_IMPORTED_MODULE_19__["default"])();
 });
 
 })();
