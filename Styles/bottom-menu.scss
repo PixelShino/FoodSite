@@ -1,0 +1,96 @@
+@import 'mixin';
+@import 'mediaMixin';
+
+.bottom__menu {
+  display: flex;
+  align-self: flex-end;
+  margin-top: auto;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  @include BTNmedium;
+  @include fluid-text(24, 16);
+  position: relative;
+  background-color: $green;
+  @include no-border-radius();
+  border: none;
+  animation: fadeInUp 1.5s forwards;
+  /* Фиксируем элемент внизу экрана */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 5vh;
+  z-index: 1000;
+  flex-direction: column;
+  height: var(--bottom-menu-height);
+  @include respond-to(mobile) {
+    height: var(--bottom-menu-height-mobile);
+    padding: 0;
+  }
+  &-promo,
+  &-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include fluid-text(24, 16);
+    width: 100%;
+    max-width: 100%;
+    height: 5vh;
+  }
+  &-promo {
+    font-weight: 600;
+  }
+  &-btns {
+    display: none;
+    flex: 0 0 40%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: $black;
+    padding: 1rem;
+
+    @include respond-to(mobile) {
+      display: flex;
+    }
+    button {
+      // @include BTN;
+      margin-left: 1vw;
+      margin-right: 1vw;
+      max-height: 10vw;
+      margin: 0;
+      padding: 4vw;
+
+      background-color: $black;
+      color: $white;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      @include fluid-text(24, 16);
+      font-weight: 600;
+      img {
+        // background-color: $orange;
+      }
+    }
+  }
+  button:nth-child(2) {
+    color: $orange;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+}

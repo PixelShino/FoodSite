@@ -1,0 +1,178 @@
+@import 'mixin';
+@import 'mediaMixin';
+
+.menu {
+  @include container;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  @include BRo;
+  height: 100%;
+
+  // margin: 5vw 0 5vw 0;
+  margin-top: 5vw;
+  margin-bottom: 5vw;
+  .title {
+    text-align: center;
+    margin-top: 2vw;
+    position: relative;
+    z-index: 2;
+    @include fluid-text(40, 24);
+    font-weight: 900;
+  }
+  .expand {
+    text-align: center;
+
+    @include fluid-text(26, 18);
+    font-weight: 700;
+
+    width: 90%;
+    margin: 1vw;
+    position: relative;
+    z-index: 2;
+    @include BTN;
+    background-color: $orange;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include hover-effect(glow);
+    @include hover-effect(lift);
+    @include hover-effect(scale);
+    @include respond-to(mobile) {
+      width: 100%;
+      padding: 1rem;
+    }
+  }
+
+  .menu__field {
+    // margin-top: 50px;
+    // padding: 50px 0;
+    width: 100%;
+    height: 100%;
+    // background: rgba(249, 254, 126, 0.25);
+    padding: 0 2vw 0vw 2vw;
+    margin-bottom: 2vw;
+
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out; // Анимация высоты
+    max-height: 5000px;
+
+    &.collapsed {
+      max-height: 0;
+      padding: 0; // Высота в свернутом состоянии
+    }
+    transition:
+      max-height 0.5s ease,
+      padding 0.5s ease;
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      row-gap: 2rem;
+      flex-wrap: nowrap;
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+      max-height: 100%;
+      min-height: 100%;
+      --container-height: 100%;
+      flex-direction: row;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+
+      @media screen and (max-width: 1030px) {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      @include respond-to(desktop) {
+        flex-wrap: wrap;
+      }
+      @include respond-to(mobile) {
+        // margin: 0;
+      }
+
+      .menu__item {
+        // width: calc(100% / 3);
+        width: 100%;
+
+        // min-height: 1100px;
+        // height: 100%;
+        @include BTN;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        // align-items: center;
+
+        img {
+          // @include BTN;
+          border-radius: 30px;
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+        }
+
+        .menu__item-subtitle {
+          @include fluid-text(30, 20);
+          font-weight: 800;
+
+          padding: 0 1rem;
+          margin-top: 1rem;
+        }
+
+        .menu__item-descr {
+          // @include BTN;
+          // min-height: 310px; // background-color: $white;
+          @include fluid-text(18, 16);
+          font-weight: 500;
+          line-height: 1.5;
+          height: 100%;
+          padding: 0 1rem;
+          padding: 1rem;
+          margin-top: 1rem;
+        }
+
+        .menu__item-divider {
+          width: 100%;
+          height: 2px;
+          background-color: rgba(0, 0, 0, 0.25);
+          margin-top: 1rem;
+        }
+
+        .menu__item-price {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 20px;
+
+          .menu__item-cost {
+            @include fluid-text(24, 16);
+            font-weight: 500;
+          }
+
+          //TODO: добавить кнопку перехода к выбору в меню
+          .menu__item-total {
+            span {
+              @include fluid-text(28, 18);
+              font-weight: 700;
+            }
+          }
+        }
+        .menu__item-select {
+          @include fluid-text(24, 16);
+          font-weight: 700;
+          width: 100%;
+          @include BTN;
+          background-color: $half-green;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

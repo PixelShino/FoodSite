@@ -1,0 +1,259 @@
+@use 'sass:math';
+@import 'colors';
+
+@mixin fluid-text($max: 48, $min: 16) {
+  $maxViewportWidth: 1400;
+  $minViewportWidth: 360;
+
+  $maxSize: math.div($max, 16);
+  $minSize: math.div($min, 16);
+  $maxWidth: math.div($maxViewportWidth, 16);
+  $minWidth: math.div($minViewportWidth, 16);
+
+  $slope: math.div(($maxSize - $minSize), ($maxWidth - $minWidth));
+  $yAxisIntersection: -$minWidth * $slope + $minSize;
+
+  font-size: clamp(
+    #{$minSize * 1rem},
+    #{$yAxisIntersection * 1rem} + #{$slope * 100vw},
+    #{$maxSize * 1rem}
+  );
+}
+@mixin center-flex($direction: row) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+@mixin BTN {
+  border-radius: 30px;
+  border: $white solid 1px;
+  background: #e0e0e0;
+
+  height: 100%;
+  padding: 2rem;
+}
+@mixin BTNopiacity {
+  border-radius: 30px;
+  border: $white solid 1px;
+  background: #e0e0e086;
+
+  height: 100%;
+  padding: 2rem;
+}
+@mixin BTNmedium {
+  border-radius: 30px;
+  border: $white solid 1px;
+  background: #e0e0e0;
+  height: 100%;
+  padding: 1rem;
+}
+@mixin BTNshadow {
+  border-radius: 30px;
+  background: #e0e0e06a;
+  box-shadow:
+    5px 5px 18px #a4a4a480,
+    -5px -5px 18px #ffffff82;
+}
+@mixin BRo {
+  border-radius: 30px;
+  background: #e0e0e094;
+
+  // box-shadow:
+  //   48px 48px 300px #d9d9d9e1,
+  //   -48px -48px 300px #e7e7e7a5;
+}
+@mixin h3 {
+  // padding: 1rem;
+  font-weight: 700;
+  text-align: center;
+  @include fluid-text(36, 20);
+  margin: 1.5vw 0 1.5vw 0;
+}
+@mixin h2 {
+  // padding: 1rem;
+  font-weight: 800;
+  text-align: center;
+  @include fluid-text(42, 25);
+  margin: 1.5vw 0 1.5vw 0;
+}
+@mixin word-break {
+  overflow-wrap: normal; // Перенос слов только целиком
+  word-break: normal; // Перенос слов только целиком
+}
+
+@mixin no-border-radius($side: all) {
+  // Default value 'all'
+  @if $side == all {
+    border-radius: 0;
+  } @else if $side == top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  } @else if $side == right {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  } @else if $side == bottom {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  } @else if $side == left {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  } @else {
+    @error "Invalid side value: #{$side}. Allowed values: all, top, right, bottom, left";
+  }
+}
+
+@mixin container {
+  width: 85%;
+  max-width: math.div(85, 100) * 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: $breakpoint-mobile) {
+    width: 95%;
+    max-width: math.div(95, 100) * 100%;
+  }
+}
+
+@mixin no-select {
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+@mixin flex($direction: row, $justify: flex-start, $align: stretch) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+$transition-base: 0.3s ease;
+$shadow-light: rgba(0, 0, 0, 0.1);
+$shadow-medium: rgba(0, 0, 0, 0.15);
+$glow-light: rgba(255, 255, 255, 0.2);
+
+// Универсальный миксин для hover эффектов
+@mixin hover-effect($effect: 'lift') {
+  transition: all $transition-base;
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @if $effect == 'lift' {
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px $shadow-light;
+    }
+  }
+
+  @if $effect == 'scale' {
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px $shadow-light;
+    }
+  }
+
+  @if $effect == 'glow' {
+    &:hover {
+      box-shadow: 0 0 15px $glow-light;
+      filter: brightness(1.1);
+    }
+  }
+
+  @if $effect == 'border' {
+    border: 2px solid transparent;
+    &:hover {
+      border-color: currentColor;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+// Основные переменные
+$focus-transition: 0.3s ease-in-out;
+
+// Универсальный миксин для focus эффектов
+@mixin focus-effect($effect: 'default') {
+  transition: all $focus-transition;
+  outline: none;
+
+  @if $effect == 'default' {
+    &:focus {
+      border-color: $green;
+      box-shadow: 0 0 0 3px $green;
+    }
+  }
+
+  @if $effect == 'glow' {
+    &:focus {
+      border-color: $green;
+      box-shadow: 0 0 10px $green;
+    }
+  }
+
+  @if $effect == 'border' {
+    &:focus {
+      border: 2px solid $green;
+      box-shadow: none;
+    }
+  }
+
+  @if $effect == 'underline' {
+    position: relative;
+
+    &:focus {
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -px;
+        width: 100%;
+        height: 2px;
+        background-color: $green;
+        transform: scaleX(1);
+        transition: transform $focus-transition;
+      }
+    }
+  }
+
+  @if $effect == 'pulse' {
+    &:focus {
+      animation: focus-pulse 1.5s infinite;
+      border-color: $green;
+    }
+  }
+}
+
+// Анимация пульсации для pulse эффекта
+@keyframes focus-pulse {
+  0% {
+    box-shadow: 0 0 0 0 $green;
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(74, 144, 226, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
+  }
+}
+
+// Определение точек останова как переменных для согласованности и простоты поддержки
+$breakpoint-mobile: 425px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1440px;
+
+$main-bg-color: #ecf5ec;
+$orange: #f5bc53; // bright
+$white: #eeeeee;
+$light: #8b8b8b; // light
+$medium: #6e6e6e; // medium
+$medium-dark: #515151; // dark
+$dark: #3e3e3e; // dark
+$black: #1f1f1f;
+$green: #76da6d;
+$half-green: #54ed397b; // Определение миксина для запрета выделения

@@ -1,0 +1,855 @@
+@import 'mixin';
+@import 'mediaMixin';
+
+.preview {
+  z-index: 0;
+}
+
+.container {
+  @include container;
+
+  .tabcontainer {
+    display: flex;
+    justify-content: space-between;
+    @include BRo;
+    padding: 1rem;
+    height: 100%;
+    flex-direction: column;
+    @include respond-to(desktop) {
+      flex-direction: column;
+    }
+
+    &__bot {
+      display: flex;
+      flex-flow: row wrap;
+      align-self: center;
+      flex-grow: 1;
+      padding: 2rem;
+
+      // @include BRo;
+      height: 50%;
+      max-width: 100%;
+      width: 100%;
+
+      padding: 0;
+      margin: 1vw 1vw 0 1vw;
+
+      @include respond-to(desktop) {
+        // display: flex;
+        // padding: 0;
+        // margin: 1vw 1vw 0 1vw;
+        // flex-flow: row wrap;
+        // max-width: 100%;
+        // width: 100%;
+      }
+
+      &-title,
+      &-tariff,
+      &-day,
+      &-calories,
+      &-price,
+      &-action,
+      &-reset {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        align-content: center;
+        flex-grow: 1;
+        // max-height: 80px;
+        // height: 80px;
+
+        margin-bottom: 1rem;
+
+        @include BTN;
+        background-color: $half-green;
+        color: $black;
+
+        @include fluid-text(24, 14);
+        font-weight: 900;
+
+        @include respond-to(desktop) {
+          // padding: 1vw;
+          max-height: 15vw;
+          height: 7vw;
+        }
+        @include respond-to(mobile) {
+          margin: 0;
+        }
+      }
+      &-day,
+      &-calories,
+      &-price {
+        background-color: $black;
+        color: $green;
+      }
+
+      &-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include BTNshadow;
+        background-color: $orange;
+        // padding: 1rem;
+        order: 1;
+        flex-grow: 1;
+
+        @include hover-effect(glow);
+        @include hover-effect(lift);
+        @include hover-effect(scale);
+
+        &--icon,
+        &--text {
+          display: flex;
+          align-items: center;
+        }
+
+        &--icon {
+          // padding: 0 1rem;
+
+          // img {
+          //   width: 4rem;
+          //   @include respond-to(tablet) {
+          //     width: 2rem;
+          //   }
+          // }
+          i {
+            padding: 0 1rem;
+          }
+        }
+
+        &--text {
+          font-weight: 900;
+          @include fluid-text(26, 16);
+          // padding: 0 1rem;
+        }
+        @include respond-to(desktop) {
+          // flex-direction: row-reverse;
+          // padding: 1rem;
+          // padding: 2rem;
+        }
+        @include respond-to(mobile) {
+          // margin-top: 1rem;
+        }
+      }
+
+      &__title {
+      }
+      &__tariff {
+      }
+      &__day {
+      }
+
+      &-price {
+        flex-direction: row;
+        display: flex;
+        flex-shrink: 1;
+        flex-grow: 0;
+
+        .discount-info {
+          display: flex;
+          // padding: 0.25rem;
+          align-self: center;
+          align-items: center;
+          justify-content: center;
+          // width: 100%;
+          @include BTN;
+          @include no-border-radius;
+          padding: 0;
+          margin: 0;
+          margin-right: 10px;
+          height: auto;
+          background-color: $green;
+          display: none; /* Изначально скрыто */
+          color: $black;
+          // margin-bottom: 5px;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 40%;
+          z-index: 1000;
+          animation: fadeInUp 1.5s forwards;
+
+          @include respond-to(desktop) {
+            padding: 1rem;
+          }
+
+          // &::before {
+          //   content: '';
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   width: 100%;
+          //   height: 100%;
+          //   background: linear-gradient(
+          //     120deg,
+          //     #ff000016,
+          //     #ffff0016,
+          //     #00ff0016,
+          //     #0000ff16,
+          //     #ff00ff16,
+          //     #ff000016
+          //   );
+          //   background-size: 400% 400%;
+          //   animation: iridescent 4s linear infinite;
+          //   z-index: -1;
+          //   filter: blur(5px);
+          //   opacity: 0.8;
+          // }
+        }
+
+        @keyframes iridescent {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        .price-info {
+          font-weight: 800;
+          @include fluid-text(26, 16);
+        }
+        @include respond-to(tablet) {
+          // flex-direction: column;
+          width: 100%;
+        }
+      }
+
+      &-reset {
+        background-color: $green;
+        @include hover-effect(glow);
+        @include hover-effect(lift);
+        @include hover-effect(scale);
+        cursor: pointer;
+        i {
+          padding: 0 1rem;
+        }
+      }
+    }
+
+    .tabcontainer__top {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      height: 100%;
+      max-width: 100%;
+
+      @include respond-to(desktop) {
+        max-width: 100%;
+      }
+
+      .tabcontent {
+        order: 1;
+      }
+
+      .tabcontent__wrapper {
+        display: flex;
+        flex-direction: column-reverse;
+        height: 100%;
+
+        .tabcontent__top {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-around;
+          height: 100%;
+
+          .tabcontent__img {
+            display: none; /* скрыты по умолчанию */
+            flex-direction: row;
+            align-items: center;
+            flex: 0 0 35%;
+            height: 100%;
+            width: 100%;
+
+            img {
+              height: 100%;
+              width: 30%;
+              overflow: hidden;
+              object-fit: scale-down;
+              order: 4;
+              display: flex;
+              align-self: flex-end;
+            }
+
+            &-title,
+            &-price,
+            &-cKal {
+              height: 100%;
+              width: 100%;
+              display: flex;
+              text-align: center;
+              align-items: center;
+              justify-content: center;
+              @include BTNmedium;
+              margin: 0.5rem;
+            }
+
+            &-title {
+              font-weight: 700;
+              @include fluid-text(28, 16);
+              order: 3;
+              background-color: $orange;
+            }
+            &-price {
+              order: 1;
+              @include fluid-text(22, 14);
+            }
+            &-cKal {
+              order: 2;
+              @include fluid-text(22, 14);
+            }
+          }
+
+          .tabcontent__descr {
+            color: $black;
+            padding: 2rem;
+            font-size: 1.5rem;
+            font-weight: 300;
+            line-height: 2rem;
+            overflow: hidden;
+            display: none; /* скрыты по умолчанию */
+            flex: 0 0 65%;
+            width: 100%;
+            height: 100%;
+            @include fluid-text(24, 16);
+          }
+        }
+
+        .tabcontent__bot-cards {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          overflow-y: hidden;
+          @include no-select;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          scroll-snap-type: x mandatory;
+          cursor: grab;
+          // padding: 1.5rem;
+          align-items: center;
+          justify-content: space-around;
+          scrollbar-width: thin;
+          scrollbar-color: $green transparent;
+          margin-top: 2vw;
+          gap: 1rem;
+          // max-height: 300px;
+
+          &:active {
+            cursor: grabbing;
+          }
+
+          &::-webkit-scrollbar {
+            height: 8px;
+          }
+          &::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          &::-webkit-scrollbar-thumb {
+            background-color: $green transparent;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+          }
+
+          @include respond-to(tablet) {
+            // display: grid;
+            grid-template-columns: repeat(3, 1fr); // Two columns
+            gap: 0.5rem; // Adjust gap as needed
+            // padding: 1.5rem; // Adjust padding as needed
+            overflow-x: auto;
+
+            &--card {
+              width: auto; // Important: Let grid manage width
+              min-width: 0; // Prevent content overflow
+              padding: 0.125rem; // Adjust padding as needed
+              display: flex;
+              flex-direction: column;
+              scroll-snap-align: start;
+            }
+          }
+          @include respond-to(tablet) {
+            grid-template-columns: repeat(2, 1fr); // Two columns
+
+            &--card {
+            }
+          }
+          &--card {
+            display: flex;
+            flex-direction: column;
+            scroll-snap-align: start;
+            flex: 0 0 auto;
+            // margin-top: 1rem;
+            min-width: max-content;
+            width: calc((100% / 3) - 2rem);
+            padding: 0.25rem;
+            @include no-select;
+            @include BTNopiacity;
+            background-color: $black;
+            height: 100%;
+
+            // .card--left {
+            //   display: flex;
+            //   flex-direction: column;
+            // }
+            @include respond-to(desktop) {
+              width: calc((100% / 2) - 2rem);
+            }
+            @include respond-to(tablet) {
+              width: 50%;
+              padding: 0.125rem;
+              // margin: 0;
+            }
+            @include respond-to(mobile) {
+              width: 75%;
+            }
+
+            &--title {
+              display: flex;
+              justify-content: center;
+              order: 3;
+              @include fluid-text(18, 14);
+              font-weight: 700;
+              color: $black;
+              color: $white;
+              padding: 1vw;
+              flex-wrap: wrap;
+              @include word-break;
+              @include respond-to(mobile) {
+                max-width: 278.81px; //card width
+                padding: 3vw;
+                height: 60px;
+                align-items: center;
+              }
+            }
+
+            &--img {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              order: 1;
+              @include no-select;
+              background-color: $white;
+              border-radius: 30px;
+
+              // box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+
+              // For multiple shadows (both inner and outer)
+              // box-shadow:
+              //   inset 0 0 20px rgba(0, 0, 0, 0.568),
+              //   inset 0 0 50px rgba(0, 0, 0, 0.1);
+
+              // For a more dramatic effect
+              // box-shadow:
+              //   inset 0 2px 10px rgba(0, 0, 0, 0.2),
+              //   inset 0 5px 15px rgba(0, 0, 0, 0.1);
+
+              img {
+                height: 100%;
+                max-height: 225px;
+                width: 100%;
+                max-width: 225px;
+                overflow: hidden;
+                object-fit: cover;
+                @include no-select;
+                @include respond-to(mobile) {
+                  width: 150px;
+                  height: 150px;
+                  // max-width: min-content;
+                }
+              }
+            }
+
+            &--impact {
+              order: 3;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+              @include BTN;
+              // background-color: $orange;
+              background-color: $white;
+              padding: 0;
+              @include respond-to(mobile) {
+                @include no-border-radius(top);
+                padding: 2vw;
+              }
+
+              #cKal,
+              #protein,
+              #fats,
+              #carbs {
+                display: flex;
+                flex-direction: column-reverse;
+                padding: 0.3rem;
+                border-radius: 20px;
+                width: 100%;
+
+                .tabcontent__bot-cards--card--impact--title {
+                  font-weight: 500;
+                  @include fluid-text(14, 12);
+                }
+                .tabcontent__bot-cards--card--impact--value {
+                  font-weight: 700;
+                  @include fluid-text(18, 14);
+                }
+              }
+
+              @include no-select;
+
+              &--title {
+                display: flex;
+                justify-content: center;
+                @include fluid-text(13, 8);
+              }
+
+              &--value {
+                display: flex;
+                justify-content: center;
+                @include fluid-text(16, 13);
+              }
+            }
+          }
+
+          &.active {
+            cursor: grabbing;
+            cursor: -webkit-grabbing;
+          }
+        }
+
+        .custom-scrollbar {
+          position: relative;
+          width: 100%;
+          height: 40px;
+          background: #b34545;
+          border-radius: 2px;
+          margin-top: 1rem;
+
+          &__thumb {
+            position: absolute;
+            height: 100%;
+            width: 20%;
+            background: $orange;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background 0.3s;
+
+            &:hover {
+              background: darken($orange, 10%);
+            }
+          }
+        }
+      }
+    }
+
+    .tabheader {
+      color: $black;
+      flex: 0 1 100%;
+
+      h3 {
+        // padding: 1rem;
+        // font-weight: 700;
+        // text-align: center;
+        // @include fluid-text(30, 20);
+        @include h3;
+      }
+
+      &__items {
+        min-height: 150px;
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-auto-rows: minmax(100%, auto);
+
+        @include respond-to(desktop) {
+          display: flex;
+          flex-direction: column;
+        }
+        @include respond-to(tablet) {
+          padding: 0;
+          margin: 0;
+          gap: 1rem;
+        }
+        #tab-0,
+        #tab-1,
+        #tab-2 {
+          background-repeat: no-repeat;
+          background-position: top right;
+          background-size: contain;
+          background-size: 18vw;
+          // background-attachment: fixed;
+          @include respond-to(mobile) {
+            background-size: 135px;
+          }
+        }
+        #tab-0 {
+          background-image: url(../img/food/slider_food1.png);
+        }
+        #tab-1 {
+          background-image: url(../img/food/slider__food2.png);
+        }
+        #tab-2 {
+          background-image: url(../img/food/slider__food3.png);
+        }
+        .tabheader__item {
+          display: flex;
+          width: 100%;
+          height: 100%;
+          height: auto;
+          justify-content: space-around;
+          color: rgba(0, 0, 0, 0.6);
+          color: rgba(255, 255, 255, 0.6);
+
+          transition: 0.3s all;
+          cursor: pointer;
+          flex-direction: column;
+          @include BTN;
+          padding: 1rem;
+          @include no-select;
+          z-index: 3;
+          background-color: $black;
+
+          @include hover-effect(glow);
+          @include hover-effect(lift);
+          @include hover-effect(scale);
+
+          @include respond-to(desktop) {
+            flex-direction: row;
+          }
+          @include respond-to(tablet) {
+            // @include fluid-text(22, 16);
+          }
+          @include respond-to(mobile) {
+          }
+
+          .tabheader__item--left {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-self: flex-start;
+            height: 100%;
+            justify-content: flex-start;
+            flex-shrink: 1;
+            flex-grow: 0;
+
+            .tabheader__item-title {
+              @include fluid-text(33, 18);
+              font-weight: 500;
+              display: flex;
+              align-self: flex-start;
+              flex-grow: 0;
+              flex-wrap: nowrap;
+              align-content: flex-end;
+              color: $green;
+              font-weight: 700;
+            }
+
+            .tabheader__item-cKal {
+              @include fluid-text(24, 14);
+              display: flex;
+              align-self: flex-start;
+              flex-grow: 0;
+            }
+          }
+
+          .tabheader__item--right {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            align-self: flex-end;
+            justify-content: flex-end;
+
+            .tabheader__item-img {
+              @include no-select();
+              display: flex;
+              flex-shrink: 0;
+              min-width: 50%;
+              width: 100%;
+              max-height: 100%;
+              justify-content: flex-end;
+
+              img {
+                display: flex;
+                flex-shrink: 0;
+                width: 100px;
+                max-height: 100%;
+              }
+            }
+            @include respond-to(tablet) {
+            }
+          }
+
+          &_active {
+            background-color: $green;
+            color: rgba(0, 0, 0, 0.6);
+
+            .tabheader__item--left {
+              .tabheader__item-title {
+                transition: 0.1s all;
+                font-weight: 900;
+                color: $black;
+              }
+              .tabheader__item-cKal {
+                transition: 0.1s all;
+                font-weight: 900;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .tabcalories {
+      display: flex;
+      flex-direction: column;
+      order: 1;
+
+      &__title {
+        h3 {
+          // padding: 1rem;
+          // font-weight: 700;
+          // text-align: center;
+          // @include fluid-text(30, 20);
+          @include h3;
+
+          a {
+            color: $orange;
+            font-weight: 900;
+          }
+        }
+      }
+
+      &__choise {
+        display: flex;
+        max-width: 100%;
+        font-weight: 600;
+        gap: 1rem;
+
+        @include respond-to(desktop) {
+          display: flex;
+          flex-wrap: wrap;
+        }
+
+        &-btn {
+          display: flex;
+          width: 100%;
+          @include BTN;
+          // background-color: $black;
+          // background-color: $white;
+          color: $black;
+          justify-content: center;
+          text-align: center;
+          align-content: center;
+          @include fluid-text(24, 16);
+          cursor: pointer;
+          padding: 0.5rem;
+          align-items: center;
+
+          @include hover-effect(glow);
+          @include hover-effect(lift);
+          @include hover-effect(scale);
+
+          @include respond-to(desktop) {
+            height: 5vh;
+          }
+
+          &--active {
+            transition: 0.3s all;
+            background-color: $green;
+            color: $black;
+            font-weight: 900;
+            @include fluid-text(28, 20);
+          }
+        }
+      }
+    }
+
+    .tabdays {
+      order: 2;
+      display: flex;
+      flex-direction: column;
+
+      &__title {
+        h3 {
+          // padding: 1rem;
+          // font-weight: 700;
+          // text-align: center;
+          // @include fluid-text(30, 20);
+          @include h3;
+        }
+      }
+
+      &__choise {
+        display: flex;
+        max-width: 100%;
+        gap: 1rem;
+        @include respond-to(desktop) {
+          // display: flex;
+          // flex-wrap: wrap;
+        }
+        @include respond-to(tablet) {
+          gap: 0rem;
+          flex-wrap: wrap;
+        }
+
+        &-btn {
+          display: flex;
+          width: 100%;
+          @include BTN;
+
+          // background-color: $black;
+          // color: $green;
+          justify-content: center;
+          text-align: center;
+          align-content: center;
+          align-items: center;
+          @include fluid-text(24, 16);
+          cursor: pointer;
+          padding: 0.5rem;
+
+          @include hover-effect(glow);
+          @include hover-effect(lift);
+          @include hover-effect(scale);
+
+          @include respond-to(desktop) {
+            height: 5vh;
+            width: 50%;
+          }
+
+          &--active {
+            transition: 0.3s all;
+            background-color: $green;
+            color: black;
+            font-weight: 900;
+          }
+        }
+      }
+    }
+  }
+
+  .preview__life {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-left: 7rem;
+    margin-top: 2rem;
+    color: $black;
+  }
+}
+
+.header__link:last-child {
+  margin-right: 0;
+}
+
+@include respond-to(desktop) {
+}
+@include respond-to(large-desktop) {
+}
+@include respond-to(tablet) {
+}
+@include respond-to(mobile) {
+}

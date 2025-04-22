@@ -8,14 +8,70 @@ import slider from './modules/slider.js';
 import tabs from './modules/tabs.js';
 import timer from './modules/timer.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('its work');
+import SliderV2 from './modules/tabsAndSlider.js';
+import menuCardSlider from './modules/menuCardSlider.js';
+import fixedPromo from './modules/fixedPromo';
+import burger from './modules/burger.js';
+import bodyNoScroll from './modules/bodyNoScroll.js';
+import collapsed from './modules/collapsed.js';
+import insertContent from './modules/moveContent';
+import replaceImg from './modules/replaceImg';
+import reviews from './modules/reviews';
+import callMeBack from './modules/callMeBack';
 
+import location from './modules/location';
+import auth from './modules/auth';
+
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('script js  work');
+
+  // fixedPromo();
   calc();
   cards();
   forms();
   modal('[data-modal]', '.modal', '[data-close]');
-  slider();
-  tabs();
+  // slider();
+  tabs(
+    '.tabheader__item',
+    '.tabcontent',
+    '.tabheader__items',
+    '.tabcontent__bot-cards',
+    '.tabdays__choise-btn',
+  );
+  //TODO:перенести таймер в promo вниз экрана
+  //или переделать таймер в отдельное окно
   timer();
+  SliderV2(
+    '.offer__slide', // изменить на слайды вместо .offer__descr
+    '.offer__slider', // изменить на родительский элемент слайдера
+    '.prev',
+    '.next',
+    '#current',
+    '#total',
+  );
+  insertContent();
+  // menuCardSlider('.offer__slider-inner');
+  menuCardSlider();
+  burger();
+  collapsed();
+  collapsed('.reviews__list', '.reviews .expand');
+  collapsed('.questions .questions__item-content', '.questionsExpand', 0);
+  insertContent();
+  insertContent(0, '.cityMoveElement', '.cityToMoveElement', 425);
+  insertContent(0, '.authBtnHeader', '.authBtnBurger', 425);
+  replaceImg(
+    '.calculating__choose_big',
+    'calculating__choose-item',
+    'calculating__choose-item_active',
+  );
+  replaceImg(
+    '#gender',
+    'calculating__choose-item',
+    'calculating__choose-item_active',
+  );
+  reviews();
+  callMeBack();
+  // request();
+  location();
+  auth();
 });

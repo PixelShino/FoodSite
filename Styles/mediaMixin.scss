@@ -1,0 +1,27 @@
+// Определение точек останова
+$breakpoint-mobile: 425px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1440px;
+
+// Миксин для адаптивного дизайна (Desktop First)
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'large-desktop' {
+    @media (min-width: #{$breakpoint-desktop + 1}) {
+      @content;
+    }
+  } @else if $breakpoint == 'desktop' {
+    @media (max-width: #{$breakpoint-desktop}) {
+      @content;
+    }
+  } @else if $breakpoint == 'tablet' {
+    @media (max-width: #{$breakpoint-tablet}) {
+      @content;
+    }
+  } @else if $breakpoint == 'mobile' {
+    @media (max-width: #{$breakpoint-mobile}) {
+      @content;
+    }
+  } @else {
+    @error "Неизвестный брейкпоинт: #{$breakpoint}. Используй 'large-desktop', 'desktop', 'tablet' или 'mobile'.";
+  }
+}

@@ -1,2 +1,31 @@
-@use 'reset';
 @use 'old';
+// @use 'uicons';
+@use 'reset';
+@use 'mixin';
+@use '_variables';
+@use '_colors';
+@use 'bottom-menu.scss';
+@use 'btn';
+@use 'header';
+@use 'tabs';
+@use 'offer';
+@use 'calc';
+@use 'menu';
+@use 'order';
+@use 'promotion';
+@use 'footer';
+@use 'sidepanel';
+@use 'modal';
+@use 'sequence';
+@use 'reviews';
+@use 'questions';
+@use 'about';
+
+// @use 'mediaMixin';
+
+// * {
+//   outline: red 1px solid;
+// }
+html {
+  scroll-behavior: smooth !important;
+}

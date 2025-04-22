@@ -1,5 +1,17 @@
-// normalize.scss
-
+@import 'mixin'; // normalize.scss
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap&subset=cyrillic-ext);
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+a {
+  text-decoration: none;
+}
 // 1. Убираем отступы по умолчанию
 *,
 *::before,
@@ -13,11 +25,21 @@
 html {
   line-height: 1.15; // 1. Уменьшение межстрочного интервала для лучшей читаемости
   -webkit-text-size-adjust: 100%; // 2. Убираем масштабирование текста в мобильных браузерах
+
+  // transform: scale(0.8);
+  // transform-origin: top left; /* Убедитесь, что масштабирование начинается с верхнего левого угла */
+  // width: 125%; /* Компенсируйте уменьшение размера для правильного размещения */
+
+  zoom: 0.8; /* Масштабирует всё содержимое страницы до 80% */
+  @media (max-width: $breakpoint-mobile) {
+    zoom: 1;
+  }
 }
 
 body {
   margin: 0;
   font-family:
+    'Montserrat',
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
@@ -26,7 +48,7 @@ body {
     'Helvetica Neue',
     Arial,
     sans-serif;
-  background-color: #fff;
+  // background-color: #ec0000; /* Лёгкий серый */
   color: #000;
   text-rendering: optimizeLegibility; // Улучшенная рендеринг шрифтов
 }

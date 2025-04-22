@@ -1,0 +1,331 @@
+@import 'mixin';
+@import 'mediaMixin';
+// Variables
+$color-primary: #4cd964;
+$color-primary-dark: #3cb551;
+$color-gray: #f8f8f8;
+$color-text: #333;
+$border-radius: 16px;
+$transition: all 0.3s ease;
+
+// Reviews Section
+.reviews {
+  padding: 4rem 0;
+  // background-color: #fff;
+
+  // Container
+  .container {
+    @include container;
+
+    display: flex;
+    flex-flow: column nowrap;
+
+    max-width: 100%;
+    z-index: 0;
+
+    @include BTN;
+
+    background-color: $black;
+    justify-content: center;
+    align-items: center;
+    @include respond-to(tablet) {
+      padding: 1rem;
+    }
+    @include respond-to(mobile) {
+      padding: 1rem;
+    }
+  }
+  .expand {
+    text-align: center;
+    justify-self: center;
+    @include fluid-text(26, 18);
+    font-weight: 700;
+
+    width: 90%;
+    margin: 1vw;
+    position: relative;
+    z-index: 2;
+    @include BTN;
+    background-color: $orange;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include hover-effect(glow);
+    @include hover-effect(lift);
+    @include hover-effect(scale);
+    @include respond-to(mobile) {
+      width: 100%;
+      padding: 1rem;
+    }
+  }
+  &__title {
+    text-align: center;
+    margin-top: 2vw;
+    position: relative;
+    z-index: 2;
+    @include fluid-text(40, 24);
+    font-weight: 900;
+    color: $white;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+    padding: 1rem;
+    max-height: 5000px;
+
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out; // Анимация высоты
+    max-height: auto;
+    transition:
+      max-height 0.3s ease,
+      padding 0.3s ease;
+
+    &.collapsed {
+      max-height: 0; // Высота в свернутом состоянии
+      margin-bottom: 0;
+      padding: 0;
+    }
+
+    @include respond-to(desktop) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @include respond-to(tablet) {
+      grid-template-columns: 1fr 1fr;
+    }
+    @include respond-to(mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__item {
+    background: white;
+    border-radius: $border-radius;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    @include hover-effect(scale);
+    @include hover-effect(lift);
+
+    &-header {
+      margin-bottom: 1rem;
+    }
+
+    &-user {
+      @include flex(row, flex-start, center);
+      gap: 1rem;
+    }
+
+    &-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &-info {
+      flex: 1;
+    }
+
+    &-name {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    &-date {
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    &-rating {
+      margin-top: 0.5rem;
+
+      i {
+        color: $color-primary;
+        font-size: 1rem;
+      }
+    }
+
+    &-content {
+      margin-top: 1rem;
+    }
+
+    &-photo {
+      width: 100%;
+      height: 200px;
+      border-radius: $border-radius;
+      overflow: hidden;
+      margin-bottom: 1rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &-text {
+      color: $color-text;
+      line-height: 1.5;
+    }
+  }
+}
+
+.reviews__form {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  background: $white;
+  padding: 2rem;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  &-title {
+    text-align: center;
+    margin-top: 2vw;
+    position: relative;
+    z-index: 2;
+    @include fluid-text(40, 24);
+    font-weight: 900;
+    color: $black;
+  }
+}
+
+.form {
+  &__field {
+    margin-bottom: 1.5rem;
+    .drop-zone {
+      border: 2px dashed #ccc;
+      padding: 20px;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .drop-zone--over {
+      border-color: #4caf50;
+      background-color: rgba(76, 175, 80, 0.1);
+    }
+
+    .form__preview {
+      max-width: 30vh;
+      display: flex;
+      max-height: 30vh;
+
+      .form__preview-remove {
+      }
+    }
+  }
+
+  &__input,
+  &__textarea {
+    width: 100%;
+    padding: 0.875rem;
+    border: 1px solid #ddd;
+    border-radius: $border-radius;
+    font-size: 1rem;
+    transition: $transition;
+
+    @include fluid-text(24, 16);
+    @include focus-effect(pulse);
+  }
+
+  &__textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  &__rating {
+    @include flex(row, flex-start, center);
+    gap: 0.5rem;
+
+    i {
+      cursor: pointer;
+      font-size: 1.5rem;
+      @include fluid-text(60, 16);
+
+      color: #ddd;
+      transition: $transition;
+
+      &.active {
+        color: $color-primary;
+      }
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+    @include respond-to(mobile) {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      gap: 3vw;
+      i {
+        font-size: 10vw;
+      }
+    }
+  }
+
+  &__input-file {
+    display: none;
+  }
+
+  &__file-label {
+    display: inline-block;
+    padding: 0.875rem 1.5rem;
+    background: $color-gray;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: $transition;
+
+    text-align: center;
+    width: 100%;
+
+    text-align: center;
+    margin-top: 2vw;
+    position: relative;
+    z-index: 2;
+    @include fluid-text(26, 18);
+    font-weight: 900;
+    color: $black;
+    @include hover-effect(glow);
+    @include hover-effect(lift);
+    @include hover-effect(scale);
+
+    @include respond-to(mobile) {
+    }
+  }
+
+  &__submit {
+    width: 100%;
+    padding: 1rem;
+    background: $green;
+    color: white;
+    border: none;
+    border-radius: $border-radius;
+
+    font-weight: 500;
+    cursor: pointer;
+    transition: $transition;
+
+    text-align: center;
+    margin-top: 2vw;
+    position: relative;
+    z-index: 2;
+    @include fluid-text(26, 18);
+    font-weight: 900;
+    color: $black;
+    @include hover-effect(glow);
+    @include hover-effect(lift);
+    @include hover-effect(scale);
+  }
+}
+
+// Media Queries

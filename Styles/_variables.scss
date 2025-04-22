@@ -1,0 +1,15 @@
+.no-scroll {
+  overflow: hidden;
+}
+// _variables.scss
+:root {
+  --bottom-menu-height: 5vh;
+  --bottom-menu-height-mobile: 10vh;
+  --header-height: 10vh;
+  --divider-height: 5vh;
+}
+.divider {
+  margin-top: var(--divider-height);
+  margin-bottom: var(--divider-height);
+  width: 70%;
+}

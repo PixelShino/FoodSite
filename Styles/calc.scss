@@ -1,0 +1,529 @@
+@import 'mixin';
+@import 'mediaMixin';
+@import 'colors';
+@mixin calculating-choose-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  // min-width: 10rem;
+  height: 4rem;
+  padding: 0 2rem;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  outline: 0;
+  transition: 0.3s all;
+  @include BTN;
+  @include fluid-text(26, 18);
+  flex-wrap: wrap;
+
+  background-color: $white;
+  color: $black;
+  &.calculating__choose-item_active {
+    color: $black;
+    background-color: $green;
+  }
+  &--img {
+    max-width: 60px;
+  }
+}
+
+.calculating {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // background-image: url(../img/icon/onion.webp);
+  background-repeat: repeat-y;
+  background-size: contain;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // margin-top: 3rem;
+    @include container;
+
+    @include respond-to(mobile) {
+      margin-top: 2rem;
+    }
+  }
+
+  .title {
+    @include h2;
+
+    // text-align: center;
+    // @include fluid-text(36, 16);
+
+    // @include respond-to(tablet) {
+    //   font-size: 2rem;
+    // }
+  }
+
+  &__field {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    background: #ffffff7c;
+    @include BRo;
+
+    @include respond-to(tablet) {
+      margin-top: 1rem;
+      padding: 2vw;
+    }
+  }
+
+  &__subtitle {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    margin: 1rem 0;
+    h3 {
+      @include h3;
+    }
+
+    @include fluid-text(22, 16);
+
+    @include respond-to(mobile) {
+      font-size: 1.8rem;
+    }
+    @include respond-to(tablet) {
+      font-size: 1.5rem;
+    }
+  }
+
+  #gender {
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+
+    #male,
+    #female {
+      margin: auto 1rem auto;
+      @include BTN;
+      @include calculating-choose-item;
+      background-color: $black;
+      color: $white;
+      flex-wrap: nowrap;
+
+      @include hover-effect(glow);
+      @include hover-effect(lift);
+      @include hover-effect(scale);
+      &.calculating__choose-item_active {
+        // background-color: #54ed39 !important;
+        // color: $black;
+      }
+      @include respond-to(desktop) {
+        margin: 0 0.4rem 0;
+        // padding: 0 1rem;
+        // @include BTN;
+        &.calculating__choose-item_active {
+          // background-color: #54ed39;
+        }
+      }
+
+      @include respond-to(mobile) {
+        margin: 0.25rem 0;
+        // padding: 0;
+      }
+      @include respond-to(tablet) {
+        margin: 0.5rem 0;
+        // padding: 0;
+        padding: 1rem;
+      }
+    }
+    @include respond-to(tablet) {
+    }
+    @include respond-to(mobile) {
+    }
+  }
+
+  &__choose {
+    position: relative;
+    display: flex;
+    // margin: 0.25rem 0 0.25rem 0;
+    justify-content: center;
+    align-items: center;
+    // max-width: 90vw;
+    flex-wrap: nowrap;
+
+    &-item {
+      @include calculating-choose-item;
+      margin: auto;
+
+      @include respond-to(tablet) {
+        margin: 0.5rem 0;
+      }
+      @include respond-to(mobile) {
+        margin: 0.25rem 0;
+      }
+
+      @include respond-to(desktop) {
+        margin: 1rem 2rem;
+      }
+    }
+
+    &.calculating__choose_medium {
+      justify-content: space-between;
+      // margin: 1.5rem auto;
+      width: 100%;
+
+      .calculating__choose-item {
+        margin: 0 1rem;
+        @include BTNmedium;
+        @include calculating-choose-item();
+
+        @include hover-effect(glow);
+        @include hover-effect(lift);
+        @include hover-effect(scale);
+        &:focus {
+          outline: 5px solid $green;
+          outline-offset: 2px;
+
+          scale: 1.05;
+        }
+
+        input {
+          width: 100%;
+        }
+        @include respond-to(tablet) {
+          height: 4rem;
+        }
+        @include respond-to(desktop) {
+          margin: 0;
+        }
+        @include respond-to(mobile) {
+          height: 2rem;
+          padding: 0 2rem;
+        }
+      }
+      @include respond-to(desktop) {
+        display: grid;
+        grid-template: 1fr / 1fr 1fr;
+        grid-template-areas:
+          'top top'
+          'botLeft botRight';
+        gap: 1vw;
+        #weight {
+          grid-area: top;
+          width: 100%;
+          justify-self: center;
+        }
+        #height {
+          grid-area: botLeft;
+          width: 100%;
+          justify-self: center;
+        }
+        #age {
+          grid-area: botRight;
+          width: 100%;
+          justify-self: center;
+        }
+      }
+
+      @include respond-to(mobile) {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    &.calculating__choose_big {
+      // margin: 1.5rem auto;
+      width: 100%;
+
+      max-width: 100%;
+      .calculating__choose-item {
+        margin: 0 1rem;
+        @include BTN;
+        @include calculating-choose-item();
+        align-items: center;
+        flex-flow: row nowrap;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+
+        @include no-select;
+        @include hover-effect(glow);
+        @include hover-effect(lift);
+        @include hover-effect(scale);
+        &.calculating__choose-item_active {
+          // background-color: #54ed39 !important;
+        }
+        &--img {
+          width: 25%;
+          display: flex;
+          justify-content: flex-end;
+          @include no-select;
+          img {
+            justify-self: flex-end;
+            @include no-select;
+          }
+        }
+
+        @include respond-to(desktop) {
+          margin: 0 auto;
+        }
+        @include respond-to(tablet) {
+          padding: 0 2rem;
+          height: 4rem;
+        }
+        @include respond-to(mobile) {
+          height: 3rem;
+        }
+      }
+      @include respond-to(tablet) {
+        flex-wrap: wrap;
+      }
+      @include respond-to(desktop) {
+        display: grid;
+        grid-template: 1fr 1fr / 1fr 1fr;
+        gap: 1vw;
+        #low,
+        #small,
+        #medium,
+        #high {
+          width: 100%;
+          justify-self: center;
+        }
+      }
+      @include respond-to(mobile) {
+        grid-template: 1fr/1fr;
+      }
+    }
+
+    @include respond-to(mobile) {
+      margin: 0 0.25rem;
+      padding: 0;
+      flex-wrap: wrap;
+      width: auto;
+    }
+    @include respond-to(tablet) {
+      margin: 0 1rem;
+      padding: 0;
+      flex-wrap: wrap;
+      width: auto;
+    }
+    @include respond-to(desktop) {
+      margin: 0;
+    }
+  }
+
+  &__total-wrapper {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 1rem;
+    column-gap: 1rem;
+    width: 100%;
+
+    @include respond-to(tablet) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+    }
+    @include respond-to(mobile) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__total {
+    display: flex;
+    width: auto;
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    @include BTN;
+    @include calculating-choose-item();
+    background-color: $black;
+    background-color: $white;
+
+    color: $white;
+    color: $black;
+    padding: 1rem;
+
+    &.kcal,
+    &.bmi {
+      // max-width: 90%;
+      width: 100%;
+      margin: 0;
+      justify-content: center;
+      align-items: center;
+      justify-self: center;
+      .calculating__subtitle {
+        @include fluid-text(32, 20);
+        font-weight: 500;
+        min-width: 50%;
+      }
+      .calculating__result {
+        text-align: left;
+        min-width: 20%;
+        display: flex;
+        @include fluid-text(32, 20);
+        font-weight: 300;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+
+        span {
+          @include fluid-text(32, 20);
+          font-weight: 700;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+        }
+      }
+    }
+    @include respond-to(desktop) {
+      width: 100% !important;
+    }
+    @include respond-to(tablet) {
+      display: flex;
+      height: 100%;
+      width: auto;
+      flex-direction: column;
+      &.kcal,
+      &.bmi {
+        .calculating__subtitle {
+          font-size: 1rem;
+        }
+        .calculating__result span {
+          font-size: 1.7rem;
+        }
+      }
+    }
+    @include respond-to(mobile) {
+      display: flex;
+      height: 100%;
+      width: auto;
+      flex-direction: column;
+      padding: 0.25rem 1rem;
+      &.kcal,
+      &.bmi {
+        .calculating__subtitle {
+          font-size: 1rem;
+        }
+        .calculating__result span {
+          font-size: 1.7rem;
+        }
+      }
+    }
+  }
+  .calc-addition--wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+
+    row-gap: 0.5rem;
+    column-gap: 0.5rem;
+
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    @include respond-to(tablet) {
+      // grid-column: auto;
+      // grid-row: 2 / 3;
+      grid-template-columns: none;
+    }
+    .bmi.info,
+    .calculating__total.bmi.tariff {
+      min-height: 10vw;
+      background-color: $black;
+      color: $white;
+      @include respond-to(tablet) {
+        // grid-column: auto;
+        grid-row: 1 / -1;
+      }
+    }
+
+    .bmi.info {
+      .calculating__subtitle {
+        span {
+          @include fluid-text(40, 18);
+          font-weight: 600;
+        }
+      }
+
+      @include respond-to(tablet) {
+        grid-row: 2 / 2;
+      }
+    }
+
+    .calculating__total.bmi.tariff {
+      background-repeat: no-repeat;
+      background-position: top right;
+      background-size: contain;
+      background-size: 28vw;
+      // background-attachment: fixed;
+      @include respond-to(desktop) {
+        background-size: 28vw;
+      }
+      @include respond-to(tablet) {
+        grid-row: 3 / 3;
+        background-size: 57vw;
+      }
+      @include respond-to(mobile) {
+        background-size: 51vw;
+        background-position: right;
+      }
+
+      display: flex;
+      flex-direction: column;
+
+      align-self: flex-start;
+      height: 100%;
+      justify-content: flex-start;
+
+      .calculating__result.bmi.tariff {
+        align-self: flex-start;
+        text-align: left;
+        // max-height: 50%;
+        width: 100%;
+        .calculating__subtitle {
+          @include fluid-text(40, 18);
+          font-weight: 900;
+          display: flex;
+          align-self: flex-start;
+          text-align: left;
+          flex-grow: 0;
+          flex-wrap: nowrap;
+          align-content: flex-end;
+          color: $green;
+          width: 100%;
+          max-width: 50%;
+
+          @include respond-to(desktop) {
+            @include fluid-text(32, 18);
+          }
+          @include respond-to(tablet) {
+            @include fluid-text(40, 18);
+          }
+        }
+      }
+
+      span {
+        @include fluid-text(28, 18);
+        display: flex;
+        align-self: flex-start;
+        flex-grow: 0;
+        color: $orange;
+      }
+    }
+  }
+}
